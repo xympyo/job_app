@@ -3,37 +3,39 @@
 Last Updated: 2026-09-14
 
 ## Current Phase
-V1 implemented and locally verified. Production account connection / smoke test pending.
+V1 deployed and connected to production Supabase. Live sign-in, persistence and isolation verified.
 
 ## Completed
-- Full handover archived; canonical profile, architecture, workflows and decisions.
-- React/Vite/JavaScript/Tailwind v4 app; responsive routing and explicit local persistence.
+- React/Vite/JavaScript/Tailwind app and canonical career documentation.
 - Dashboard, Inbox, Applications, Attention, History, companies and three CV variants.
-- Job/source CRUD; fit, recommendations, search/filtering, freshness and manual verification.
-- Application snapshots, stages/history, outcomes, CV used, notes, next actions and contacts.
-- Questions with draft/final answers/limits; assessment/interview/conversation records.
-- Research import, preview/deduplication choices, research history, JSON/CSV export.
-- Supabase email/password integration, protected routes, atomic RPC and owned RLS schema.
-- Eight tables in SQL migration; PostgreSQL ownership/FK/rollback/history tests.
-- 27 app/domain/Auth/build-security tests; 10 SQL integration groups; lint/build pass; audit clean.
-- Desktop/tablet/phone checks (320–1440px); checked Axe views pass; screenshots/QA record.
-- README local/Supabase/Vercel instructions. Existing CVs referenced, not uploaded/published.
+- Manual job/source CRUD, explainable fit, CV selection, search/filtering and verification.
+- Application snapshots, stage history/outcomes, draft/final questions and interview records.
+- Research import with preview/deduplication and JSON/CSV exports.
+- Initial SQL migration applied to production through Management API on 2026-09-14.
+- All eight tables have RLS; atomic RPC and ownership-aware foreign keys are active.
+- Public signup disabled; Auth site URL is https://job-app-nine-lake.vercel.app.
+- Owner account provisioned; login stored only in ignored private/Your Career Workspace Login.txt.
+- Owner workspace has three CV entries, zero vacancies and no QA records/accounts.
+- Vercel production deploys from GitHub master; only public URL/anon key configured there.
+- Private configuration excluded from frontend; build rejects configured private-key leaks.
+- 27 automated app/security tests and production lint/build pass; 10 local SQL checks pass.
+- Live Auth/RPC persistence, second-user isolation, anonymous denial and stale-write rejection pass.
+- Hosted browser phone edit persists in a separate session; sign-out clears protected view.
+- Desktop 1440px and phone 390px screenshots reviewed; no checked overflow or console errors.
 
 ## In Progress
-Public Supabase settings verified; private keys removed from Vercel and local VITE names.
-Frontend configuration uses an explicit public allowlist with bundle leak detection.
-Vercel job-app deploys from GitHub master. Production is Ready and returns HTTP 200;
-published entry assets were checked for supplied private credentials (none found).
+None.
 
 ## Next
-Connect Supabase, apply migration, provision owner/disable public signups, configure public
-URL/key, deploy to Vercel and smoke-test real sign-in/persistence from desktop and phone.
+Sign in and add real opportunities manually or through research import. Keep regular exports.
 
 ## Blockers
-Supabase project/public configuration and Vercel access not supplied. No real cloud account
-or deployment verification claimed. Local app runs at http://127.0.0.1:5173.
+None for the implemented V1. No additional Supabase credentials needed now.
 
 ## Important Recent Decisions
 No vacancy automation. Markdown profile is canonical. Local and cloud data are separate.
-Production without Supabase fails closed. CV PDFs stay at D:\Moshe\CV_Revised; upload and
-full-backup restore UI deferred. See 12_QA.md for evidence and limits.
+CV PDFs remain outside the repository at D:\Moshe\CV_Revised; private uploads and full-backup
+restore UI are deferred. Migration 202609140001 was applied directly; do not rerun it or use
+an un-reconciled CLI db push. Future database edits require new migrations.
+Local administration must read the current .env directly: inherited process variables can
+contain older tokens and override Vite loadEnv. See 12_QA.md for verification boundaries.

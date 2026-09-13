@@ -39,3 +39,6 @@ Decision: Ready to Apply jobs appear under Applications even before creating the
 
 ## 2026-09-14 — Public configuration boundary
 Decision: expose only the Supabase URL and public anon key through explicit Vite definitions; reject privileged public keys and scan bundles for configured private credentials. Rationale: private credentials were supplied under VITE names. Implication: private keys have been renamed locally and removed from Vercel; project management requires a separate owning-account access token kept locally.
+
+## 2026-09-14 — Production activation
+Decision: apply the existing initial SQL through the owning-account Management API, disable public signup, set the production Auth URL and provision the owner with a generated password kept in an ignored local file. Rationale: the user authorized autonomous cloud completion and supplied working project access. Implication: no invitation emails were sent, initial migration is already applied (direct SQL, not CLI history), and future migrations must not recreate these tables. Supersedes the earlier manual-provisioning boundary. Two disposable QA accounts and all their rows were removed after live verification; only owner and three CV rows remain.

@@ -80,8 +80,11 @@ instructions when credentials are absent; use `npm run dev` for the local worksp
 The default CSP allows Supabase's standard `*.supabase.co` domain; custom Supabase
 domains require updating `connect-src` in `vercel.json`.
 
-Real hosted Auth, cross-device synchronization and deployment need Moshe's Supabase/
-Vercel account connection. They are not claimed as verified until tested on that project.
+Production is connected at https://job-app-nine-lake.vercel.app. Hosted password sign-in,
+record persistence between separate browser sessions and account isolation were verified
+on 2026-09-14. Public signup is disabled. Owner login is in the ignored local file
+`private/Your Career Workspace Login.txt`. The initial migration is already applied directly;
+do not rerun it. Reconcile migration history before using Supabase CLI db push.
 
 ## Research import
 
