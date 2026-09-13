@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "research_run": {
+    "goal": "Example only — replace with your actual research goal",
+    "query_summary": "Describe where and how you researched",
+    "notes": "This is a template, not a verified vacancy. Replace all example values before import."
+  },
+  "jobs": [
+    {
+      "company": "Example Company (replace)",
+      "title": "IT Business Analyst (example)",
+      "location_text": "Jakarta",
+      "role_family": "Analyst",
+      "work_mode": "Unknown",
+      "description": "Replace with the actual description. Never invent missing facts.",
+      "requirements": "",
+      "deadline": "",
+      "posting_status": "Unknown",
+      "fit_score": null,
+      "fit_label": "",
+      "fit_reason": "",
+      "strengths": [],
+      "gaps": [],
+      "red_flags": [],
+      "recommended_cv": "Analyst",
+      "research_notes": "Unverified example. No factual fit assessment has been made.",
+      "sources": [
+        {
+          "source_name": "Company careers (replace)",
+          "source_type": "Official careers",
+          "source_url": "https://example.com/careers",
+          "apply_url": "",
+          "is_primary": true
+        }
+      ]
+    }
+  ]
+}
