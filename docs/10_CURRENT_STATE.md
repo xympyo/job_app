@@ -22,7 +22,8 @@ V1 implemented and locally verified. Production account connection / smoke test 
 ## In Progress
 Public Supabase settings verified; private keys removed from Vercel and local VITE names.
 Frontend configuration uses an explicit public allowlist with bundle leak detection.
-Vercel job-app is linked to GitHub master; first deployment verification in progress.
+Vercel job-app deploys from GitHub master. Production is Ready and returns HTTP 200;
+published entry assets were checked for supplied private credentials (none found).
 
 ## Next
 Connect Supabase, apply migration, provision owner/disable public signups, configure public
