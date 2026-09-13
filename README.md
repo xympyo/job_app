@@ -61,6 +61,11 @@ are separate; a researched-job import can move vacancies. Full JSON export prese
 data for recovery, but there is no full-backup restore UI in V1. Preserve the exported
 file before changing origins/storage or moving an established local history to cloud.
 
+For automated local administration, use an unprefixed `SUPABASE_ACCESS_TOKEN` from the
+account owning the project and an unprefixed `SUPABASE_SECRET_KEY`. Keep both only in the
+ignored local environment. Vercel needs only the two public variables. The build exposes
+only those two settings and rejects private credentials in generated browser assets.
+
 ## Deploy to Vercel
 
 This project is ready for Vercel's Vite preset: install `npm ci`, build `npm run build`,

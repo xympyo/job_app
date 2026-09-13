@@ -15,12 +15,14 @@ V1 implemented and locally verified. Production account connection / smoke test 
 - Research import, preview/deduplication choices, research history, JSON/CSV export.
 - Supabase email/password integration, protected routes, atomic RPC and owned RLS schema.
 - Eight tables in SQL migration; PostgreSQL ownership/FK/rollback/history tests.
-- 24 app/domain/Auth tests; 10 SQL integration groups; lint/build pass; audit clean.
+- 27 app/domain/Auth/build-security tests; 10 SQL integration groups; lint/build pass; audit clean.
 - Desktop/tablet/phone checks (320–1440px); checked Axe views pass; screenshots/QA record.
 - README local/Supabase/Vercel instructions. Existing CVs referenced, not uploaded/published.
 
 ## In Progress
-None locally. Production project connection remains pending.
+Public Supabase settings verified; private keys removed from Vercel and local VITE names.
+Frontend configuration uses an explicit public allowlist with bundle leak detection.
+Vercel job-app is linked to GitHub master; first deployment verification in progress.
 
 ## Next
 Connect Supabase, apply migration, provision owner/disable public signups, configure public

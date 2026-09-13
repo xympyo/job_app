@@ -36,3 +36,6 @@ Decision: validate locally with domain/UI tests, mocked Supabase Auth, real embe
 
 ## 2026-09-14 — Ready opportunities and initialization
 Decision: Ready to Apply jobs appear under Applications even before creating their application workspace. Rationale: preparation belongs in Applications, and dashboard counts must lead to the matching work. Implication: the original snapshot is captured on explicit Prepare application. Concurrent first-login CV seeding handles unique-slug conflicts by reading the winning seed.
+
+## 2026-09-14 — Public configuration boundary
+Decision: expose only the Supabase URL and public anon key through explicit Vite definitions; reject privileged public keys and scan bundles for configured private credentials. Rationale: private credentials were supplied under VITE names. Implication: private keys have been renamed locally and removed from Vercel; project management requires a separate owning-account access token kept locally.
