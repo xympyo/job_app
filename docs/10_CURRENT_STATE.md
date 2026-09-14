@@ -23,9 +23,11 @@ V1 deployed and connected to production Supabase. Live sign-in, persistence and 
 - Live Auth/RPC persistence, second-user isolation, anonymous denial and stale-write rejection pass.
 - Hosted browser phone edit persists in a separate session; sign-out clears protected view.
 - Desktop 1440px and phone 390px screenshots reviewed; no checked overflow or console errors.
+- Signup and verification routes are live on the canonical Vercel domain; the former Vercel alias now serves directly as well.
 
 ## In Progress
-None.
+None for the implemented flow. The default Supabase email provider remains rate-limited;
+custom SMTP is the only outstanding production-hardening option for broad signup delivery.
 
 ## Next
 Sign in and add real opportunities manually or through research import. Keep regular exports.
