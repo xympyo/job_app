@@ -396,6 +396,7 @@ AUD-008, AUD-011, AUD-015, AUD-016, AUD-017 and AUD-021.
 The application-state migration is `supabase/migrations/202609140002_application_preparing.sql`.
 Local checks pass (42 tests, lint, build and 10 database/RLS checks). Production
 acceptance is complete at `https://pyoloker.vercel.app/` from deployment
-`job-hjf44x6o1-moshe-dayans-projects.vercel.app` (commit
-`5e496ed71def1a8de9c19c7a02a80b366824995f`); the exact journey, responsive checks and
+`job-375tw13uv-moshe-dayans-projects.vercel.app` (commit
+`a5154b5537e9c2d17ca163e38b722c51f484df33`); the exact journey, responsive checks and
 cleanup are recorded in `docs/12_QA.md`.
+
