@@ -111,6 +111,7 @@ describe("private workspace UI", () => {
       screen.getByLabelText("Application stage"),
       "Applied",
     );
+    await user.type(screen.getByLabelText("Date applied"), "2026-09-14");
     await user.click(screen.getByRole("button", { name: "Save application" }));
     await waitFor(() =>
       expect(screen.queryByRole("dialog")).not.toBeInTheDocument(),

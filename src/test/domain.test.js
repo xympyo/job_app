@@ -11,10 +11,12 @@ import {
   filterJobs,
   csv,
   attentionItems,
+  displayCompanyName,
 } from "../lib/domain";
 import { LOCAL_USER } from "../lib/constants";
 import {
   parseImport,
+  importErrorMessage,
   previewImport,
   applyImport,
   findDuplicates,
@@ -90,11 +92,38 @@ describe("vacancy and application workflow", () => {
       LOCAL_USER,
     );
     expect(rejected.stage_history.map((s) => s.status)).toEqual([
-      "Ready to Apply",
+      "Preparing",
       "Applied",
       "Rejected",
     ]);
     expect(() => deleteRow(d, "jobs", j.id)).toThrow(/history/);
+  });
+  it("requires an applied date for submitted stages and clears it for preparing", () => {
+    const d = make();
+    const a = createApplication(d, add(d).id, LOCAL_USER);
+    expect(() =>
+      saveApplication(d, { ...a, status: "HR Interview" }, LOCAL_USER),
+    ).toThrow(/applied/);
+    const applied = saveApplication(
+      d,
+      { ...a, status: "Applied", applied_at: "2026-09-14" },
+      LOCAL_USER,
+    );
+    expect(() =>
+      saveApplication(d, { ...applied, status: "Preparing" }, LOCAL_USER),
+    ).toThrow(/applied date/);
+    const preparing = saveApplication(
+      d,
+      { ...applied, status: "Preparing", applied_at: "" },
+      LOCAL_USER,
+    );
+    expect(preparing.applied_at).toBe("");
+  });
+  it("normalizes legal prefixes for display without changing stored names", () => {
+    expect(displayCompanyName("PT. Mowilex")).toBe("Mowilex");
+    expect(displayCompanyName("CV Nusantara")).toBe("Nusantara");
+    expect(displayCompanyName("PT Technology Partners")).toBe("Technology Partners");
+    expect(displayCompanyName("The PT Group")).toBe("The PT Group");
   });
   it("keeps draft and final answers separate and enforces completion limits", () => {
     const d = make(),
@@ -164,7 +193,7 @@ describe("vacancy and application workflow", () => {
     createApplication(d, j.id, LOCAL_USER);
     expect(filterJobs(d, { area: "inbox" })).toHaveLength(0);
     expect(
-      filterJobs(d, { area: "applications", status: "Ready to Apply" }),
+      filterJobs(d, { area: "applications", status: "Preparing" }),
     ).toHaveLength(1);
   });
   it("puts ready vacancies in Applications before a formal application record exists", () => {
@@ -205,10 +234,15 @@ describe("vacancy and application workflow", () => {
       { application_id: a.id, kind: "HR interview", title: "HR call" },
       LOCAL_USER,
     );
-    expect(attentionItems(d)).toHaveLength(5);
+    expect(attentionItems(d)).toHaveLength(4);
     saveApplication(
       d,
-      { ...d.applications[0], status: "Withdrawn" },
+      { ...d.applications[0], status: "Applied", applied_at: "2026-09-14" },
+      LOCAL_USER,
+    );
+    saveApplication(
+      d,
+      { ...d.applications[0], status: "Withdrawn", applied_at: "2026-09-14" },
       LOCAL_USER,
     );
     expect(attentionItems(d)).toHaveLength(0);
@@ -222,7 +256,7 @@ describe("vacancy and application workflow", () => {
     const app = createApplication(d, job.id, LOCAL_USER);
     expect(
       attentionItems(d).filter((i) => i.type === "Ready to Apply"),
-    ).toHaveLength(1);
+    ).toHaveLength(0);
     saveApplication(d, { ...app, status: "Applied" }, LOCAL_USER);
     expect(
       attentionItems(d).filter((i) => i.type === "Ready to Apply"),
@@ -237,6 +271,28 @@ describe("research validation and deduplication", () => {
       payload([{ company: "Example", title: "Role", injected_script: "x" }]),
     ).toThrow();
     expect(() => parseImport(" ".repeat(2_000_001))).toThrow(/large/);
+  });
+  it("translates nested import validation into job-specific repair guidance", () => {
+    const raw = JSON.stringify({
+      version: 1,
+      research_run: { goal: "QA" },
+      jobs: [
+        {
+          company: "Paper",
+          title: "Associate Product Manager",
+          sources: [{ source_name: "Recruiter", source_type: "Recruiter blog" }],
+        },
+      ],
+    });
+    let error;
+    try {
+      parseImport(raw);
+    } catch (e) {
+      error = e;
+    }
+    expect(importErrorMessage(error, raw)).toMatch(
+      /Job 1 — Paper \/ Associate Product Manager.*Source type.*Accepted values/s,
+    );
   });
   it("blocks script URLs and requires explanations for numeric scores", () => {
     expect(

@@ -8,7 +8,7 @@ export const REVIEW_STATES = [
   "Closed",
 ];
 export const STAGES = [
-  "Ready to Apply",
+  "Preparing",
   "Applied",
   "Assessment / OA",
   "HR Interview",
@@ -20,6 +20,19 @@ export const STAGES = [
   "Rejected",
   "Expired",
   "Closed",
+  "Offer Declined",
+  "Offer Accepted",
+];
+export const POST_SUBMISSION_STAGES = [
+  "Applied",
+  "Assessment / OA",
+  "HR Interview",
+  "User / Hiring Manager Interview",
+  "Technical / Case Interview",
+  "Final Interview",
+  "Offer",
+  "Rejected",
+  "Withdrawn",
   "Offer Declined",
   "Offer Accepted",
 ];
@@ -66,6 +79,17 @@ export const POSTING_STATES = [
   "Closed",
   "Expired",
 ];
+export const STATUS_HELP = {
+  Found: "New opportunity not reviewed yet.",
+  Reviewing: "You are evaluating whether this role fits.",
+  Saved: "Worth keeping in your shortlist for later.",
+  "Ready to Apply": "You decided this opportunity is worth applying to.",
+  Preparing: "You are preparing the application; it has not been submitted.",
+  Applied: "You submitted the application externally.",
+  "Possibly open": "The posting may still be available; verify before applying.",
+  Unverified: "No verification timestamp is recorded for this posting.",
+  "Not timestamped": "The posting state is recorded, but no verification date is stored.",
+};
 export const WORK_MODES = ["Onsite", "Hybrid", "Remote", "Unknown"];
 export const QUESTION_TYPES = [
   "motivation",

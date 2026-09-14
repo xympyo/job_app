@@ -98,14 +98,51 @@ export function parseImport(raw) {
           )
         : value;
   const normalized = unknownsToDefaults(parsed);
-  normalized.jobs = normalized.jobs.map((job) => ({
-    ...job,
-    sources: (job.sources || []).map((source) => ({
-      ...source,
-      source_type: normalizeSourceType(source.source_type),
-    })),
-  }));
+  if (!normalized || typeof normalized !== "object" || Array.isArray(normalized))
+    return importSchema.parse(normalized);
+  if (Array.isArray(normalized.jobs))
+    normalized.jobs = normalized.jobs.map((job) => ({
+      ...job,
+      sources: (job.sources || []).map((source) => ({
+        ...source,
+        source_type: normalizeSourceType(source.source_type),
+      })),
+    }));
   return importSchema.parse(normalized);
+}
+export function importErrorMessage(error, raw = "") {
+  if (!error?.issues) return error?.message || "Import could not be read. Please retry.";
+  let input = null;
+  try {
+    input = JSON.parse(raw);
+  } catch {
+    /* parseImport already reports malformed JSON */
+  }
+  return error.issues
+    .map((issue) => {
+      const path = issue.path || [];
+      const jobIndex = path[0] === "jobs" && Number.isInteger(path[1]) ? path[1] : null;
+      const job = jobIndex === null ? null : input?.jobs?.[jobIndex];
+      const subject = job
+        ? `Job ${jobIndex + 1} — ${job.company || "Unknown company"} / ${job.title || "Untitled role"}`
+        : "Research import";
+      const field =
+        jobIndex === null ? path[0] : path[2] === "sources" ? path[4] : path[2];
+      const value =
+        field && job
+          ? path[2] === "sources"
+            ? job.sources?.[path[3]]?.[field]
+            : job[field]
+          : undefined;
+      let detail = issue.message;
+      if (field === "source_type") {
+        detail = `Source type "${value ?? "(missing)"}" is not recognized. Accepted values: Official careers, Official posting, Job platform, Secondary, Unknown. Suggested correction: choose the closest accepted value.`;
+      } else if (field) {
+        detail = `${field}: ${issue.message}`;
+      }
+      return `${subject}: ${detail}`;
+    })
+    .join("\n");
 }
 export function canonicalUrl(s) {
   if (!s) return "";

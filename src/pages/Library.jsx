@@ -158,6 +158,12 @@ export default function Library({ companiesOnly = false }) {
                     <Pencil size={14} />
                   </Button>
                   <Button
+                    disabled={data.jobs.some((j) => j.company_id === c.id)}
+                    title={
+                      data.jobs.some((j) => j.company_id === c.id)
+                        ? "This company is retained because vacancies use it."
+                        : "Delete unused company"
+                    }
                     onClick={() =>
                       setDeleting({ table: "companies", id: c.id })
                     }

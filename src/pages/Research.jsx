@@ -7,8 +7,12 @@ import {
   Upload,
 } from "lucide-react";
 import { useWorkspace } from "../context";
-import { applyImport, parseImport, previewImport } from "../lib/import";
-import { errorMessage } from "../lib/schema";
+import {
+  applyImport,
+  importErrorMessage,
+  parseImport,
+  previewImport,
+} from "../lib/import";
 import {
   Badge,
   Button,
@@ -48,7 +52,7 @@ export default function Research() {
       setPreview({ payload, rows: previewImport(data, payload) });
       setChoices({});
     } catch (e) {
-      setError(errorMessage(e));
+      setError(importErrorMessage(e, raw));
     }
   };
   const confirm = async () => {
@@ -62,7 +66,7 @@ export default function Research() {
       setRaw("");
       setPreview(null);
     } catch (e) {
-      setError(errorMessage(e));
+      setError(importErrorMessage(e, raw));
     }
   };
   return (
@@ -174,6 +178,15 @@ export default function Research() {
             {preview.rows.length === 1 ? "y" : "ies"}
           </h2>
           <p className="muted">{preview.payload.research_run.goal}</p>
+          <div className="import-summary" aria-label="Import summary">
+            <strong>Batch summary</strong>
+            <span>Total {preview.rows.length}</span>
+            <span>New {preview.rows.filter((r) => !r.duplicates.length).length}</span>
+            <span>Possible duplicates {preview.rows.filter((r) => r.duplicates.length).length}</span>
+            <span>Invalid 0</span>
+            <span>Ready to import {preview.rows.filter((r) => !r.duplicates.length || choices[r.index] === "keep" || choices[r.index]?.startsWith("merge:")).length}</span>
+          </div>
+          <p className="small muted">Confirm import adds new rows, merges only the duplicate sources you select, and skips unresolved duplicates.</p>
           {preview.rows.map((row) => (
             <article className="import-row" key={row.index}>
               <div className="section-heading">
@@ -183,8 +196,9 @@ export default function Research() {
                   <p className="muted">
                     {row.job.location_text || "Location unknown"} ·{" "}
                     {row.job.sources.length} sources ·{" "}
-                    {row.job.recommended_cv || "No CV selected"}
+                    {row.job.recommended_cv || "No CV selected"} · {row.job.recommendation || "No recommendation"}
                   </p>
+                  <p className="small muted">Source: {row.job.sources.map((s) => s.source_name).filter(Boolean).join(", ") || "Not recorded"}</p>
                 </div>
                 <Badge tone={row.duplicates.length ? "amber" : "green"}>
                   {row.duplicates.length ? "Possible duplicate" : "New vacancy"}

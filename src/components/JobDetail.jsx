@@ -13,11 +13,11 @@ import { useWorkspace } from "../context";
 import {
   createApplication,
   deleteRow,
-  freshness,
-  now,
+  postingLabel,
   put,
+  verificationLabel,
 } from "../lib/domain";
-import { POSTING_STATES, REVIEW_STATES } from "../lib/constants";
+import { POSTING_STATES, REVIEW_STATES, STATUS_HELP } from "../lib/constants";
 import { Badge, Button, Confirm, ExternalLink, Select, formatDate } from "./ui";
 import JobForm from "./JobForm";
 import ApplicationPanel from "./ApplicationPanel";
@@ -91,12 +91,12 @@ export default function JobDetail({ job, area = "inbox" }) {
         <div className="badge-row">
           <Badge>{job.role_family || "Role family not set"}</Badge>
           {job.deadline && <Badge>Deadline {formatDate(job.deadline)}</Badge>}
+          <Badge>Posting: {postingLabel(job.posting_status)}</Badge>
           <Badge
-            tone={
-              ["Fresh", "Recent"].includes(freshness(job)) ? "green" : "amber"
-            }
+            tone={verificationLabel(job) === "Verified recently" ? "green" : "amber"}
+            title={STATUS_HELP["Not timestamped"]}
           >
-            {freshness(job)}
+            Verification: {verificationLabel(job)}
           </Badge>
         </div>
         <div className="primary-actions">
@@ -147,9 +147,25 @@ export default function JobDetail({ job, area = "inbox" }) {
         <ApplicationPanel application={application} />
       ) : (
         <>
+          <section className="decision-summary" aria-labelledby="decision-summary-title">
+            <div className="section-heading">
+              <div>
+                <span className="eyebrow">DECISION SUMMARY</span>
+                <h3 id="decision-summary-title">Should this opportunity move forward?</h3>
+              </div>
+              <Badge tone="green">{job.recommendation || "Review needed"}</Badge>
+            </div>
+            <div className="fact-grid">
+              <div><small>Posting</small><strong>{postingLabel(job.posting_status)}</strong></div>
+              <div><small>Verification</small><strong>{verificationLabel(job)}</strong></div>
+              <div><small>Deadline</small><strong>{formatDate(job.deadline)}</strong></div>
+              <div><small>Fit</small><strong>{job.fit_label || "Not assessed"}{job.fit_score !== null ? ` · ${job.fit_score}/100` : ""}</strong></div>
+              <div><small>Recommended CV</small><strong>{job.custom_tailoring ? "Custom tailoring" : cv?.name || "Not selected"}</strong></div>
+            </div>
+          </section>
           <section className="fit-section">
             <div className="section-heading">
-              <span className="eyebrow">FIT ASSESSMENT</span>
+              <span className="eyebrow">RESEARCH / AI ASSESSMENT</span>
               {job.fit_score !== null && (
                 <span className="fit-score">
                   {job.fit_score}
@@ -226,18 +242,24 @@ export default function JobDetail({ job, area = "inbox" }) {
                 onChange={(e) => patch({ review_status: e.target.value })}
               />
               <Select
-                label="Posting verification"
+                label="Posting state"
                 options={POSTING_STATES}
                 value={job.posting_status}
                 disabled={saving}
                 onChange={(e) =>
                   patch({
                     posting_status: e.target.value,
-                    last_verified_at: now(),
                   })
                 }
               />
             </div>
+            <p className="field-help">
+              {STATUS_HELP[job.review_status] || "Choose the current decision for this opportunity."}
+            </p>
+            <p className="field-help">
+              Posting state describes the employer listing. Verification is our
+              separate timestamped check.
+            </p>
             <div className="fact-grid">
               <div>
                 <small>Date found</small>
@@ -252,7 +274,7 @@ export default function JobDetail({ job, area = "inbox" }) {
                 <strong>
                   {job.last_verified_at
                     ? formatDate(job.last_verified_at)
-                    : "Not yet verified"}
+                    : "Not timestamped"}
                 </strong>
               </div>
               <div>
@@ -273,7 +295,8 @@ export default function JobDetail({ job, area = "inbox" }) {
               </div>
             </div>
           </section>
-          {[
+          <p className="eyebrow detail-facts-label">EMPLOYER / SOURCE FACTS</p>
+                    {[
             "description",
             "responsibilities",
             "requirements",
@@ -342,7 +365,10 @@ export default function JobDetail({ job, area = "inbox" }) {
           </section>
           <section className="detail-section">
             <div className="section-heading">
-              <h3>Your notes</h3>
+              <div>
+                <span className="eyebrow">YOUR NOTES</span>
+                <h3>Your notes</h3>
+              </div>
               <Button variant="text" onClick={() => setEditing(true)}>
                 Edit notes
               </Button>

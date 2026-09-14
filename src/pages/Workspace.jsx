@@ -9,11 +9,18 @@ import {
   FileText,
 } from "lucide-react";
 import { useWorkspace } from "../context";
-import { filterJobs, freshness, put } from "../lib/domain";
+import {
+  displayCompanyName,
+  filterJobs,
+  postingLabel,
+  put,
+  verificationLabel,
+} from "../lib/domain";
 import {
   FIT_LABELS,
   REVIEW_STATES,
   ROLE_FAMILIES,
+  STATUS_HELP,
   STAGES,
   WORK_MODES,
 } from "../lib/constants";
@@ -59,12 +66,11 @@ export function JobCard({ job, area, selected }) {
       >
         <div className="job-card-top">
           <div className="company-mark">
-            {(company?.name || "?")
-              .replace(/^PT /i, "")
+            {(displayCompanyName(company?.name) || "?")
               .slice(0, 2)
               .toUpperCase()}
           </div>
-          <span className="company-name">{company?.name}</span>
+          <span className="company-name">{displayCompanyName(company?.name)}</span>
           <ArrowUpRight size={16} />
         </div>
         <h3>{job.title}</h3>
@@ -82,14 +88,21 @@ export function JobCard({ job, area, selected }) {
           >
             {job.fit_label || "Not assessed"}
           </Badge>
-          <span className="small muted">{freshness(job)}</span>
+          <span className="small muted" title="How recently this posting was checked">
+            {verificationLabel(job)}
+          </span>
+          {job.posting_status !== "Unknown" && (
+            <span className="small muted">Posting: {postingLabel(job.posting_status)}</span>
+          )}
         </div>
         <div className="job-card-bottom">
           <span>
             <FileText size={13} />
             {job.custom_tailoring ? "Custom CV" : cv?.name || "CV not selected"}
           </span>
-          <span>{application?.status || job.review_status}</span>
+          <span title={STATUS_HELP[application?.status || job.review_status] || "Ready to prepare this opportunity."}>
+            {application?.status || (job.review_status === "Ready to Apply" ? "Ready to prepare" : job.review_status)}
+          </span>
         </div>
         {job.deadline && (
           <p className="deadline-label">Deadline {formatDate(job.deadline)}</p>
@@ -177,7 +190,7 @@ export default function Workspace({ area }) {
           </div>
           {expanded && (
             <div className="filters">
-              <Select
+                <Select
                 label="Status"
                 options={[...new Set([...REVIEW_STATES, ...STAGES])]}
                 empty="All statuses"
@@ -232,7 +245,7 @@ export default function Workspace({ area }) {
                   "Recent",
                   "Aging",
                   "Possibly stale",
-                  "Unverified",
+                  "Not timestamped",
                   "Closed",
                   "Expired",
                 ]}
@@ -285,17 +298,16 @@ export default function Workspace({ area }) {
                     ? "Try a broader search or clear your filters."
                     : area === "applications"
                       ? "Open a vacancy and choose Prepare application to track your answers and next steps."
-                      : "Add a vacancy or import research to start building your shortlist."
+                      : "Use Add vacancy above for one role, or import research for a batch to start building your shortlist."
                 }
               >
                 {Object.values(filters).some(Boolean) ? (
                   <Button onClick={() => setFilters({})}>Clear filters</Button>
-                ) : (
-                  <Button onClick={() => setAdding(true)}>
-                    <Plus size={16} />
-                    Add your first vacancy
-                  </Button>
-                )}
+                ) : area === "inbox" ? (
+                  <Link className="btn" to="/research">
+                    Import research
+                  </Link>
+                ) : null}
               </Empty>
             )}
           </div>
@@ -317,14 +329,11 @@ export default function Workspace({ area }) {
               <div className="outline-mark">
                 <ArrowUpRight size={32} />
               </div>
-              <h2>A considered next step.</h2>
+              <h2>Select an opportunity</h2>
               <p>
-                Select an opportunity to explore the role,
-                <br />
-                understand the fit and plan your next move.
+                Explore the facts, research assessment and next action for the
+                opportunity you choose.
               </p>
-              <div className="placeholder-line" />
-              <span>YOUR DIRECTION. YOUR DECISION.</span>
             </div>
           )}
         </div>

@@ -386,3 +386,14 @@ The app has a skip link, labelled form controls, named icon buttons, visible sem
 6. Add 320px and automated accessibility coverage (AUD-022, AUD-023).
 7. Reconcile documentation and deployment references, then measure scale before performance work (AUD-016).
 
+## Remediation Status — 2026-09-14
+
+Approved in-scope work is implemented for AUD-001, AUD-002, AUD-003, AUD-004, AUD-005,
+AUD-006, AUD-007, AUD-009, AUD-010, AUD-012, AUD-013, AUD-014, AUD-018, AUD-019,
+AUD-020, AUD-022 and AUD-023. Deferred findings remain intentionally unchanged:
+AUD-008, AUD-011, AUD-015, AUD-016, AUD-017 and AUD-021.
+
+The application-state migration is `supabase/migrations/202609140002_application_preparing.sql`.
+Local checks pass (42 tests, lint, build and 10 database/RLS checks). Production schema
+acceptance and the final responsive journey remain deployment-gated and are recorded in
+`docs/12_QA.md`.

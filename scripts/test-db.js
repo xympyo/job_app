@@ -13,9 +13,11 @@ create table auth.users(id uuid primary key);
 insert into auth.users values('${A}'),('${B}');
 create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub', true),'')::uuid $$;
 grant usage on schema auth, public to anon, authenticated; grant execute on function auth.uid() to anon, authenticated;`);
-await db.exec(
-  fs.readFileSync("supabase/migrations/202609140001_initial.sql", "utf8"),
-);
+for (const migration of fs
+  .readdirSync("supabase/migrations")
+  .filter((name) => name.endsWith(".sql"))
+  .sort())
+  await db.exec(fs.readFileSync(`supabase/migrations/${migration}`, "utf8"));
 let passed = 0;
 const check = async (name, fn) => {
   await fn();

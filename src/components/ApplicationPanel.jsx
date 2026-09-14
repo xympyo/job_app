@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { Plus, Pencil, Trash2, CheckCircle2, CalendarDays } from "lucide-react";
 import { useWorkspace } from "../context";
-import { QUESTION_TYPES, REJECTION_STAGES, STAGES } from "../lib/constants";
+import {
+  POST_SUBMISSION_STAGES,
+  QUESTION_TYPES,
+  REJECTION_STAGES,
+  STAGES,
+  STATUS_HELP,
+} from "../lib/constants";
 import { deleteRow, put, saveApplication } from "../lib/domain";
 import {
   AsyncForm,
@@ -33,6 +39,7 @@ function QuestionForm({ question, applicationId, onClose }) {
       character_limit: null,
     },
   );
+  const [validation, setValidation] = useState("");
   const set = (k, value) => setV((old) => ({ ...old, [k]: value }));
   return (
     <Modal
@@ -44,6 +51,21 @@ function QuestionForm({ question, applicationId, onClose }) {
     >
       <AsyncForm
         onSubmit={async () => {
+          if (v.status === "Completed" && v.required && !v.final_answer.trim()) {
+            setValidation("A completed required question needs a final answer.");
+            return;
+          }
+          if (
+            v.status !== "Draft" &&
+            v.character_limit &&
+            v.final_answer.length > v.character_limit
+          ) {
+            setValidation(
+              `Final answer is ${v.final_answer.length} characters; the limit is ${v.character_limit}.`,
+            );
+            return;
+          }
+          setValidation("");
           await mutate(
             (d, uid) => put(d, "application_questions", v, uid),
             "Question and answers saved",
@@ -98,9 +120,11 @@ function QuestionForm({ question, applicationId, onClose }) {
           <Textarea
             label="Final / submitted answer"
             hint={`${v.final_answer.length}${v.character_limit ? ` / ${v.character_limit}` : ""} characters · saved separately from your draft`}
+            aria-invalid={Boolean(validation)}
             value={v.final_answer}
             onChange={(e) => set("final_answer", e.target.value)}
           />
+          {validation && <p className="field-error">{validation}</p>}
         </div>
         <Textarea
           label="Answer strategy / reasoning notes"
@@ -199,16 +223,36 @@ function EventForm({ event, applicationId, onClose }) {
 function ApplicationForm({ application, onClose }) {
   const { data, mutate } = useWorkspace();
   const [v, setV] = useState(application);
+  const [validation, setValidation] = useState("");
+  const [confirmPreparing, setConfirmPreparing] = useState(false);
   const set = (k, value) => setV((old) => ({ ...old, [k]: value }));
+  const save = async () => {
+    await mutate(
+      (d, uid) => saveApplication(d, v, uid),
+      "Application updated",
+    );
+    onClose();
+  };
   return (
     <Modal title="Update application" onClose={onClose} wide>
       <AsyncForm
         onSubmit={async () => {
-          await mutate(
-            (d, uid) => saveApplication(d, v, uid),
-            "Application updated",
-          );
-          onClose();
+          setValidation("");
+          if (POST_SUBMISSION_STAGES.includes(v.status) && !v.applied_at) {
+            setValidation(
+              "When did you apply? Add the application date before saving this stage.",
+            );
+            return;
+          }
+          if (
+            v.status === "Preparing" &&
+            POST_SUBMISSION_STAGES.includes(application.status) &&
+            application.applied_at
+          ) {
+            setConfirmPreparing(true);
+            return;
+          }
+          await save();
         }}
       >
         <div className="form-grid">
@@ -263,6 +307,38 @@ function ApplicationForm({ application, onClose }) {
             onChange={(e) => set("recruiter_contact", e.target.value)}
           />
         </div>
+        <p className="field-help">{STATUS_HELP[v.status]}</p>
+        {validation && <p className="field-error">{validation}</p>}
+        {confirmPreparing && (
+          <div className="warning-box" role="alert">
+            <strong>Mark as not yet submitted?</strong>
+            <p>
+              This will mark the application as not yet submitted and clear the
+              applied date.
+            </p>
+            <div className="form-actions">
+              <Button type="button" onClick={() => setConfirmPreparing(false)}>
+                Keep current stage
+              </Button>
+              <Button
+                type="button"
+                variant="danger"
+                onClick={async () => {
+                  setV((old) => ({ ...old, applied_at: "" }));
+                  setConfirmPreparing(false);
+                  await mutate(
+                    (d, uid) =>
+                      saveApplication(d, { ...v, applied_at: "" }, uid),
+                    "Application marked Preparing",
+                  );
+                  onClose();
+                }}
+              >
+                Mark Preparing and clear date
+              </Button>
+            </div>
+          </div>
+        )}
         {[
           "cover_letter_used",
           "rejection_reason",

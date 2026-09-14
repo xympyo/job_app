@@ -1,4 +1,4 @@
-import { CV_SEEDS, TABLES, TERMINAL } from "./constants";
+import { CV_SEEDS, POST_SUBMISSION_STAGES, TABLES, TERMINAL } from "./constants";
 import { schemas } from "./schema";
 
 export const today = () => new Date().toLocaleDateString("en-CA");
@@ -12,6 +12,10 @@ export const normalize = (s) =>
     .trim();
 export const normalizeTitle = (s) =>
   normalize(s).split(" ").filter(Boolean).sort().join(" ");
+export function displayCompanyName(name) {
+  const value = (name || "").trim();
+  return value.replace(/^(?:PT|CV)\.?\s+/i, "").trim() || value;
+}
 export const emptyData = () => Object.fromEntries(TABLES.map((t) => [t, []]));
 export function put(data, table, values, userId) {
   const old = values.id && data[table].find((r) => r.id === values.id);
@@ -98,7 +102,7 @@ export function createApplication(data, jobId, userId) {
         company_name: company?.name,
         sources: data.job_sources.filter((s) => s.job_id === jobId),
       },
-      stage_history: [{ status: "Ready to Apply", at: now() }],
+      stage_history: [{ status: "Preparing", at: now() }],
     },
     userId,
   );
@@ -106,6 +110,11 @@ export function createApplication(data, jobId, userId) {
 export function saveApplication(data, input, userId) {
   const old = data.applications.find((a) => a.id === input.id);
   if (!old) throw new Error("Application no longer exists");
+  const appliedAt = input.applied_at || (input.status === "Applied" ? today() : "");
+  if (POST_SUBMISSION_STAGES.includes(input.status) && !appliedAt)
+    throw new Error("Record when you applied before saving this stage.");
+  if (input.status === "Preparing" && input.applied_at)
+    throw new Error("Preparing applications cannot have an applied date.");
   const changed = old.status !== input.status;
   const cv = data.cv_versions.find((c) => c.id === input.cv_version_id);
   return put(
@@ -119,8 +128,7 @@ export function saveApplication(data, input, userId) {
       stage_history: changed
         ? [...old.stage_history, { status: input.status, at: now() }]
         : old.stage_history,
-      applied_at:
-        input.applied_at || (input.status === "Applied" ? today() : ""),
+      applied_at: appliedAt,
     },
     userId,
   );
@@ -159,6 +167,23 @@ export function freshness(job, at = new Date()) {
       : days <= 30
         ? "Aging"
         : "Possibly stale";
+}
+export function postingLabel(status) {
+  return {
+    "Verified open": "Open",
+    "Possibly open": "Possibly open",
+    Closed: "Closed",
+    Expired: "Expired",
+    Unknown: "Unknown",
+  }[status] || "Unknown";
+}
+export function verificationLabel(job, at = new Date()) {
+  if (!job.last_verified_at) return "Not timestamped";
+  const days = (at - new Date(job.last_verified_at)) / 86400000;
+  if (days <= 7) return "Verified recently";
+  if (days <= 14) return "Verified 8–14 days ago";
+  if (days <= 30) return "Verified 15–30 days ago";
+  return "Possibly stale";
 }
 export function filterJobs(data, filters = {}) {
   return data.jobs
@@ -218,7 +243,12 @@ export function filterJobs(data, filters = {}) {
         )
       )
         return false;
-      if (filters.freshness && freshness(j) !== filters.freshness) return false;
+      if (
+        filters.freshness &&
+        freshness(j) !==
+          (filters.freshness === "Not timestamped" ? "Unverified" : filters.freshness)
+      )
+        return false;
       if (
         filters.deadline &&
         (!j.deadline ||
@@ -240,22 +270,21 @@ export function attentionItems(data) {
       (!app && ["Skipped", "Closed", "Expired"].includes(job.review_status))
     )
       continue;
-    if (job.deadline && (!app || app.status === "Ready to Apply"))
+    if (job.deadline && (!app || app.status === "Preparing"))
       items.push({
         id: `deadline-${job.id}`,
         job_id: job.id,
+        application_id: app?.id || "",
         title: "Application deadline",
         at: `${job.deadline}T23:59:00`,
         type: "Deadline",
         detail: job.title,
       });
-    if (
-      (!app && job.review_status === "Ready to Apply") ||
-      app?.status === "Ready to Apply"
-    )
+    if (!app && job.review_status === "Ready to Apply")
       items.push({
         id: `ready-${job.id}`,
         job_id: job.id,
+        application_id: app?.id || "",
         title: "Ready to apply",
         at: "",
         type: "Ready to Apply",
@@ -266,6 +295,7 @@ export function attentionItems(data) {
       items.push({
         id: `next-${app.id}`,
         job_id: job.id,
+        application_id: app.id,
         title: app.next_action,
         at: app.next_action_at,
         type: "Next action",
@@ -277,6 +307,7 @@ export function attentionItems(data) {
       items.push({
         id: event.id,
         job_id: job.id,
+        application_id: app.id,
         title: event.title,
         at: event.scheduled_at,
         type: event.kind,
@@ -289,6 +320,7 @@ export function attentionItems(data) {
       items.push({
         id: `questions-${app.id}`,
         job_id: job.id,
+        application_id: app.id,
         title: `${unfinished} unfinished answer${unfinished > 1 ? "s" : ""}`,
         at: "",
         type: "Questions",

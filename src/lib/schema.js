@@ -8,6 +8,7 @@ import {
   STAGES,
   WORK_MODES,
   REJECTION_STAGES,
+  POST_SUBMISSION_STAGES,
 } from "./constants";
 
 const text = z.string().max(60000).default("");
@@ -128,7 +129,7 @@ export const jobSchema = z
 export const applicationSchema = z
   .object({
     job_id: z.uuid(),
-    status: z.enum(STAGES).default("Ready to Apply"),
+    status: z.enum(STAGES).default("Preparing"),
     applied_at: date,
     cv_version_id: ref,
     cv_snapshot: z.record(z.string(), z.unknown()).default({}),
@@ -149,6 +150,14 @@ export const applicationSchema = z
   .refine((v) => v.status !== "Rejected" || !!v.rejection_stage, {
     message: "Choose a rejection stage (unknown is valid)",
     path: ["rejection_stage"],
+  })
+  .refine((v) => !POST_SUBMISSION_STAGES.includes(v.status) || !!v.applied_at, {
+    message: "Record when the application was submitted",
+    path: ["applied_at"],
+  })
+  .refine((v) => v.status !== "Preparing" || !v.applied_at, {
+    message: "Preparing applications cannot have an applied date",
+    path: ["applied_at"],
   });
 export const questionSchema = z
   .object({

@@ -57,3 +57,13 @@ the actionable start and operational lists lead the page.
 Implications: no migration, automation or new service is needed. Owner CV records remain
 personal; new accounts stay empty. Use disposable accounts for production QA and delete
 their data afterward. Browser viewport testing is not a claim of physical-phone testing.
+
+## 2026-09-14 — Separate opportunity decision from application stage
+
+Decision: `Ready to Apply` remains a job/opportunity decision; application workspaces use
+`Preparing` before external submission. Submitted and later stages require `applied_at`,
+and moving back to Preparing requires explicit confirmation and clears the date.
+Rationale: one label must not represent both “I chose this role” and “I submitted an
+application,” while still allowing users to record skipped hiring stages. Implication:
+the new migration converts legacy application `Ready to Apply` rows to `Preparing` and
+retains their stage-history timeline.

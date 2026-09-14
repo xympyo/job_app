@@ -17,12 +17,17 @@ import { Badge, Button, Empty, formatDateTime } from "../components/ui";
 import JobForm from "../components/JobForm";
 
 export function AttentionList({ items, limit }) {
+  const hrefFor = (item) => {
+    if (item.type === "Deadline" && !item.application_id)
+      return `/inbox/${item.job_id}`;
+    return `/applications/${item.job_id}`;
+  };
   return (
     <div className="attention-list">
       {items.slice(0, limit || items.length).map((item) => (
         <Link
           key={item.id}
-          to={`/history/${item.job_id}`}
+          to={hrefFor(item)}
           className="attention-item"
         >
           <div className="attention-icon">
@@ -55,20 +60,13 @@ export default function Dashboard({ attentionOnly = false }) {
       ["Found", "Reviewing"].includes(j.review_status) &&
       !data.applications.some((a) => a.job_id === j.id),
   ).length;
-  const ready = new Set([
-    ...data.jobs
-      .filter(
-        (j) =>
-          j.review_status === "Ready to Apply" &&
-          !data.applications.some((a) => a.job_id === j.id),
-      )
-      .map((j) => j.id),
-    ...data.applications
-      .filter((a) => a.status === "Ready to Apply")
-      .map((a) => a.job_id),
-  ]).size;
+  const ready = data.jobs.filter(
+    (j) =>
+      j.review_status === "Ready to Apply" &&
+      !data.applications.some((a) => a.job_id === j.id),
+  ).length;
   const active = data.applications.filter(
-    (a) => a.status !== "Ready to Apply" && !TERMINAL.includes(a.status),
+    (a) => !TERMINAL.includes(a.status),
   ).length;
   const recent = [
     ...data.jobs.map((j) => ({
@@ -187,7 +185,7 @@ export default function Dashboard({ attentionOnly = false }) {
               <span>{title}</span>
               <Icon size={19} />
             </div>
-            <strong>{String(value).padStart(2, "0")}</strong>
+            <strong>{String(value)}</strong>
             <p>
               {sub}
               <ArrowUpRight size={14} />

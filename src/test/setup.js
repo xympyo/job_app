@@ -11,6 +11,9 @@ HTMLDialogElement.prototype.showModal = function () {
 HTMLDialogElement.prototype.close = function () {
   this.open = false;
 };
+HTMLCanvasElement.prototype.getContext = () => ({
+  measureText: () => ({ width: 0 }),
+});
 Object.defineProperty(globalThis, "crypto", {
   value: {
     randomUUID: () =>
