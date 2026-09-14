@@ -9,7 +9,7 @@ import {
   FileText,
 } from "lucide-react";
 import { useWorkspace } from "../context";
-import { filterJobs, freshness } from "../lib/domain";
+import { filterJobs, freshness, put } from "../lib/domain";
 import {
   FIT_LABELS,
   REVIEW_STATES,
@@ -23,59 +23,105 @@ import {
   Empty,
   Input,
   Select,
+  ExternalLink,
   formatDate,
 } from "../components/ui";
 import JobForm from "../components/JobForm";
 import JobDetail from "../components/JobDetail";
 
 export function JobCard({ job, area, selected }) {
-  const { data } = useWorkspace();
+  const { data, mutate, saving } = useWorkspace();
   const company = data.companies.find((c) => c.id === job.company_id);
   const application = data.applications.find((a) => a.job_id === job.id);
   const cv = data.cv_versions.find((c) => c.id === job.recommended_cv_id);
+  const source = data.job_sources
+    .filter((s) => s.job_id === job.id)
+    .sort((a, b) => Number(b.is_primary) - Number(a.is_primary))[0];
+  const classify = async (status) => {
+    try {
+      await mutate(
+        (d, uid) => put(d, "jobs", { ...job, review_status: status }, uid),
+        status === "Ready to Apply"
+          ? "Ready to Apply — continue under Applications"
+          : status === "Skipped"
+            ? "Skipped — kept in History"
+            : `Marked ${status}`,
+      );
+    } catch {
+      /* Workspace context shows the save error. */
+    }
+  };
   return (
-    <Link
-      to={`/${area}/${job.id}`}
-      className={`job-card ${selected ? "selected" : ""}`}
-    >
-      <div className="job-card-top">
-        <div className="company-mark">
-          {(company?.name || "?")
-            .replace(/^PT /i, "")
-            .slice(0, 2)
-            .toUpperCase()}
+    <article className="job-card-shell">
+      <Link
+        to={`/${area}/${job.id}`}
+        className={`job-card ${selected ? "selected" : ""}`}
+      >
+        <div className="job-card-top">
+          <div className="company-mark">
+            {(company?.name || "?")
+              .replace(/^PT /i, "")
+              .slice(0, 2)
+              .toUpperCase()}
+          </div>
+          <span className="company-name">{company?.name}</span>
+          <ArrowUpRight size={16} />
         </div>
-        <span className="company-name">{company?.name}</span>
-        <ArrowUpRight size={16} />
-      </div>
-      <h3>{job.title}</h3>
-      <p className="job-card-location">
-        <MapPin size={13} />
-        {job.location_text || "Location unknown"} · {job.work_mode}
-      </p>
-      <div className="badge-row">
-        <Badge
-          tone={
-            ["Excellent Fit", "Strong Fit"].includes(job.fit_label)
-              ? "green"
-              : ""
-          }
+        <h3>{job.title}</h3>
+        <p className="job-card-location">
+          <MapPin size={13} />
+          {job.location_text || "Location unknown"} · {job.work_mode}
+        </p>
+        <div className="badge-row">
+          <Badge
+            tone={
+              ["Excellent Fit", "Strong Fit"].includes(job.fit_label)
+                ? "green"
+                : ""
+            }
+          >
+            {job.fit_label || "Not assessed"}
+          </Badge>
+          <span className="small muted">{freshness(job)}</span>
+        </div>
+        <div className="job-card-bottom">
+          <span>
+            <FileText size={13} />
+            {job.custom_tailoring ? "Custom CV" : cv?.name || "CV not selected"}
+          </span>
+          <span>{application?.status || job.review_status}</span>
+        </div>
+        {job.deadline && (
+          <p className="deadline-label">Deadline {formatDate(job.deadline)}</p>
+        )}
+      </Link>
+      {area === "inbox" && !application && (
+        <div
+          className="card-quick-actions"
+          aria-label={`Actions for ${job.title}`}
         >
-          {job.fit_label || "Not assessed"}
-        </Badge>
-        <span className="small muted">{freshness(job)}</span>
-      </div>
-      <div className="job-card-bottom">
-        <span>
-          <FileText size={13} />
-          {job.custom_tailoring ? "Custom CV" : cv?.name || "CV not selected"}
-        </span>
-        <span>{application?.status || job.review_status}</span>
-      </div>
-      {job.deadline && (
-        <p className="deadline-label">Deadline {formatDate(job.deadline)}</p>
+          {[
+            ["Review", "Reviewing"],
+            ["Save", "Saved"],
+            ["Ready to Apply", "Ready to Apply"],
+            ["Skip", "Skipped"],
+          ].map(([label, status]) => (
+            <Button
+              key={status}
+              disabled={saving || job.review_status === status}
+              onClick={() => classify(status)}
+            >
+              {label}
+            </Button>
+          ))}
+          {source && (
+            <ExternalLink href={source.source_url || source.apply_url}>
+              Open source
+            </ExternalLink>
+          )}
+        </div>
       )}
-    </Link>
+    </article>
   );
 }
 export default function Workspace({ area }) {

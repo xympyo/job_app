@@ -3,7 +3,8 @@
 Last Updated: 2026-09-14
 
 ## Current Phase
-V1 deployed and connected to production Supabase. Live sign-in, persistence and isolation verified.
+First usable career workflow acceptance in progress. Core job/application features already
+exist; practical entry/review/attention gaps identified in 13_WORKFLOW_GAP_ANALYSIS.md.
 
 ## Completed
 - React/Vite/JavaScript/Tailwind app and canonical career documentation.
@@ -26,15 +27,14 @@ V1 deployed and connected to production Supabase. Live sign-in, persistence and 
 - Signup and verification routes are live on the canonical Vercel domain; the former Vercel alias now serves directly as well.
 
 ## In Progress
-None for the implemented flow. The default Supabase email provider remains rate-limited;
-custom SMTP is the only outstanding production-hardening option for broad signup delivery.
+Dashboard create/import entry, card review actions, date-found context and Ready to Apply
+attention items; then full live desktop/phone application workflow verification.
 
 ## Next
 Sign in and add real opportunities manually or through research import. Keep regular exports.
 
 ## Blockers
-No application credentials are needed now. Custom SMTP remains optional for local testing but
-is required for unrestricted production email delivery beyond Supabase's default limits.
+None for this milestone. Custom SMTP is explicitly deferred; existing mail limits are accepted.
 
 ## Important Recent Decisions
 No vacancy automation. Markdown profile is canonical. Local and cloud data are separate.

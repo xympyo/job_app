@@ -16,6 +16,45 @@ const renderApp = (path = "/", props = {}) =>
     </MemoryRouter>,
   );
 describe("private workspace UI", () => {
+  it("starts from the dashboard and moves a reviewed card into Applications and Attention", async () => {
+    const u = userEvent.setup();
+    renderApp("/", {
+      initialUser: { id: LOCAL_USER, email: "Local" },
+      repository: createLocalRepository(),
+    });
+    await u.click(await screen.findByRole("button", { name: "Add vacancy" }));
+    await u.type(screen.getByLabelText("Company *"), "Workflow Example");
+    await u.type(
+      screen.getByLabelText("Job title *"),
+      "Transformation Analyst",
+    );
+    await u.click(screen.getByRole("button", { name: "Add to inbox" }));
+    await waitFor(() =>
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument(),
+    );
+    await u.click(screen.getByRole("link", { name: "Review inbox" }));
+    await u.click(screen.getByRole("button", { name: "Review", exact: true }));
+    expect(await screen.findByText("Marked Reviewing")).toBeVisible();
+    await u.click(
+      screen.getByRole("button", { name: "Ready to Apply", exact: true }),
+    );
+    expect(
+      await screen.findByText("Ready to Apply — continue under Applications"),
+    ).toBeVisible();
+    await u.click(
+      within(
+        screen.getByRole("navigation", { name: "Main navigation" }),
+      ).getByRole("link", { name: "Overview" }),
+    );
+    await u.click(
+      await screen.findByRole("link", {
+        name: /Ready to apply Transformation Analyst/,
+      }),
+    );
+    expect(
+      await screen.findByRole("button", { name: "Prepare application" }),
+    ).toBeVisible();
+  });
   it("guards private routes and allows deliberate local entry", async () => {
     const user = userEvent.setup();
     renderApp("/applications");

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -12,7 +13,8 @@ import {
 import { useWorkspace } from "../context";
 import { attentionItems, today } from "../lib/domain";
 import { TERMINAL } from "../lib/constants";
-import { Badge, Empty, formatDateTime } from "../components/ui";
+import { Badge, Button, Empty, formatDateTime } from "../components/ui";
+import JobForm from "../components/JobForm";
 
 export function AttentionList({ items, limit }) {
   return (
@@ -46,6 +48,7 @@ export function AttentionList({ items, limit }) {
 }
 export default function Dashboard({ attentionOnly = false }) {
   const { data } = useWorkspace();
+  const [adding, setAdding] = useState(false);
   const attention = attentionItems(data);
   const review = data.jobs.filter(
     (j) =>
@@ -121,6 +124,33 @@ export default function Dashboard({ attentionOnly = false }) {
           }).format(new Date())}
         </span>
       </header>
+      <section className="panel workflow-start" aria-label="Next career step">
+        <div>
+          <h2>
+            {data.jobs.length
+              ? "Keep your shortlist moving"
+              : "Start with one opportunity"}
+          </h2>
+          <p>
+            Add a vacancy or import research. Review it in your Inbox, choose a
+            CV, then prepare and record your application.
+          </p>
+        </div>
+        <div className="primary-actions">
+          <Button variant="primary" onClick={() => setAdding(true)}>
+            <Plus size={17} />
+            Add vacancy
+          </Button>
+          <Link className="btn" to="/research">
+            Import research
+          </Link>
+          {data.jobs.length > 0 && (
+            <Link className="btn" to="/inbox">
+              Review inbox
+            </Link>
+          )}
+        </div>
+      </section>
       <div className="stats-grid">
         {[
           {
@@ -277,6 +307,7 @@ export default function Dashboard({ attentionOnly = false }) {
           <ArrowRight size={16} />
         </Link>
       </section>
+      {adding && <JobForm onClose={() => setAdding(false)} />}
     </div>
   );
 }

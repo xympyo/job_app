@@ -205,13 +205,28 @@ describe("vacancy and application workflow", () => {
       { application_id: a.id, kind: "HR interview", title: "HR call" },
       LOCAL_USER,
     );
-    expect(attentionItems(d)).toHaveLength(4);
+    expect(attentionItems(d)).toHaveLength(5);
     saveApplication(
       d,
       { ...d.applications[0], status: "Withdrawn" },
       LOCAL_USER,
     );
     expect(attentionItems(d)).toHaveLength(0);
+  });
+  it("shows ready vacancies before preparation and stops prompting after submission", () => {
+    const d = make();
+    const job = add(d, { review_status: "Ready to Apply" });
+    expect(
+      attentionItems(d).filter((i) => i.type === "Ready to Apply"),
+    ).toHaveLength(1);
+    const app = createApplication(d, job.id, LOCAL_USER);
+    expect(
+      attentionItems(d).filter((i) => i.type === "Ready to Apply"),
+    ).toHaveLength(1);
+    saveApplication(d, { ...app, status: "Applied" }, LOCAL_USER);
+    expect(
+      attentionItems(d).filter((i) => i.type === "Ready to Apply"),
+    ).toHaveLength(0);
   });
 });
 describe("research validation and deduplication", () => {

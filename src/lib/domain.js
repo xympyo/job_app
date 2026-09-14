@@ -249,6 +249,18 @@ export function attentionItems(data) {
         type: "Deadline",
         detail: job.title,
       });
+    if (
+      (!app && job.review_status === "Ready to Apply") ||
+      app?.status === "Ready to Apply"
+    )
+      items.push({
+        id: `ready-${job.id}`,
+        job_id: job.id,
+        title: "Ready to apply",
+        at: "",
+        type: "Ready to Apply",
+        detail: job.title,
+      });
     if (!app) continue;
     if (app.next_action)
       items.push({

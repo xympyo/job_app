@@ -90,6 +90,7 @@ export default function JobDetail({ job, area = "inbox" }) {
         </p>
         <div className="badge-row">
           <Badge>{job.role_family || "Role family not set"}</Badge>
+          {job.deadline && <Badge>Deadline {formatDate(job.deadline)}</Badge>}
           <Badge
             tone={
               ["Fresh", "Recent"].includes(freshness(job)) ? "green" : "amber"
@@ -238,6 +239,10 @@ export default function JobDetail({ job, area = "inbox" }) {
               />
             </div>
             <div className="fact-grid">
+              <div>
+                <small>Date found</small>
+                <strong>{formatDate(job.found_at)}</strong>
+              </div>
               <div>
                 <small>Deadline</small>
                 <strong>{formatDate(job.deadline)}</strong>

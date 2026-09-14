@@ -2229,3 +2229,29 @@
     scroll-behavior: auto !important;
   }
 }
+/* Keep the first action and card decisions reachable on phone and desktop. */
+.workflow-start {
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.workflow-start h2 {
+  margin: 0 0 8px;
+}
+.workflow-start p {
+  margin: 0;
+}
+.job-card-shell {
+  min-width: 0;
+}
+.card-quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 4px 14px;
+}
+.card-quick-actions .btn,
+.card-quick-actions .external-link {
+  min-height: 44px;
+  padding: 8px 10px;
+  font-size: 12px;
+}
