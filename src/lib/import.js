@@ -2,6 +2,27 @@ import { z } from "zod";
 import { sourceSchema, jobSchema } from "./schema";
 import { normalize, normalizeTitle, now, put, saveJob } from "./domain";
 
+// Researchers often describe the provenance more precisely than the compact
+// categories stored by the app. Keep the persisted vocabulary stable while
+// accepting common labels from curated research batches.
+const sourceTypeAliases = new Map([
+  ["official careers", "Official careers"],
+  ["official career page", "Official careers"],
+  ["official posting", "Official posting"],
+  ["official recruiter posting", "Official posting"],
+  ["company recruiter posting", "Official posting"],
+  ["job platform", "Job platform"],
+  ["university career center", "Secondary"],
+  ["university job platform", "Secondary"],
+  ["secondary", "Secondary"],
+  ["unknown", "Unknown"],
+]);
+
+export function normalizeSourceType(value) {
+  if (!value) return value;
+  return sourceTypeAliases.get(value.trim().toLowerCase()) || value;
+}
+
 const researchJob = z
   .object(jobSchema.shape)
   .omit({
@@ -76,7 +97,15 @@ export function parseImport(raw) {
               .map(([k, v]) => [k, unknownsToDefaults(v)]),
           )
         : value;
-  return importSchema.parse(unknownsToDefaults(parsed));
+  const normalized = unknownsToDefaults(parsed);
+  normalized.jobs = normalized.jobs.map((job) => ({
+    ...job,
+    sources: (job.sources || []).map((source) => ({
+      ...source,
+      source_type: normalizeSourceType(source.source_type),
+    })),
+  }));
+  return importSchema.parse(normalized);
 }
 export function canonicalUrl(s) {
   if (!s) return "";

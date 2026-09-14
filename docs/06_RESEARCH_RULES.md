@@ -2,6 +2,9 @@
 
 Research is explicitly requested and performed outside this app. No background searches.
 Prefer company careers → official recruiter posting → reputable platforms → secondary sources.
+Imports may use descriptive provenance labels such as “Official recruiter posting” or
+“University career center”; validation normalizes these to the stored Official posting or
+Secondary categories while keeping the original source name and URL.
 LinkedIn, Jobstreet, Glints, Kalibrr, Indeed, university career centers are discovery sources.
 One vacancy can have many sources. Do not fabricate unknown requirements, dates or freshness.
 Retain original URL, application URL, requisition ID, found/published/verified times, notes,

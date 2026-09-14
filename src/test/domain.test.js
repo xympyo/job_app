@@ -262,6 +262,30 @@ describe("research validation and deduplication", () => {
     expect(p.jobs[0].deadline).toBe("");
     expect(p.jobs[0].fit_score).toBeNull();
   });
+  it("normalizes descriptive source labels from curated research batches", () => {
+    const p = payload([
+      {
+        company: "BCA",
+        title: "Management Development Program",
+        sources: [
+          {
+            source_name: "University career center",
+            source_type: "University career center",
+            source_url: "https://example.com/university",
+          },
+          {
+            source_name: "LinkedIn recruiter",
+            source_type: "Official recruiter posting",
+            source_url: "https://example.com/recruiter",
+          },
+        ],
+      },
+    ]);
+    expect(p.jobs[0].sources.map((source) => source.source_type)).toEqual([
+      "Secondary",
+      "Official posting",
+    ]);
+  });
   it("recognizes reordered title tokens and canonical URL matches", () => {
     const d = make();
     add(d, {
