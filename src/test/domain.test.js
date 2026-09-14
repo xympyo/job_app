@@ -286,6 +286,51 @@ describe("research validation and deduplication", () => {
       "Official posting",
     ]);
   });
+  it("accepts the realistic seven-role batch shape", () => {
+    const roles = [
+      ["PT Bank Central Asia Tbk (BCA)", "Management Trainee / Graduate Program", "Management/Product", "University career center"],
+      ["Deliveree Indonesia", "Management Trainee / Graduate Program", "Management/Product", "Official recruiter posting"],
+      ["PT. Mowilex", "Management Trainee / Graduate Program", "Management/Product", "Official recruiter posting"],
+      ["Traveloka", "Product", "Management/Product", "Official careers"],
+      ["Paper", "Product", "Management/Product", "Official recruiter posting"],
+      ["Krom", "Product", "Management/Product", "Official recruiter posting"],
+      ["Deloitte", "Consulting", "Analyst", "Official careers"],
+    ];
+    const parsed = payload(
+      roles.map(([company, role_family, recommended_cv, source_type], index) => ({
+        company,
+        title: `${company} opportunity`,
+        location_text: index % 2 ? "Jakarta, Indonesia" : "Indonesia",
+        role_family,
+        work_mode: index === 1 ? "Onsite" : "Unknown",
+        description: "Curated role description with operational and product context.",
+        requirements: index === 2 ? "" : "Analytical thinking and stakeholder communication.",
+        deadline: index === 0 ? "2026-12-31" : "",
+        posting_status: "Verified open",
+        fit_score: 82 + index,
+        fit_label: index < 3 ? "Excellent Fit" : "Strong Fit",
+        fit_reason: "The role connects Moshe's management, product, systems or transformation goals.",
+        strengths: ["Process improvement", "Cross-functional communication"],
+        gaps: index === 2 ? ["Eligibility details unknown"] : [],
+        red_flags: [],
+        recommended_cv,
+        research_notes: "Curated batch entry; verify details before applying.",
+        sources: [{
+          source_name: `${company} source`,
+          source_type,
+          source_url: `https://example.com/roles/${index}`,
+          apply_url: index % 2 ? `https://example.com/apply/${index}` : "",
+          is_primary: true,
+        }],
+      })),
+    );
+    expect(parsed.jobs).toHaveLength(7);
+    expect(parsed.jobs[1].sources[0].source_type).toBe("Official posting");
+    expect(parsed.jobs[0].sources[0].source_type).toBe("Secondary");
+    expect(parsed.jobs[2].requirements).toBe("");
+    expect(parsed.jobs[0].deadline).toBe("2026-12-31");
+    expect(parsed.jobs[6].recommended_cv).toBe("Analyst");
+  });
   it("recognizes reordered title tokens and canonical URL matches", () => {
     const d = make();
     add(d, {
