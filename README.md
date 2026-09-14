@@ -53,7 +53,8 @@ each. They stay outside the repository and public web assets; no files are uploa
    **Never use a service-role or secret key.** Vite public variables appear in the browser;
    RLS is what protects the database.
 4. Restart the local app and sign in. Add a vacancy, refresh and verify it persists.
-   CV rows initialize at first successful workspace load.
+   New cloud accounts start empty. Moshe's existing owner account has its three CV rows;
+   other users can add their own versions in Career toolkit.
 5. Set the Supabase Auth site URL to the final deployment URL and allow the development
    URL if needed. Email verification, resend, expired-link recovery and password checks
    are implemented; no Google OAuth or automated messaging is implemented.
@@ -89,7 +90,8 @@ Owner login is in the ignored local file
 `private/Your Career Workspace Login.txt`. The initial migration is already applied directly;
 do not rerun it. Reconcile migration history before using Supabase CLI db push. The default
 Supabase email service is restricted and rate-limited; configure custom SMTP for unrestricted
-production signup email delivery.
+production signup email delivery. Custom SMTP is deferred for the current private-use
+milestone; those delivery limits are accepted.
 
 ## Research import
 

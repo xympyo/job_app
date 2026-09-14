@@ -195,48 +195,6 @@ export default function Dashboard({ attentionOnly = false }) {
           </Link>
         ))}
       </div>
-      {!data.jobs.length && (
-        <section className="welcome-panel">
-          <div>
-            <span className="eyebrow">
-              A WORKSPACE BUILT AROUND YOUR DIRECTION
-            </span>
-            <h2>
-              From possibility
-              <br />
-              to a practical next step.
-            </h2>
-            <p>
-              Bring your opportunities into one place. Compare the fit, choose
-              the right CV and follow through with confidence.
-            </p>
-            <div className="badge-row">
-              <Link className="btn primary" to="/inbox">
-                <Plus size={16} />
-                Add a vacancy
-              </Link>
-              <Link className="btn" to="/research">
-                Import research
-                <ArrowRight size={15} />
-              </Link>
-            </div>
-          </div>
-          <div className="journey">
-            <span>
-              01 <strong>Find</strong>
-            </span>
-            <span>
-              02 <strong>Evaluate</strong>
-            </span>
-            <span>
-              03 <strong>Apply</strong>
-            </span>
-            <span>
-              04 <strong>Progress</strong>
-            </span>
-          </div>
-        </section>
-      )}
       <div className="dashboard-columns">
         <section className="panel">
           <div className="panel-heading">

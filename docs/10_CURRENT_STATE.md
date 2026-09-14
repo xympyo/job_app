@@ -3,43 +3,39 @@
 Last Updated: 2026-09-14
 
 ## Current Phase
-First usable career workflow acceptance in progress. Core job/application features already
-exist; practical entry/review/attention gaps identified in 13_WORKFLOW_GAP_ANALYSIS.md.
+First usable career workflow implemented and verified against production Supabase.
 
 ## Completed
-- React/Vite/JavaScript/Tailwind app and canonical career documentation.
-- Dashboard, Inbox, Applications, Attention, History, companies and three CV variants.
-- Manual job/source CRUD, explainable fit, CV selection, search/filtering and verification.
-- Application snapshots, stage history/outcomes, draft/final questions and interview records.
-- Research import with preview/deduplication and JSON/CSV exports.
-- Initial SQL migration applied to production through Management API on 2026-09-14.
-- All eight tables have RLS; atomic RPC and ownership-aware foreign keys are active.
-- Verified email signup enabled; Auth site URL is https://job-app-nine-lake.vercel.app.
-- Auth requires 12-character passwords and one-hour confirmation links. New accounts load an empty workspace.
-- Owner account provisioned; login stored only in ignored private/Your Career Workspace Login.txt.
-- Owner workspace has three CV entries, zero vacancies and no QA records/accounts.
-- Vercel production deploys from GitHub master; only public URL/anon key configured there.
-- Private configuration excluded from frontend; build rejects configured private-key leaks.
-- 27 automated app/security tests and production lint/build pass; 10 local SQL checks pass.
-- Live Auth/RPC persistence, second-user isolation, anonymous denial and stale-write rejection pass.
-- Hosted browser phone edit persists in a separate session; sign-out clears protected view.
-- Desktop 1440px and phone 390px screenshots reviewed; no checked overflow or console errors.
-- Signup and verification routes are live on the canonical Vercel domain; the former Vercel alias now serves directly as well.
-
-## In Progress
-Dashboard create/import entry, card review actions, date-found context and Ready to Apply
-attention items; then full live desktop/phone application workflow verification.
+- Overview has direct Add vacancy/import actions, operational counts and next steps.
+- Inbox cards support Review, Save, Ready to Apply, Skip and Open source.
+- Job details expose fit reasoning, CV, vacancy text, sources, date found and deadline.
+- Applications preserve CV selection, applied date, flexible stages, next actions,
+  separate draft/final answers, rejection stage, outcomes and original snapshots.
+- Ready to Apply appears in Attention without duplicate job/application reminders.
+- Research import validates, previews, supports correction and resolves duplicates.
+- Eleven role families available. Owner retains Master, Analyst and Management/Product.
+- Live desktop 1440x1000 and phone 390x844 scenario passed creation through submission,
+  questions, HR Interview, phone editing, refresh/relogin and rejection. Import passed.
+- All eight populated tables passed live isolation/anonymous checks; foreign ownership,
+  stale writes and partial transactions were rejected. QA accounts/data removed.
+- npm run check: 36 tests, lint and production build pass. SQL integration: 10 groups pass.
+- GitHub master deploys to https://job-app-nine-lake.vercel.app through Vercel.
+- Authentication remains intact: verified signup, password login, resend/recovery.
 
 ## Next
-Sign in and add real opportunities manually or through research import. Keep regular exports.
+Use Add vacancy or Import research, review in Inbox, then prepare and record applications.
+Owner workspace is clean: three CV rows and zero rows in the seven other domain tables.
+Keep regular exports. No remaining blocker for this milestone.
 
-## Blockers
-None for this milestone. Custom SMTP is explicitly deferred; existing mail limits are accepted.
+## Accepted Limits
+Custom SMTP deferred; default email limits accepted for private use. Physical phone
+hardware and exhaustive browser/accessibility combinations were not tested. Private CV
+uploads and full-backup restore UI remain deferred. CV files are at D:/Moshe/CV_Revised.
 
-## Important Recent Decisions
-No vacancy automation. Markdown profile is canonical. Local and cloud data are separate.
-CV PDFs remain outside the repository at D:\Moshe\CV_Revised; private uploads and full-backup
-restore UI are deferred. Migration 202609140001 was applied directly; do not rerun it or use
-an un-reconciled CLI db push. Future database edits require new migrations.
-Local administration must read the current .env directly: inherited process variables can
-contain older tokens and override Vite loadEnv. See 12_QA.md for verification boundaries.
+## Operational Notes
+No scraping, automated applying or messaging. Markdown profile remains canonical.
+Local mode is separate from cloud Auth. Credentials stay in ignored local private files;
+frontend configuration exposes only public URL/anon key. Initial migration was applied
+directly through Management API; reconcile CLI history before db push. No new migration
+was needed. Read current .env directly for administration; inherited tokens can be stale.
+See 12_QA.md and 13_WORKFLOW_GAP_ANALYSIS.md for evidence and scope.

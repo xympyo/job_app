@@ -19,4 +19,18 @@ be over limit while being edited but completion cannot. Final answer never auto-
 
 Events cover assessments, interviews and recruiter interactions (no automation). Track
 schedule, status and notes. Attention includes due dates, next actions, scheduled events
-and unfinished questions. User explicitly applies on the external company website.
+and unfinished questions. Ready to Apply vacancies/applications also appear once in
+Attention until submitted or moved out of that state. User explicitly applies on the
+external company website.
+
+## First use
+From Overview, Add vacancy opens the form directly; Import research opens validation
+and preview. Inbox cards support Review, Save, Ready to Apply, Skip and Open source.
+Ready opportunities move to Applications; Prepare application creates the historical
+snapshot. Update records CV used, applied date, stage and next action. Add question
+keeps working and submitted answers separate. History retains every outcome.
+
+Live desktop/phone acceptance on 2026-09-14 covered this sequence through HR Interview,
+phone next-action editing, sign-out/sign-in and rejection at HR interview. Import was
+corrected before confirmation and skipped a duplicate. Offer/withdrawal persistence was
+also verified through the same domain/repository commands against production Supabase.

@@ -33,3 +33,9 @@ Owner CV records must be preserved; other users must not receive Moshe's persona
 Make immediate actions visible, complete review/attention/detail gaps, then run a realistic
 explicitly labeled QA scenario through live Supabase on desktop and phone layouts.
 Keep QA in disposable accounts, preserve the owner's workspace, and record actual results.
+
+## Resolution — 2026-09-14
+All missing items above are implemented. The redundant decorative empty-dashboard panel
+was removed. Live desktop/phone scenario, import correction/duplicate handling and RLS
+acceptance passed; see 12_QA.md. No auth refactor or new migration was required. The owner
+workspace remains clean with three CV records. Custom SMTP remains explicitly deferred.

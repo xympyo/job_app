@@ -45,3 +45,15 @@ Decision: apply the existing initial SQL through the owning-account Management A
 
 ## 2026-09-14 — Verified account signup
 Decision: enable email/password signup with mandatory email verification, a 12-character minimum and one-hour confirmation links. Rationale: the user requested account creation for other users while keeping each workspace private. Implication: signup starts an empty user-owned workspace; unverified users cannot sign in. The default Supabase email service is rate-limited and recipient-restricted, so custom SMTP is required for unrestricted production delivery. Confirmation links support both Supabase's default fragment redirect and a future token-hash template.
+
+## 2026-09-14 — First usable workflow acceptance
+
+Decision: preserve working authentication and the existing schema; defer custom SMTP as
+explicitly accepted by Moshe. Prioritize direct vacancy creation/import, card review
+actions, date-found/deadline context and Ready to Apply attention reminders.
+Rationale: these close practical Find → Evaluate → Apply → Progress gaps without adding
+speculative product work. Remove the redundant empty-dashboard promotional panel so
+the actionable start and operational lists lead the page.
+Implications: no migration, automation or new service is needed. Owner CV records remain
+personal; new accounts stay empty. Use disposable accounts for production QA and delete
+their data afterward. Browser viewport testing is not a claim of physical-phone testing.

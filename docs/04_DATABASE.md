@@ -27,3 +27,10 @@ Atomic save/import uses a security-invoker RPC transaction over normalized table
 RLS enforced. Optimistic updated_at checks reject stale writes. No service-role key in UI.
 Local adapter uses the same entities and validation with versioned browser storage.
 Local storage is a development/offline workspace, not protected multi-device storage.
+
+## Live verification — 2026-09-14
+The existing migration supplies this milestone without schema additions. Live inventory
+confirmed RLS on all eight tables, with authenticated ownership checks for reads/writes.
+Two disposable accounts verified isolation on every populated table, anonymous denial,
+ownership-aware foreign keys, stale RPC rejection and atomic rollback. Owner retains
+three CV records; QA data was removed. See 12_QA.md for the acceptance evidence.
