@@ -66,5 +66,16 @@ question and event rows; remediation QA did not modify owner records.
 - Added the application-state migration `202609140002_application_preparing.sql`.
 - Local verification: 42 Vitest tests, lint, production build and 10 PostgreSQL/RLS
   integration checks pass.
-- Production schema migration applied successfully; live acceptance is required after
-  the Vercel deployment completes.
+- Production schema migration applied successfully. Live acceptance completed on
+  pyoloker.vercel.app after deployment job-hjf44x6o1-moshe-dayans-projects.vercel.app
+  (Vercel production commit 5e496ed71def1a8de9c19c7a02a80b366824995f).
+
+## Controlled remediation acceptance — 2026-09-14
+
+The complete disposable-account journey passed in production: import and preview,
+Ready to Apply, preparation, missing-applied-date guardrail, Applied/HR Interview,
+question validation and completion, Attention deep-link routing, explicit return to
+Preparing, rejection details and History retention. Invalid imports produced
+job-specific repair guidance. The same deployment was verified at 390px and 320px
+without horizontal overflow. QA users and rows were deleted afterward; owner data
+remained unchanged.

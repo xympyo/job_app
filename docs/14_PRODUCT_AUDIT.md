@@ -394,6 +394,8 @@ AUD-020, AUD-022 and AUD-023. Deferred findings remain intentionally unchanged:
 AUD-008, AUD-011, AUD-015, AUD-016, AUD-017 and AUD-021.
 
 The application-state migration is `supabase/migrations/202609140002_application_preparing.sql`.
-Local checks pass (42 tests, lint, build and 10 database/RLS checks). Production schema
-acceptance and the final responsive journey remain deployment-gated and are recorded in
-`docs/12_QA.md`.
+Local checks pass (42 tests, lint, build and 10 database/RLS checks). Production
+acceptance is complete at `https://pyoloker.vercel.app/` from deployment
+`job-hjf44x6o1-moshe-dayans-projects.vercel.app` (commit
+`5e496ed71def1a8de9c19c7a02a80b366824995f`); the exact journey, responsive checks and
+cleanup are recorded in `docs/12_QA.md`.
