@@ -33,6 +33,16 @@ describe("bulk triage contract", () => {
     expect(rows[1].errors.join(" ")).toMatch(/more than once/);
   });
 
+  it("handles a realistic 27-job-like decision batch", () => {
+    const { data } = fixture();
+    const jobs = data.jobs.slice();
+    for (let i = 1; i < 27; i++) jobs.push(saveJob(data, { company_name: `Company ${i}`, title: `Analyst ${i}`, location_text: "Jakarta", work_mode: "Unknown", role_family: "Analyst", description: "", requirements: "", preferred_requirements: "", fit_score: null, fit_label: "", fit_reason: "", strengths: [], gaps: [], red_flags: [], recommendation: "", recommended_cv_id: "", review_status: "Found", posting_status: "Unknown", deadline: "", found_at: "2026-09-15", last_verified_at: "", sources: [] }, uid));
+    const decisions = jobs.map((job, i) => ({ job_id: job.id, decision: i % 4 === 0 ? "Apply ASAP" : i % 4 === 1 ? "Apply" : i % 4 === 2 ? "Research First" : "Skip", review_status: i % 4 === 3 ? "Skipped" : i % 4 === 2 ? "Reviewing" : "Ready to Apply", recommendation: i % 4 === 0 ? "Apply ASAP" : i % 4 === 1 ? "Apply" : i % 4 === 2 ? "Research first" : "Skip", reason: `Decision ${i + 1}` }));
+    const payload = parseTriage(JSON.stringify({ version: 1, triage_run: { goal: "27-job triage" }, decisions }));
+    expect(previewTriage(data, payload).every((r) => !r.errors.length)).toBe(true);
+    expect(applyTriage(data, payload, {}, uid).updated).toBe(27);
+  });
+
   it("rejects unknown job IDs and unverifiable timestamps", () => {
     const { data, job } = fixture();
     const missing = crypto.randomUUID();
