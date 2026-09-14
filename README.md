@@ -45,8 +45,9 @@ each. They stay outside the repository and public web assets; no files are uploa
    `supabase/migrations/202609140001_initial.sql` in its SQL editor, or use the Supabase
    CLI migrations workflow. The SQL is committed and repeatable on a fresh project.
    Do not rerun an already applied migration. Future schema changes need new migrations.
-2. In Authentication settings, disable new user signups. Under Authentication → Users,
-   create Moshe's email/password account (confirm the email as appropriate).
+2. Production signup is enabled with mandatory email confirmation. New users receive an
+   empty workspace scoped to their account and must verify their email before signing in.
+   The production owner account is already provisioned.
 3. Copy `.env.example` to `.env.local`. Set `VITE_SUPABASE_URL` to the project URL and
    `VITE_SUPABASE_ANON_KEY` to its public/publishable key (legacy anon key also works).
    **Never use a service-role or secret key.** Vite public variables appear in the browser;
@@ -54,7 +55,8 @@ each. They stay outside the repository and public web assets; no files are uploa
 4. Restart the local app and sign in. Add a vacancy, refresh and verify it persists.
    CV rows initialize at first successful workspace load.
 5. Set the Supabase Auth site URL to the final deployment URL and allow the development
-   URL if needed. No Google OAuth, public registration or email automation is implemented.
+   URL if needed. Email verification, resend, expired-link recovery and password checks
+   are implemented; no Google OAuth or automated messaging is implemented.
 
 Cloud mode never falls back to local storage on an error. Local records and cloud records
 are separate; a researched-job import can move vacancies. Full JSON export preserves all
@@ -82,9 +84,12 @@ domains require updating `connect-src` in `vercel.json`.
 
 Production is connected at https://job-app-nine-lake.vercel.app. Hosted password sign-in,
 record persistence between separate browser sessions and account isolation were verified
-on 2026-09-14. Public signup is disabled. Owner login is in the ignored local file
+on 2026-09-14. Signup requires email verification and is rate-limited by Supabase Auth.
+Owner login is in the ignored local file
 `private/Your Career Workspace Login.txt`. The initial migration is already applied directly;
-do not rerun it. Reconcile migration history before using Supabase CLI db push.
+do not rerun it. Reconcile migration history before using Supabase CLI db push. The default
+Supabase email service is restricted and rate-limited; configure custom SMTP for unrestricted
+production signup email delivery.
 
 ## Research import
 

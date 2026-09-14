@@ -8,7 +8,10 @@ React context owns auth, load/save/error state. Components/pages render text saf
 Local development works without credentials using explicit browser-local mode. Hosted
 production fails closed without Supabase config. No silent fallback from cloud errors
 to local storage. Cloud session is verified via Auth; RLS remains the authorization boundary.
-Email/password sign-in only. Provision Moshe in Supabase dashboard; disable public signups.
+Email/password sign-in and verified email signup. New accounts begin with an empty, owned
+workspace; email confirmation is required before sign-in. Supabase Auth enforces the
+12-character minimum and verification link expiry. Custom SMTP is required for unrestricted
+production email delivery; the default provider is rate-limited and recipient-restricted.
 Auth changes clear data immediately. Never reuse another account's in-memory data.
 
 Supabase mutations use an atomic RPC with ownership checks and optimistic concurrency.

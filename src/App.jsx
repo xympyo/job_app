@@ -25,140 +25,13 @@ import {
   X,
 } from "lucide-react";
 import { useWorkspace } from "./context";
-import { supabase } from "./lib/repository";
-import { AsyncForm, Button, Empty, ErrorBox, Input } from "./components/ui";
+import { Login, Signup, VerifyEmail, ConfirmEmail } from "./pages/Auth";
+import { Button, Empty, ErrorBox } from "./components/ui";
 import Dashboard from "./pages/Dashboard";
 import Workspace from "./pages/Workspace";
 import Research from "./pages/Research";
 import Library from "./pages/Library";
 
-export function Login() {
-  const {
-    user,
-    authLoading,
-    configured,
-    configurationError,
-    localAllowed,
-    enterLocal,
-    error,
-  } = useWorkspace();
-  const [email, setEmail] = useState(""),
-    [password, setPassword] = useState("");
-  if (authLoading) return <Loading label="Checking your session…" />;
-  if (user) return <Navigate to="/" replace />;
-  return (
-    <div className="login-page">
-      <section className="login-story">
-        <div className="brand">
-          <span className="brand-icon">
-            <ArrowUpRight size={22} />
-          </span>
-          <span>
-            Career<span className="brand-sub">COMMAND CENTER</span>
-          </span>
-        </div>
-        <div>
-          <div className="eyebrow">A LITTLE CLARITY GOES A LONG WAY.</div>
-          <h1>
-            Your next chapter.
-            <br />
-            With a sense
-            <br />
-            of direction.
-          </h1>
-          <p>
-            One place for the opportunities, decisions and conversations that
-            move your career forward.
-          </p>
-        </div>
-        <span className="login-footer">FIND · EVALUATE · APPLY · PROGRESS</span>
-      </section>
-      <section className="login-form">
-        <div className="login-card">
-          <span className="eyebrow">PERSONAL CAREER WORKSPACE</span>
-          <h2>
-            {configured
-              ? "Welcome back."
-              : localAllowed
-                ? "Start with a clear view."
-                : "Connect your workspace."}
-          </h2>
-          <p>
-            {configured
-              ? "Sign in to pick up where you left off."
-              : localAllowed
-                ? "Your private career command center is ready for local use."
-                : "Add your Supabase connection to enable private sign-in."}
-          </p>
-          <ErrorBox message={error} />
-          {configured ? (
-            <AsyncForm
-              onSubmit={async () => {
-                const { error } = await supabase.auth.signInWithPassword({
-                  email,
-                  password,
-                });
-                if (error) throw error;
-              }}
-            >
-              <Input
-                label="Email address"
-                type="email"
-                autoComplete="username"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <Input
-                label="Password"
-                type="password"
-                autoComplete="current-password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <Button className="full-width" variant="primary">
-                Sign in
-                <ArrowUpRight size={17} />
-              </Button>
-              <p className="small muted">
-                Private workspace. Use the account provisioned in your Supabase
-                project.
-              </p>
-            </AsyncForm>
-          ) : localAllowed ? (
-            <>
-              <Button
-                variant="primary"
-                className="full-width"
-                onClick={enterLocal}
-              >
-                Open local workspace
-                <ArrowUpRight size={17} />
-              </Button>
-              <div className="local-explanation">
-                <strong>Saved in this browser</strong>
-                <p>
-                  Local records persist here between visits. Export backups from
-                  your toolkit. Connect Supabase for protected sign-in and
-                  access across devices.
-                </p>
-              </div>
-            </>
-          ) : (
-            <ErrorBox
-              message={
-                configurationError
-                  ? "Supabase configuration is incomplete or invalid. Check the project URL and public key."
-                  : "Supabase is not connected. Configure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY before using this hosted app."
-              }
-            />
-          )}
-        </div>
-      </section>
-    </div>
-  );
-}
 function Loading({ label = "Loading your workspace…" }) {
   return (
     <div role="status" className="loading-screen">
@@ -192,6 +65,9 @@ function Layout() {
     reload,
     signOut,
   } = useWorkspace();
+  const displayName =
+    user.user_metadata?.display_name || user.email || "Your workspace";
+  const initials = displayName.slice(0, 2).toUpperCase();
   const [menu, setMenu] = useState(false);
   const location = useLocation();
   return (
@@ -266,9 +142,9 @@ function Layout() {
             </small>
           </div>
           <div className="profile-row">
-            <span className="avatar">MD</span>
+            <span className="avatar">{initials}</span>
             <div>
-              <strong>Moshe Dayan</strong>
+              <strong>{displayName}</strong>
               <small>Make the next move.</small>
             </div>
             <button
@@ -321,7 +197,7 @@ function Layout() {
                   : "Browser storage"}
             </span>
             <span className="avatar small-avatar" title={user.email}>
-              MD
+              {initials}
             </span>
           </div>
         </header>
@@ -377,6 +253,9 @@ export default function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/verify-email" element={<VerifyEmail />} />
+      <Route path="/auth/confirm" element={<ConfirmEmail />} />
       <Route element={<ProtectedRoute />}>
         <Route element={<Layout />}>
           <Route index element={<Dashboard />} />

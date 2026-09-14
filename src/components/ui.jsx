@@ -125,6 +125,7 @@ export function Modal({ title, onClose, children, wide = false }) {
   );
 }
 export function AsyncForm({ onSubmit, children, className = "" }) {
+  const busy = useRef(false);
   const [error, setError] = useState(""),
     [pending, setPending] = useState(false);
   return (
@@ -132,6 +133,8 @@ export function AsyncForm({ onSubmit, children, className = "" }) {
       className={className}
       onSubmit={async (e) => {
         e.preventDefault();
+        if (busy.current) return;
+        busy.current = true;
         setError("");
         setPending(true);
         try {
@@ -139,6 +142,7 @@ export function AsyncForm({ onSubmit, children, className = "" }) {
         } catch (e) {
           setError(errorMessage(e));
         } finally {
+          busy.current = false;
           setPending(false);
         }
       }}

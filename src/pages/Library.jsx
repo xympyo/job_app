@@ -194,6 +194,12 @@ export default function Library({ companiesOnly = false }) {
       ) : (
         <>
           <div className="cv-grid">
+            {!data.cv_versions.length && (
+              <Empty
+                title="Add your first CV"
+                description="Create a CV version to record its positioning and select it for your applications."
+              />
+            )}
             {data.cv_versions.map((cv, i) => (
               <article className="cv-card" key={cv.id}>
                 <div className="section-heading">

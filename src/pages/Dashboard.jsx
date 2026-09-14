@@ -266,10 +266,10 @@ export default function Dashboard({ attentionOnly = false }) {
       <section className="direction-strip">
         <div>
           <FileIcon />
-          <strong>Three perspectives. One consistent story.</strong>
+          <strong>Your experience. Ready for the next opportunity.</strong>
           <p>
-            Your Master, Analyst and Management/Product CVs are ready for the
-            right opportunities.
+            Keep your CV versions together and choose the right one for each
+            opportunity.
           </p>
         </div>
         <Link to="/library">

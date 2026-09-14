@@ -13,7 +13,8 @@ V1 deployed and connected to production Supabase. Live sign-in, persistence and 
 - Research import with preview/deduplication and JSON/CSV exports.
 - Initial SQL migration applied to production through Management API on 2026-09-14.
 - All eight tables have RLS; atomic RPC and ownership-aware foreign keys are active.
-- Public signup disabled; Auth site URL is https://job-app-nine-lake.vercel.app.
+- Verified email signup enabled; Auth site URL is https://job-app-nine-lake.vercel.app.
+- Auth requires 12-character passwords and one-hour confirmation links. New accounts load an empty workspace.
 - Owner account provisioned; login stored only in ignored private/Your Career Workspace Login.txt.
 - Owner workspace has three CV entries, zero vacancies and no QA records/accounts.
 - Vercel production deploys from GitHub master; only public URL/anon key configured there.
@@ -30,7 +31,8 @@ None.
 Sign in and add real opportunities manually or through research import. Keep regular exports.
 
 ## Blockers
-None for the implemented V1. No additional Supabase credentials needed now.
+No application credentials are needed now. Custom SMTP remains optional for local testing but
+is required for unrestricted production email delivery beyond Supabase's default limits.
 
 ## Important Recent Decisions
 No vacancy automation. Markdown profile is canonical. Local and cloud data are separate.

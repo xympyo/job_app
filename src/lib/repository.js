@@ -139,26 +139,6 @@ export function createCloudRepository(client) {
         }),
       );
       const data = Object.fromEntries(results);
-      if (!data.cv_versions.length) {
-        const seeded = structuredClone(data);
-        seedCVs(seeded, userId);
-        try {
-          return await repository.commit(data, seeded, userId);
-        } catch (e) {
-          // Two newly signed-in tabs may initialize the same three unique CV slugs.
-          // If the other tab won, read its committed seed instead of showing a failure.
-          if (e.code !== "23505") throw e;
-          const { data: cvs, error } = await client
-            .from("cv_versions")
-            .select("*")
-            .eq("user_id", userId);
-          if (error || !cvs?.length) throw error || e;
-          return {
-            ...data,
-            cv_versions: cvs.map((r) => hydrate("cv_versions", r)),
-          };
-        }
-      }
       return data;
     },
     async commit(before, after, _userId) {
