@@ -21,3 +21,10 @@ Match normalized company plus token-normalized title/location, canonical URLs or
 Uncertain matches require review. Default duplicate choice is skip; source merge retains
 the existing vacancy and application. Keep separate requires explicit user choice.
 Trace research runs without requiring them for manual entry. No scripts or HTML execution.
+# Triage result interchange
+
+Bulk triage is a human-initiated export/import workflow. Results are matched by exact
+UUID `job_id`; unknown, cross-owner or duplicate IDs are rejected. The strict version 1
+contract rejects unknown keys and unsupported decisions. Verification timestamps are
+accepted only when the result includes an explicit verification note; ChatGPT output
+alone never fabricates freshness.

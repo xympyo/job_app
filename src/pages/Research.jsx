@@ -13,6 +13,7 @@ import {
   parseImport,
   previewImport,
 } from "../lib/import";
+import { applyTriage, parseTriage, previewTriage, triageErrorMessage, triageExport } from "../lib/triage";
 import {
   Badge,
   Button,
@@ -38,12 +39,30 @@ export default function Research() {
     [preview, setPreview] = useState(null),
     [choices, setChoices] = useState({}),
     [error, setError] = useState(""),
-    [result, setResult] = useState(null);
+    [result, setResult] = useState(null),
+    [triageRaw, setTriageRaw] = useState(""),
+    [triagePreview, setTriagePreview] = useState(null),
+    [triageError, setTriageError] = useState(""),
+    [triageResult, setTriageResult] = useState(null);
   const change = (text) => {
     setRaw(text);
     setPreview(null);
     setError("");
     setResult(null);
+  };
+  const validateTriage = () => {
+    setTriageError("");
+    try {
+      const payload = parseTriage(triageRaw);
+      setTriagePreview({ payload, rows: previewTriage(data, payload) });
+    } catch (e) { setTriageError(triageErrorMessage(e, triageRaw)); }
+  };
+  const confirmTriage = async () => {
+    setTriageError("");
+    try {
+      const r = await mutate((d, uid) => applyTriage(d, triagePreview.payload, {}, uid), "Triage updates saved");
+      setTriageResult(r); setTriagePreview(null); setTriageRaw("");
+    } catch (e) { setTriageError(triageErrorMessage(e, triageRaw)); }
   };
   const validate = () => {
     setError("");
@@ -103,6 +122,7 @@ export default function Research() {
         </span>
       </div>
       <ErrorBox message={error} />
+      <ErrorBox message={triageError} />
       {result && (
         <div className="success-box">
           <CheckCircle2 size={20} />
@@ -171,6 +191,33 @@ export default function Research() {
           </Button>
         </div>
       </section>
+      <section className="panel import-panel">
+        <div className="section-heading">
+          <div>
+            <h2>Bulk triage</h2>
+            <p className="muted">Export existing opportunities for ChatGPT to review, then import the decisions for one safe update.</p>
+          </div>
+          <Button onClick={() => download("jobs-for-triage.json", JSON.stringify(triageExport(data), null, 2))}>
+            <Download size={16} /> Export for triage
+          </Button>
+        </div>
+        <p className="small muted">The triage importer updates existing jobs by stable ID only. It never creates jobs or changes applications.</p>
+        <div className="section-heading">
+          <label className="btn file-button"><Upload size={16} /> Import triage results
+            <input type="file" accept=".json,application/json" onChange={async (e) => { const file = e.target.files[0]; if (file) { try { setTriageRaw(await file.text()); setTriageError(""); setTriagePreview(null); } catch { setTriageError("Could not read this file"); } } e.target.value = ""; }} />
+          </label>
+          <Button variant="primary" disabled={!triageRaw.trim() || saving} onClick={validateTriage}>Validate triage & preview <ArrowRight size={16} /></Button>
+        </div>
+        <Textarea label="Paste triage-results.json" rows={8} value={triageRaw} onChange={(e) => { setTriageRaw(e.target.value); setTriagePreview(null); setTriageError(""); }} placeholder={'{\n  "version": 1,\n  "triage_run": { "goal": "…" },\n  "decisions": […]\n}'} />
+      </section>
+      {triageResult && <div className="success-box"><CheckCircle2 size={20} /><div><strong>{triageResult.updated} job decisions updated</strong><p>Applications and history were not changed.</p></div></div>}
+      {triagePreview && <section className="panel import-panel">
+        <h2>Review triage changes</h2>
+        <p className="muted">Confirm updates existing jobs by ID. No new jobs will be created.</p>
+        <div className="import-summary"><strong>Batch summary</strong><span>Total {triagePreview.rows.length}</span><span>Apply ASAP {triagePreview.rows.filter(r => r.decision.decision === "Apply ASAP").length}</span><span>Apply {triagePreview.rows.filter(r => r.decision.decision === "Apply").length}</span><span>Research First {triagePreview.rows.filter(r => r.decision.decision === "Research First").length}</span><span>Skip {triagePreview.rows.filter(r => r.decision.decision === "Skip").length}</span><span>Unchanged {triagePreview.rows.filter(r => !r.changed.length && !r.errors.length).length}</span><span>Invalid {triagePreview.rows.filter(r => r.errors.length).length}</span></div>
+        {triagePreview.rows.map((row) => <article className="import-row" key={row.index}><div className="section-heading"><div><span className="eyebrow">{row.company}</span><h3>{row.job?.title || row.decision.job_id}</h3><p className="muted">{row.job ? `${row.job.review_status} → ${row.decision.review_status} · ${row.decision.recommended_cv || "Keep current CV"}` : "Job not found"}</p></div><Badge tone={row.errors.length ? "red" : row.changed.length ? "amber" : "green"}>{row.errors.length ? "Invalid" : row.changed.length ? "Changed" : "Unchanged"}</Badge></div>{row.errors.length ? <p className="field-error">{row.errors.join(" ")}</p> : <p>{row.decision.reason || row.decision.priority_reason || "No reason supplied."}</p>}</article>)}
+        <div className="form-actions"><Button onClick={() => setTriagePreview(null)}>Back to results</Button><Button variant="primary" disabled={saving || triagePreview.rows.some(r => r.errors.length)} onClick={confirmTriage}>{saving ? "Updating…" : "Confirm triage updates"}</Button></div>
+      </section>}
       {preview && (
         <section className="panel import-panel">
           <h2>

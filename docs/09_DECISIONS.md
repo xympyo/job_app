@@ -67,3 +67,9 @@ Rationale: one label must not represent both “I chose this role” and “I su
 application,” while still allowing users to record skipped hiring stages. Implication:
 the new migration converts legacy application `Ready to Apply` rows to `Preparing` and
 retains their stage-history timeline.
+## 2026-09-15 — Bulk triage interchange
+
+Bulk triage is a strict, user-confirmed export/import contract keyed by stable job UUID.
+It reuses existing job decision and assessment fields, performs one atomic workspace
+mutation, and excludes factual vacancy and application-history fields. This keeps the
+AI-assisted workflow human-controlled without adding an LLM dependency or automation.

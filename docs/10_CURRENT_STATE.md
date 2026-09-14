@@ -80,3 +80,10 @@ job-specific repair guidance. The same deployment was verified at 390px and 320p
 without horizontal overflow. QA users and rows were deleted afterward; owner data
 remained unchanged.
 
+## Bulk triage — 2026-09-15
+
+Implemented a versioned Export for triage / Import triage results workflow. Preview
+shows decision counts and old-to-new states; confirmation updates existing jobs only.
+No database migration was required because the existing atomic apply_changes RPC and
+RLS ownership model are sufficient. Manual Inbox multi-select was deferred to avoid
+adding mobile complexity alongside the focused triage workflow.

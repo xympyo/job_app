@@ -34,3 +34,10 @@ confirmed RLS on all eight tables, with authenticated ownership checks for reads
 Two disposable accounts verified isolation on every populated table, anonymous denial,
 ownership-aware foreign keys, stale RPC rejection and atomic rollback. Owner retains
 three CV records; QA data was removed. See 12_QA.md for the acceptance evidence.
+# Bulk triage persistence
+
+Bulk triage uses the existing atomic repository commit/RPC. Its update whitelist is
+review status, recommendation, fit assessment fields, strengths, gaps, red flags,
+recommended CV, research notes and explicitly verified timestamp. Company/title,
+description, requirements, sources, applications, snapshots, questions and events are
+never modified by this workflow. Existing RLS and owner filtering remain authoritative.

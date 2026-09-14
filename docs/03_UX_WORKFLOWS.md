@@ -18,3 +18,10 @@ next useful action. Failed saves remain visible and keep form input. Destructive
 requires confirmation; applied jobs cannot be deleted. Safe links open separately.
 Use semantic controls, labels, keyboard focus, accessible dialogs, 44px tap targets,
 readable contrast, and no injected HTML. Draft and submitted answers are visually distinct.
+# Bulk triage workflow
+
+From Research, use **Export for triage** to download active jobs with stable `job_id`
+values. Give that file to ChatGPT and receive a version 1 `triage-results.json` file.
+Use **Import triage results**, review the old and new decision for every existing job,
+then confirm once. The importer updates existing jobs only and never creates jobs or
+changes applications, questions, events or history.
