@@ -101,3 +101,5 @@ The default Applications view now shows active application workspaces only; term
 outcomes remain available through an explicit status filter and History. Selecting or
 saving Applied with no date records today automatically, while later stages preserve
 the existing applied date.
+Applications are backed strictly by application records; Ready to Apply vacancies without
+an application workspace remain in Inbox until preparation begins.

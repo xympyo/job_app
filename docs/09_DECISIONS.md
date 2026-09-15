@@ -79,3 +79,5 @@ AI-assisted workflow human-controlled without adding an LLM dependency or automa
 Applications defaults to active pipeline work; terminal outcomes remain historical and
 filterable. The Applied transition owns the convenience default of today when no date
 was entered, while preserving any existing or manually edited applied date thereafter.
+The Applications workspace is sourced only from jobs with an application record; a
+Ready to Apply decision alone does not create or imply an application workspace.

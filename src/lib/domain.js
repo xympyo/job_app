@@ -208,8 +208,7 @@ export function filterJobs(data, filters = {}) {
       }
       if (
         filters.area === "applications" &&
-        !application &&
-        j.review_status !== "Ready to Apply"
+        !application
       )
         return false;
       if (

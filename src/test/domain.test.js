@@ -207,10 +207,10 @@ describe("vacancy and application workflow", () => {
       filterJobs(d, { area: "applications", status: "Preparing" }),
     ).toHaveLength(1);
   });
-  it("puts ready vacancies in Applications before a formal application record exists", () => {
+  it("keeps ready vacancies in Inbox until an application record exists", () => {
     const d = make();
     add(d, { review_status: "Ready to Apply" });
-    expect(filterJobs(d, { area: "applications" })).toHaveLength(1);
+    expect(filterJobs(d, { area: "applications" })).toHaveLength(0);
     expect(filterJobs(d, { area: "inbox" })).toHaveLength(0);
   });
   it("enforces unique company names locally, matching PostgreSQL", () => {
@@ -541,12 +541,14 @@ describe("triage browsing filters", () => {
     const d = make();
     const activeJob = add(d, { title: "Active role" });
     const closedJob = add(d, { title: "Closed role" });
+    const readyJob = add(d, { title: "Ready but not prepared", review_status: "Ready to Apply" });
     const active = createApplication(d, activeJob.id, LOCAL_USER);
     createApplication(d, closedJob.id, LOCAL_USER);
     saveApplication(d, { ...active, status: "Applied" }, LOCAL_USER);
     const closed = d.applications.find((a) => a.job_id === closedJob.id);
     saveApplication(d, { ...closed, status: "Rejected", applied_at: "2026-09-15", rejection_stage: "unknown" }, LOCAL_USER);
     expect(filterJobs(d, { area: "applications" }).map((j) => j.id)).toEqual([activeJob.id]);
+    expect(filterJobs(d, { area: "applications" }).map((j) => j.id)).not.toContain(readyJob.id);
     expect(filterJobs(d, { area: "applications", status: "Rejected" }).map((j) => j.id)).toEqual([closedJob.id]);
     expect(filterJobs(d, { area: "applications", status: "Applied" }).map((j) => j.id)).toEqual([activeJob.id]);
   });
