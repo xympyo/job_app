@@ -8,7 +8,7 @@ import {
   STAGES,
   STATUS_HELP,
 } from "../lib/constants";
-import { deleteRow, put, saveApplication } from "../lib/domain";
+import { deleteRow, put, saveApplication, today } from "../lib/domain";
 import {
   AsyncForm,
   Badge,
@@ -226,9 +226,9 @@ function ApplicationForm({ application, onClose }) {
   const [validation, setValidation] = useState("");
   const [confirmPreparing, setConfirmPreparing] = useState(false);
   const set = (k, value) => setV((old) => ({ ...old, [k]: value }));
-  const save = async () => {
+  const save = async (values = v) => {
     await mutate(
-      (d, uid) => saveApplication(d, v, uid),
+      (d, uid) => saveApplication(d, values, uid),
       "Application updated",
     );
     onClose();
@@ -238,21 +238,26 @@ function ApplicationForm({ application, onClose }) {
       <AsyncForm
         onSubmit={async () => {
           setValidation("");
-          if (POST_SUBMISSION_STAGES.includes(v.status) && !v.applied_at) {
+          const values = {
+            ...v,
+            applied_at: v.applied_at || (v.status === "Applied" ? today() : ""),
+          };
+          setV(values);
+          if (POST_SUBMISSION_STAGES.includes(values.status) && !values.applied_at) {
             setValidation(
               "When did you apply? Add the application date before saving this stage.",
             );
             return;
           }
           if (
-            v.status === "Preparing" &&
+            values.status === "Preparing" &&
             POST_SUBMISSION_STAGES.includes(application.status) &&
             application.applied_at
           ) {
             setConfirmPreparing(true);
             return;
           }
-          await save();
+          await save(values);
         }}
       >
         <div className="form-grid">
@@ -260,7 +265,14 @@ function ApplicationForm({ application, onClose }) {
             label="Application stage"
             options={STAGES}
             value={v.status}
-            onChange={(e) => set("status", e.target.value)}
+            onChange={(e) => {
+              const status = e.target.value;
+              setV((old) => ({
+                ...old,
+                status,
+                applied_at: status === "Applied" && !old.applied_at ? today() : old.applied_at,
+              }));
+            }}
           />
           <Input
             label="Date applied"

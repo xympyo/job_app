@@ -94,3 +94,10 @@ Overview status cards and triage shortcuts now deep-link to Inbox filters. Inbox
 triage, status and search parameters in the URL so refresh and browser navigation retain
 the selected view. Explicit status filters can include Ready to Apply and Skipped rows;
 the default Inbox remains focused on unclassified opportunities.
+
+## Application list/date usability — 2026-09-15
+
+The default Applications view now shows active application workspaces only; terminal
+outcomes remain available through an explicit status filter and History. Selecting or
+saving Applied with no date records today automatically, while later stages preserve
+the existing applied date.

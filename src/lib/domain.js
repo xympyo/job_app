@@ -110,7 +110,10 @@ export function createApplication(data, jobId, userId) {
 export function saveApplication(data, input, userId) {
   const old = data.applications.find((a) => a.id === input.id);
   if (!old) throw new Error("Application no longer exists");
-  const appliedAt = input.applied_at || (input.status === "Applied" ? today() : "");
+  const appliedAt = input.applied_at ||
+    (POST_SUBMISSION_STAGES.includes(input.status)
+      ? old.applied_at || (input.status === "Applied" ? today() : "")
+      : "");
   if (POST_SUBMISSION_STAGES.includes(input.status) && !appliedAt)
     throw new Error("Record when you applied before saving this stage.");
   if (input.status === "Preparing" && input.applied_at)
@@ -207,6 +210,13 @@ export function filterJobs(data, filters = {}) {
         filters.area === "applications" &&
         !application &&
         j.review_status !== "Ready to Apply"
+      )
+        return false;
+      if (
+        filters.area === "applications" &&
+        application &&
+        !filters.status &&
+        TERMINAL.includes(application.status)
       )
         return false;
       if (

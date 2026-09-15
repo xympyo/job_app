@@ -12,6 +12,7 @@ import {
   csv,
   attentionItems,
   displayCompanyName,
+  today,
 } from "../lib/domain";
 import { LOCAL_USER } from "../lib/constants";
 import {
@@ -80,7 +81,7 @@ describe("vacancy and application workflow", () => {
     expect(createApplication(d, j.id, LOCAL_USER).id).toBe(a.id);
     add(d, { ...j, description: "Changed listing" });
     const applied = saveApplication(d, { ...a, status: "Applied" }, LOCAL_USER);
-    expect(applied.applied_at).toBeTruthy();
+    expect(applied.applied_at).toBe(today());
     expect(applied.job_snapshot.description).toBe("Original requirements");
     expect(applied.cv_snapshot.name).toBe("Analyst");
     expect(() =>
@@ -118,6 +119,16 @@ describe("vacancy and application workflow", () => {
       LOCAL_USER,
     );
     expect(preparing.applied_at).toBe("");
+  });
+  it("preserves an existing applied date across later stages and allows manual edits", () => {
+    const d = make();
+    const a = createApplication(d, add(d).id, LOCAL_USER);
+    const applied = saveApplication(d, { ...a, status: "Applied" }, LOCAL_USER);
+    const original = applied.applied_at;
+    const interview = saveApplication(d, { ...applied, status: "HR Interview", applied_at: "" }, LOCAL_USER);
+    expect(interview.applied_at).toBe(original);
+    const edited = saveApplication(d, { ...interview, applied_at: "2026-01-02" }, LOCAL_USER);
+    expect(edited.applied_at).toBe("2026-01-02");
   });
   it("normalizes legal prefixes for display without changing stored names", () => {
     expect(displayCompanyName("PT. Mowilex")).toBe("Mowilex");
@@ -525,5 +536,18 @@ describe("triage browsing filters", () => {
     expect(filterJobs(d, { area: "inbox", triage: "Skip" })).toHaveLength(1);
     expect(filterJobs(d, { area: "inbox", status: "Ready to Apply" })).toHaveLength(2);
     expect(filterJobs(d, { area: "inbox", triage: "Apply ASAP", query: "" })).toHaveLength(1);
+  });
+  it("hides terminal application records by default but returns them for an explicit status", () => {
+    const d = make();
+    const activeJob = add(d, { title: "Active role" });
+    const closedJob = add(d, { title: "Closed role" });
+    const active = createApplication(d, activeJob.id, LOCAL_USER);
+    createApplication(d, closedJob.id, LOCAL_USER);
+    saveApplication(d, { ...active, status: "Applied" }, LOCAL_USER);
+    const closed = d.applications.find((a) => a.job_id === closedJob.id);
+    saveApplication(d, { ...closed, status: "Rejected", applied_at: "2026-09-15", rejection_stage: "unknown" }, LOCAL_USER);
+    expect(filterJobs(d, { area: "applications" }).map((j) => j.id)).toEqual([activeJob.id]);
+    expect(filterJobs(d, { area: "applications", status: "Rejected" }).map((j) => j.id)).toEqual([closedJob.id]);
+    expect(filterJobs(d, { area: "applications", status: "Applied" }).map((j) => j.id)).toEqual([activeJob.id]);
   });
 });

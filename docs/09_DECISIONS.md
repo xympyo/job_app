@@ -73,3 +73,9 @@ Bulk triage is a strict, user-confirmed export/import contract keyed by stable j
 It reuses existing job decision and assessment fields, performs one atomic workspace
 mutation, and excludes factual vacancy and application-history fields. This keeps the
 AI-assisted workflow human-controlled without adding an LLM dependency or automation.
+
+## 2026-09-15 — Application list and applied date
+
+Applications defaults to active pipeline work; terminal outcomes remain historical and
+filterable. The Applied transition owns the convenience default of today when no date
+was entered, while preserving any existing or manually edited applied date thereafter.

@@ -164,7 +164,7 @@ export default function Workspace({ area }) {
   const selected = data.jobs.find((j) => j.id === id);
   const titles = {
     inbox: ["Opportunity inbox", "A clear view of what could come next."],
-    applications: ["Your applications", "Keep every next step in sight."],
+    applications: ["Your applications", "Active application workspaces. Use Status to view closed outcomes."],
     history: ["Career history", "Every opportunity, decision and outcome."],
   };
   const activeFilters = Object.entries(filters).filter(
