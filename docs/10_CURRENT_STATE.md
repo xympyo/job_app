@@ -103,3 +103,8 @@ saving Applied with no date records today automatically, while later stages pres
 the existing applied date.
 Applications are backed strictly by application records; Ready to Apply vacancies without
 an application workspace remain in Inbox until preparation begins.
+
+## Production application snapshot — 2026-09-15
+Read-only verification found 27 jobs and 8 application records for the owner: 7 active
+records (2 Preparing, 5 Applied) and 1 terminal Closed record. The default Applications
+view renders 7 rows; the Closed status filter retrieves the one terminal row.
