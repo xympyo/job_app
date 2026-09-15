@@ -1,11 +1,11 @@
 # UX workflows
 
 Desktop uses a calm sidebar, scannable list and selected detail. Mobile uses cards and
-separate detail navigation; primary destinations are Inbox, Applications and Attention.
+separate detail navigation; primary destinations are Jobs and Attention.
 Dashboard counts are actionable: review queue, preparation, active applications, due items.
 
 1. Add a company/title/source manually, optionally fill detailed research and fit.
-2. Inbox → inspect fit, gaps, freshness, deadline and CV → save, skip or ready.
+2. Jobs → inspect fit, gaps, freshness, deadline and CV → save, skip or ready.
 3. Prepare application → questions, CV, cover letter, next action → explicitly mark Applied.
 4. Record any stage; preserve stage history. Rejection also records where it occurred.
 5. Capture assessments/interviews with scheduled time, notes and completion status.
@@ -38,3 +38,4 @@ Overview shortcuts open `/jobs` with URL-backed lifecycle or triage filters. Job
 unapplied opportunities and application-backed records together; an application status
 is the primary lifecycle label once a workspace exists. `/inbox` redirects to Jobs and
 `/applications` redirects to Jobs with active application filtering for old bookmarks.
+

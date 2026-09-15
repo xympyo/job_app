@@ -12,6 +12,7 @@ import { useWorkspace } from "../context";
 import {
   displayCompanyName,
   filterJobs,
+  currentLifecycle,
   postingLabel,
   put,
   verificationLabel,
@@ -36,7 +37,7 @@ import {
 import JobForm from "../components/JobForm";
 import JobDetail from "../components/JobDetail";
 
-export function JobCard({ job, area, selected }) {
+export function JobCard({ job, area, selected, contextQuery = "" }) {
   const { data, mutate, saving } = useWorkspace();
   const company = data.companies.find((c) => c.id === job.company_id);
   const application = data.applications.find((a) => a.job_id === job.id);
@@ -61,7 +62,7 @@ export function JobCard({ job, area, selected }) {
   return (
     <article className="job-card-shell">
       <Link
-        to={`/jobs/${job.id}`}
+        to={`/jobs/${job.id}${contextQuery ? `?${contextQuery}` : ""}`}
         className={`job-card ${selected ? "selected" : ""}`}
       >
         <div className="job-card-top">
@@ -101,7 +102,7 @@ export function JobCard({ job, area, selected }) {
             {job.custom_tailoring ? "Custom CV" : cv?.name || "CV not selected"}
           </span>
           <span title={STATUS_HELP[application?.status || job.review_status] || "Ready to prepare this opportunity."}>
-            {application?.status || (job.review_status === "Ready to Apply" ? "Ready to prepare" : job.review_status)}
+            {currentLifecycle(job, application)}
           </span>
         </div>
         {job.deadline && (
@@ -163,6 +164,7 @@ export default function Workspace({ area }) {
       });
   };
   const jobs = filterJobs(data, { ...filters, area });
+  const contextQuery = searchParams.toString();
   const selected = data.jobs.find((j) => j.id === id);
   const titles = {
     jobs: ["Jobs", "Track opportunities from review through application."],
@@ -315,7 +317,7 @@ export default function Workspace({ area }) {
           </div>
           <div className="job-list">
             {jobs.map((j) => (
-              <JobCard key={j.id} job={j} area={area} selected={j.id === id} />
+              <JobCard key={j.id} job={j} area={area} selected={j.id === id} contextQuery={contextQuery} />
             ))}
             {!jobs.length && (
               <Empty

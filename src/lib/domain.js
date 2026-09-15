@@ -208,7 +208,7 @@ export function filterJobs(data, filters = {}) {
       )
         return false;
       if (triageFilter) {
-        if (!triageDecisionMatches(j, triageFilter)) return false;
+        if (!triageDecisionMatches(j, triageFilter, application)) return false;
       }
       if (
         filters.area === "applications" &&
@@ -256,7 +256,7 @@ export function filterJobs(data, filters = {}) {
         const matches = lifecycle === "To Review"
           ? !application && ["Found", "Reviewing"].includes(j.review_status)
           : ["Apply ASAP", "Apply", "Research First", "Skip"].includes(lifecycle)
-            ? triageDecisionMatches(j, lifecycle)
+            ? triageDecisionMatches(j, lifecycle, application)
             : lifecycle === "Assessment"
               ? application?.status === "Assessment / OA"
               : lifecycle === "Interview"
@@ -298,13 +298,22 @@ export function filterJobs(data, filters = {}) {
     })
     .sort((a, b) => b.created_at.localeCompare(a.created_at));
 }
-export function triageDecisionMatches(job, decision) {
+export function triageDecisionMatches(job, decision, application) {
+  if (application) return false;
   const recommendation = job.recommendation || "";
   if (decision === "Apply ASAP") return recommendation === "Apply ASAP";
   if (decision === "Apply") return recommendation === "Apply";
   if (decision === "Research First") return recommendation === "Research first" || (!recommendation && job.review_status === "Reviewing");
   if (decision === "Skip") return recommendation === "Skip" || job.review_status === "Skipped";
   return false;
+}
+
+export function currentLifecycle(job, application) {
+  if (application?.status) return application.status;
+  if (job.recommendation === "Apply ASAP" || job.recommendation === "Apply") return job.recommendation;
+  if (job.recommendation === "Research first" || job.recommendation === "Research First") return "Research First";
+  if (job.review_status === "Found" || job.review_status === "Reviewing") return "To Review";
+  return job.review_status || "To Review";
 }
 export function attentionItems(data) {
   const items = [];

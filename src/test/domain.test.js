@@ -13,6 +13,7 @@ import {
   attentionItems,
   displayCompanyName,
   today,
+  currentLifecycle,
 } from "../lib/domain";
 import { LOCAL_USER } from "../lib/constants";
 import {
@@ -564,5 +565,7 @@ describe("triage browsing filters", () => {
     expect(filterJobs(d, { area: "jobs", lifecycle: "Applied" }).map((j) => j.id)).toEqual([appliedJob.id]);
     expect(filterJobs(d, { area: "jobs" }).map((j) => j.id)).toEqual(expect.arrayContaining([review.id, ready.id, appliedJob.id]));
     expect(filterJobs(d, { area: "jobs" })).toHaveLength(3);
+    expect(currentLifecycle(ready, null)).toBe("Apply ASAP");
+    expect(currentLifecycle(appliedJob, d.applications.find((a) => a.job_id === appliedJob.id))).toBe("Applied");
   });
 });

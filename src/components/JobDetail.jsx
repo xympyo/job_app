@@ -8,7 +8,7 @@ import {
   ShieldCheck,
   Trash2,
 } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useWorkspace } from "../context";
 import {
   createApplication,
@@ -24,6 +24,7 @@ import ApplicationPanel from "./ApplicationPanel";
 
 export default function JobDetail({ job, area = "inbox" }) {
   const { data, mutate, saving } = useWorkspace();
+  const location = useLocation();
   const application = data.applications.find((a) => a.job_id === job.id);
   const [editing, setEditing] = useState(false),
     [deleting, setDeleting] = useState(false);
@@ -55,7 +56,7 @@ export default function JobDetail({ job, area = "inbox" }) {
   return (
     <article className="job-detail">
       <div className="detail-topline">
-        <Link className="back-link" to="/jobs">
+        <Link className="back-link" to={`/jobs${location.search}`}>
           <ArrowLeft size={15} />
           Back to list
         </Link>

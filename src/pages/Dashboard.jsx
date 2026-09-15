@@ -70,7 +70,7 @@ export default function Dashboard({ attentionOnly = false }) {
   ).length;
   const triageShortcuts = ["Apply ASAP", "Apply", "Research First", "Skip"].map((decision) => ({
     decision,
-    count: data.jobs.filter((job) => triageDecisionMatches(job, decision)).length,
+    count: data.jobs.filter((job) => triageDecisionMatches(job, decision, data.applications.find((a) => a.job_id === job.id))).length,
   }));
   const recent = [
     ...data.jobs.map((j) => ({

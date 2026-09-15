@@ -37,3 +37,4 @@ The primary workspace is Jobs: it shows tracked opportunities across review, tri
 preparation and recruitment. Applications remain separate backend records, but users do
 not need to choose between Inbox and Applications. Attention is for action now; History
 is for terminal and past activity.
+
