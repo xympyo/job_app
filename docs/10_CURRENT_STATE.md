@@ -87,3 +87,10 @@ shows decision counts and old-to-new states; confirmation updates existing jobs 
 No database migration was required because the existing atomic apply_changes RPC and
 RLS ownership model are sufficient. Manual Inbox multi-select was deferred to avoid
 adding mobile complexity alongside the focused triage workflow.
+
+## Overview and Inbox routing — 2026-09-15
+
+Overview status cards and triage shortcuts now deep-link to Inbox filters. Inbox keeps
+triage, status and search parameters in the URL so refresh and browser navigation retain
+the selected view. Explicit status filters can include Ready to Apply and Skipped rows;
+the default Inbox remains focused on unclassified opportunities.

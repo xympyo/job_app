@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import {
   ArrowUpRight,
   MapPin,
@@ -140,10 +140,26 @@ export function JobCard({ job, area, selected }) {
 export default function Workspace({ area }) {
   const { data } = useWorkspace(),
     { id } = useParams();
-  const [filters, setFilters] = useState({}),
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [filters, setFilters] = useState(() => ({
+    triage: searchParams.get("triage") || "",
+    status: searchParams.get("status") || "",
+    query: searchParams.get("query") || "",
+  })),
     [expanded, setExpanded] = useState(false),
     [adding, setAdding] = useState(false);
-  const set = (key, v) => setFilters((f) => ({ ...f, [key]: v }));
+  useEffect(() => {
+    setFilters((current) => ({ ...current, triage: searchParams.get("triage") || "", status: searchParams.get("status") || "", query: searchParams.get("query") || "" }));
+  }, [searchParams]);
+  const set = (key, v) => {
+    setFilters((f) => ({ ...f, [key]: v }));
+    if (["triage", "status", "query"].includes(key))
+      setSearchParams((current) => {
+        const next = new URLSearchParams(current);
+        if (v) next.set(key, v); else next.delete(key);
+        return next;
+      });
+  };
   const jobs = filterJobs(data, { ...filters, area });
   const selected = data.jobs.find((j) => j.id === id);
   const titles = {
@@ -190,6 +206,13 @@ export default function Workspace({ area }) {
           </div>
           {expanded && (
             <div className="filters">
+              {area === "inbox" && <Select
+                label="Triage decision"
+                options={["Apply ASAP", "Apply", "Research First", "Skip"]}
+                empty="All triage decisions"
+                value={filters.triage || ""}
+                onChange={(e) => set("triage", e.target.value)}
+              />}
                 <Select
                 label="Status"
                 options={[...new Set([...REVIEW_STATES, ...STAGES])]}
@@ -271,7 +294,7 @@ export default function Workspace({ area }) {
                 />
                 Deadline within 7 days
               </label>
-              <Button onClick={() => setFilters({})}>Clear filters</Button>
+              <Button onClick={() => { setFilters({}); setSearchParams({}); }}>Clear filters</Button>
             </div>
           )}
           <div className="list-meta">

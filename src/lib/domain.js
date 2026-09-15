@@ -191,14 +191,18 @@ export function filterJobs(data, filters = {}) {
       const company = data.companies.find((c) => c.id === j.company_id);
       const application = data.applications.find((a) => a.job_id === j.id);
       const sources = data.job_sources.filter((s) => s.job_id === j.id);
+      const triageFilter = filters.triage;
       if (
-        filters.area === "inbox" &&
+        filters.area === "inbox" && !triageFilter && !filters.status &&
         (application ||
           ["Ready to Apply", "Skipped", "Closed", "Expired"].includes(
             j.review_status,
           ))
       )
         return false;
+      if (triageFilter) {
+        if (!triageDecisionMatches(j, triageFilter)) return false;
+      }
       if (
         filters.area === "applications" &&
         !application &&
@@ -260,6 +264,14 @@ export function filterJobs(data, filters = {}) {
       return true;
     })
     .sort((a, b) => b.created_at.localeCompare(a.created_at));
+}
+export function triageDecisionMatches(job, decision) {
+  const recommendation = job.recommendation || "";
+  if (decision === "Apply ASAP") return recommendation === "Apply ASAP";
+  if (decision === "Apply") return recommendation === "Apply";
+  if (decision === "Research First") return recommendation === "Research first" || (!recommendation && job.review_status === "Reviewing");
+  if (decision === "Skip") return recommendation === "Skip" || job.review_status === "Skipped";
+  return false;
 }
 export function attentionItems(data) {
   const items = [];

@@ -25,3 +25,10 @@ values. Give that file to ChatGPT and receive a version 1 `triage-results.json` 
 Use **Import triage results**, review the old and new decision for every existing job,
 then confirm once. The importer updates existing jobs only and never creates jobs or
 changes applications, questions, events or history.
+
+## Navigation mental model
+
+Inbox is the vacancy browser and evaluation workspace. Applications contains active or
+submitted application work. Attention contains actionable reminders. History is the
+historical record. Overview cards link directly to relevant views; triage shortcuts open
+Inbox with a URL-backed decision filter selected.

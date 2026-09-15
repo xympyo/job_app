@@ -11,7 +11,7 @@ import {
   Plus,
 } from "lucide-react";
 import { useWorkspace } from "../context";
-import { attentionItems, today } from "../lib/domain";
+import { attentionItems, today, triageDecisionMatches } from "../lib/domain";
 import { TERMINAL } from "../lib/constants";
 import { Badge, Button, Empty, formatDateTime } from "../components/ui";
 import JobForm from "../components/JobForm";
@@ -68,6 +68,10 @@ export default function Dashboard({ attentionOnly = false }) {
   const active = data.applications.filter(
     (a) => !TERMINAL.includes(a.status),
   ).length;
+  const triageShortcuts = ["Apply ASAP", "Apply", "Research First", "Skip"].map((decision) => ({
+    decision,
+    count: data.jobs.filter((job) => triageDecisionMatches(job, decision)).length,
+  }));
   const recent = [
     ...data.jobs.map((j) => ({
       ...j,
@@ -162,7 +166,7 @@ export default function Dashboard({ attentionOnly = false }) {
             title: "Ready to apply",
             value: ready,
             icon: CheckCircle2,
-            to: "/applications",
+            to: "/inbox?status=Ready%20to%20Apply",
             sub: "Take the next step",
           },
           {
@@ -193,6 +197,16 @@ export default function Dashboard({ attentionOnly = false }) {
           </Link>
         ))}
       </div>
+      <section className="panel triage-shortcuts" aria-label="Triage decisions">
+        <div className="panel-heading"><div><h2>Research decisions</h2><p>Open Inbox with a triage decision already selected.</p></div></div>
+        <div className="triage-shortcut-grid">
+          {triageShortcuts.map(({ decision, count }) => (
+            <Link key={decision} className="triage-shortcut" to={`/inbox?triage=${encodeURIComponent(decision)}`}>
+              <strong>{decision}</strong><span>{count}</span><small>Open in Inbox <ArrowUpRight size={13} /></small>
+            </Link>
+          ))}
+        </div>
+      </section>
       <div className="dashboard-columns">
         <section className="panel">
           <div className="panel-heading">

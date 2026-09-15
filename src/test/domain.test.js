@@ -512,3 +512,18 @@ describe("persistence, ownership and export", () => {
     expect(result).toContain('""quote""');
   });
 });
+describe("triage browsing filters", () => {
+  it("maps user-facing decisions to recommendation/status and keeps counts consistent", () => {
+    const d = make();
+    const asap = add(d); put(d, "jobs", { ...asap, recommendation: "Apply ASAP", review_status: "Ready to Apply" }, LOCAL_USER);
+    const apply = add(d); put(d, "jobs", { ...apply, recommendation: "Apply", review_status: "Ready to Apply" }, LOCAL_USER);
+    const research = add(d); put(d, "jobs", { ...research, recommendation: "Research first", review_status: "Reviewing" }, LOCAL_USER);
+    const skipped = add(d); put(d, "jobs", { ...skipped, recommendation: "", review_status: "Skipped" }, LOCAL_USER);
+    expect(filterJobs(d, { area: "inbox", triage: "Apply ASAP" })).toHaveLength(1);
+    expect(filterJobs(d, { area: "inbox", triage: "Apply" })).toHaveLength(1);
+    expect(filterJobs(d, { area: "inbox", triage: "Research First" })).toHaveLength(1);
+    expect(filterJobs(d, { area: "inbox", triage: "Skip" })).toHaveLength(1);
+    expect(filterJobs(d, { area: "inbox", status: "Ready to Apply" })).toHaveLength(2);
+    expect(filterJobs(d, { area: "inbox", triage: "Apply ASAP", query: "" })).toHaveLength(1);
+  });
+});
