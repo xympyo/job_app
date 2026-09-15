@@ -32,6 +32,8 @@ export default function JobDetail({ job, area = "inbox" }) {
     ["applications", "jobs"].includes(area) && application ? "application" : "overview",
   );
   const navigate = useNavigate();
+  const context = new URLSearchParams(location.search);
+  const backContext = context.get("triage") || context.get("lifecycle") || context.get("status");
   const company = data.companies.find((c) => c.id === job.company_id);
   const cv = data.cv_versions.find((c) => c.id === job.recommended_cv_id);
   const sources = data.job_sources
@@ -58,7 +60,7 @@ export default function JobDetail({ job, area = "inbox" }) {
       <div className="detail-topline">
         <Link className="back-link" to={`/jobs${location.search}`}>
           <ArrowLeft size={15} />
-          Back to list
+          {backContext ? `Back to ${backContext}` : "Back to Jobs"}
         </Link>
         <div className="row-actions">
           <button
