@@ -552,4 +552,17 @@ describe("triage browsing filters", () => {
     expect(filterJobs(d, { area: "applications", status: "Rejected" }).map((j) => j.id)).toEqual([closedJob.id]);
     expect(filterJobs(d, { area: "applications", status: "Applied" }).map((j) => j.id)).toEqual([activeJob.id]);
   });
+  it("supports the unified Jobs lifecycle views with application status priority", () => {
+    const d = make();
+    const review = add(d, { review_status: "Found" });
+    const ready = add(d, { review_status: "Ready to Apply", recommendation: "Apply ASAP" });
+    const appliedJob = add(d, { review_status: "Ready to Apply", recommendation: "Apply" });
+    const app = createApplication(d, appliedJob.id, LOCAL_USER);
+    saveApplication(d, { ...app, status: "Applied" }, LOCAL_USER);
+    expect(filterJobs(d, { area: "jobs", lifecycle: "To Review" }).map((j) => j.id)).toEqual([review.id]);
+    expect(filterJobs(d, { area: "jobs", lifecycle: "Apply ASAP" }).map((j) => j.id)).toEqual([ready.id]);
+    expect(filterJobs(d, { area: "jobs", lifecycle: "Applied" }).map((j) => j.id)).toEqual([appliedJob.id]);
+    expect(filterJobs(d, { area: "jobs" }).map((j) => j.id)).toEqual(expect.arrayContaining([review.id, ready.id, appliedJob.id]));
+    expect(filterJobs(d, { area: "jobs" })).toHaveLength(3);
+  });
 });

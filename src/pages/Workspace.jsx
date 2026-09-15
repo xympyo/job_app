@@ -49,7 +49,7 @@ export function JobCard({ job, area, selected }) {
       await mutate(
         (d, uid) => put(d, "jobs", { ...job, review_status: status }, uid),
         status === "Ready to Apply"
-          ? "Ready to Apply — continue under Applications"
+          ? "Ready to Apply — continue in Jobs"
           : status === "Skipped"
             ? "Skipped — kept in History"
             : `Marked ${status}`,
@@ -61,7 +61,7 @@ export function JobCard({ job, area, selected }) {
   return (
     <article className="job-card-shell">
       <Link
-        to={`/${area}/${job.id}`}
+        to={`/jobs/${job.id}`}
         className={`job-card ${selected ? "selected" : ""}`}
       >
         <div className="job-card-top">
@@ -108,7 +108,7 @@ export function JobCard({ job, area, selected }) {
           <p className="deadline-label">Deadline {formatDate(job.deadline)}</p>
         )}
       </Link>
-      {area === "inbox" && !application && (
+      {(area === "inbox" || area === "jobs") && !application && (
         <div
           className="card-quick-actions"
           aria-label={`Actions for ${job.title}`}
@@ -144,16 +144,18 @@ export default function Workspace({ area }) {
   const [filters, setFilters] = useState(() => ({
     triage: searchParams.get("triage") || "",
     status: searchParams.get("status") || "",
+    lifecycle: searchParams.get("lifecycle") || searchParams.get("view") || "",
+    application: searchParams.get("application") || "",
     query: searchParams.get("query") || "",
   })),
     [expanded, setExpanded] = useState(false),
     [adding, setAdding] = useState(false);
   useEffect(() => {
-    setFilters((current) => ({ ...current, triage: searchParams.get("triage") || "", status: searchParams.get("status") || "", query: searchParams.get("query") || "" }));
+    setFilters((current) => ({ ...current, triage: searchParams.get("triage") || "", status: searchParams.get("status") || "", lifecycle: searchParams.get("lifecycle") || searchParams.get("view") || "", application: searchParams.get("application") || "", query: searchParams.get("query") || "" }));
   }, [searchParams]);
   const set = (key, v) => {
     setFilters((f) => ({ ...f, [key]: v }));
-    if (["triage", "status", "query"].includes(key))
+    if (["triage", "status", "lifecycle", "application", "query"].includes(key))
       setSearchParams((current) => {
         const next = new URLSearchParams(current);
         if (v) next.set(key, v); else next.delete(key);
@@ -163,6 +165,7 @@ export default function Workspace({ area }) {
   const jobs = filterJobs(data, { ...filters, area });
   const selected = data.jobs.find((j) => j.id === id);
   const titles = {
+    jobs: ["Jobs", "Track opportunities from review through application."],
     inbox: ["Opportunity inbox", "A clear view of what could come next."],
     applications: ["Your applications", "Active application workspaces. Use Status to view closed outcomes."],
     history: ["Career history", "Every opportunity, decision and outcome."],
@@ -206,7 +209,14 @@ export default function Workspace({ area }) {
           </div>
           {expanded && (
             <div className="filters">
-              {area === "inbox" && <Select
+              {area === "jobs" && <Select
+                label="Lifecycle"
+                options={["To Review", "Apply ASAP", "Apply", "Research First", "Preparing", "Applied", "Assessment", "Interview", "Offer", "Closed"]}
+                empty="All active jobs"
+                value={filters.lifecycle || ""}
+                onChange={(e) => set("lifecycle", e.target.value)}
+              />}
+              {(area === "inbox" || area === "jobs") && <Select
                 label="Triage decision"
                 options={["Apply ASAP", "Apply", "Research First", "Skip"]}
                 empty="All triage decisions"
@@ -326,7 +336,7 @@ export default function Workspace({ area }) {
               >
                 {Object.values(filters).some(Boolean) ? (
                   <Button onClick={() => setFilters({})}>Clear filters</Button>
-                ) : area === "inbox" ? (
+                ) : area === "inbox" || area === "jobs" ? (
                   <Link className="btn" to="/research">
                     Import research
                   </Link>

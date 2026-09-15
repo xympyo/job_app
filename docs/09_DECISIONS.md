@@ -81,3 +81,9 @@ filterable. The Applied transition owns the convenience default of today when no
 was entered, while preserving any existing or manually edited applied date thereafter.
 The Applications workspace is sourced only from jobs with an application record; a
 Ready to Apply decision alone does not create or imply an application workspace.
+## 2026-09-15 — Consolidated Jobs workspace
+
+Inbox and Applications are consolidated in the user-facing navigation as Jobs while the
+jobs and applications tables remain separate. Application status dominates display state;
+terminal records are excluded from the default Jobs view and remain filterable/available
+in History. Legacy routes redirect without changing stored records.

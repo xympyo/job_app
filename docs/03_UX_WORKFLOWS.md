@@ -32,3 +32,9 @@ Inbox is the vacancy browser and evaluation workspace. Applications contains act
 submitted application work. Attention contains actionable reminders. History is the
 historical record. Overview cards link directly to relevant views; triage shortcuts open
 Inbox with a URL-backed decision filter selected.
+## Jobs workspace
+
+Overview shortcuts open `/jobs` with URL-backed lifecycle or triage filters. Jobs shows
+unapplied opportunities and application-backed records together; an application status
+is the primary lifecycle label once a workspace exists. `/inbox` redirects to Jobs and
+`/applications` redirects to Jobs with active application filtering for old bookmarks.

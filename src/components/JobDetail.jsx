@@ -24,10 +24,11 @@ import ApplicationPanel from "./ApplicationPanel";
 
 export default function JobDetail({ job, area = "inbox" }) {
   const { data, mutate, saving } = useWorkspace();
+  const application = data.applications.find((a) => a.job_id === job.id);
   const [editing, setEditing] = useState(false),
     [deleting, setDeleting] = useState(false);
   const [tab, setTab] = useState(
-    area === "applications" ? "application" : "overview",
+    ["applications", "jobs"].includes(area) && application ? "application" : "overview",
   );
   const navigate = useNavigate();
   const company = data.companies.find((c) => c.id === job.company_id);
@@ -35,7 +36,6 @@ export default function JobDetail({ job, area = "inbox" }) {
   const sources = data.job_sources
     .filter((s) => s.job_id === job.id)
     .sort((a, b) => Number(b.is_primary) - Number(a.is_primary));
-  const application = data.applications.find((a) => a.job_id === job.id);
   const patch = (values) =>
     mutate((d, uid) => put(d, "jobs", { ...job, ...values }, uid)).catch(
       () => {},
@@ -46,7 +46,8 @@ export default function JobDetail({ job, area = "inbox" }) {
         (d, uid) => createApplication(d, job.id, uid),
         "Application workspace created. Record submission when you apply.",
       );
-      navigate(`/applications/${job.id}`);
+      setTab("application");
+      navigate(`/jobs/${job.id}`);
     } catch {
       /* Context displays error */
     }
@@ -54,7 +55,7 @@ export default function JobDetail({ job, area = "inbox" }) {
   return (
     <article className="job-detail">
       <div className="detail-topline">
-        <Link className="back-link" to={`/${area}`}>
+        <Link className="back-link" to="/jobs">
           <ArrowLeft size={15} />
           Back to list
         </Link>

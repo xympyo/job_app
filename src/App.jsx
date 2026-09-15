@@ -6,6 +6,7 @@ import {
   Outlet,
   Route,
   Routes,
+  useParams,
   useLocation,
 } from "react-router-dom";
 import {
@@ -17,7 +18,6 @@ import {
   CircleHelp,
   Clock3,
   Flag,
-  Inbox,
   LayoutDashboard,
   LogOut,
   Menu,
@@ -40,6 +40,13 @@ function Loading({ label = "Loading your workspace…" }) {
     </div>
   );
 }
+function LegacyWorkspaceRedirect({ application = false }) {
+  const location = useLocation();
+  const { id } = useParams();
+  const search = new URLSearchParams(location.search);
+  if (application && !search.has("application")) search.set("application", "active");
+  return <Navigate to={`/jobs${id ? `/${id}` : ""}${search.toString() ? `?${search}` : ""}`} replace />;
+}
 export function ProtectedRoute() {
   const { user, authLoading } = useWorkspace();
   if (authLoading) return <Loading label="Checking your session…" />;
@@ -47,8 +54,7 @@ export function ProtectedRoute() {
 }
 const navigation = [
   { to: "/", label: "Overview", icon: LayoutDashboard },
-  { to: "/inbox", label: "Inbox", icon: Inbox },
-  { to: "/applications", label: "Applications", icon: BriefcaseBusiness },
+  { to: "/jobs", label: "Jobs", icon: BriefcaseBusiness },
   { to: "/attention", label: "Attention", icon: Flag },
   { to: "/history", label: "History", icon: Clock3 },
 ];
@@ -102,12 +108,12 @@ function Layout() {
             >
               <Icon size={18} />
               <span>{label}</span>
-              {to === "/inbox" && (
+              {to === "/jobs" && (
                 <span className="nav-count">
                   {
                     data.jobs.filter(
                       (j) =>
-                        j.review_status === "Found" &&
+                        ["Found", "Reviewing"].includes(j.review_status) &&
                         !data.applications.some((a) => a.job_id === j.id),
                     ).length
                   }
@@ -260,13 +266,10 @@ export default function App() {
         <Route element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="attention" element={<Dashboard attentionOnly />} />
-          {["inbox", "applications", "history"].map((area) => (
-            <Route
-              key={area}
-              path={`${area}/:id?`}
-              element={<Workspace key={area} area={area} />}
-            />
-          ))}
+          <Route path="jobs/:id?" element={<Workspace area="jobs" />} />
+          <Route path="inbox/:id?" element={<LegacyWorkspaceRedirect />} />
+          <Route path="applications/:id?" element={<LegacyWorkspaceRedirect application />} />
+          <Route path="history/:id?" element={<Workspace area="history" />} />
           <Route path="research" element={<Research />} />
           <Route path="companies" element={<Library companiesOnly />} />
           <Route path="library" element={<Library />} />

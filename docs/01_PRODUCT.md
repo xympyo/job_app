@@ -31,3 +31,9 @@ No decorative analytics. Stable LinkedIn umbrella; targeted CV positioning.
 - Coding agent: implement and maintain the approved software without redefining strategy.
 
 See 02_USER_PROFILE.md for all changing candidate facts and 00_HANDOVER.md for full authority.
+## User-facing workspace model (2026-09-15)
+
+The primary workspace is Jobs: it shows tracked opportunities across review, triage,
+preparation and recruitment. Applications remain separate backend records, but users do
+not need to choose between Inbox and Applications. Attention is for action now; History
+is for terminal and past activity.

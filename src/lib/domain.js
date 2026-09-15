@@ -195,6 +195,10 @@ export function filterJobs(data, filters = {}) {
       const application = data.applications.find((a) => a.job_id === j.id);
       const sources = data.job_sources.filter((s) => s.job_id === j.id);
       const triageFilter = filters.triage;
+      const lifecycle = filters.lifecycle || filters.view;
+      const activeArea = filters.area === "jobs";
+      if (activeArea && filters.application === "active" && (!application || TERMINAL.includes(application.status)))
+        return false;
       if (
         filters.area === "inbox" && !triageFilter && !filters.status &&
         (application ||
@@ -210,6 +214,9 @@ export function filterJobs(data, filters = {}) {
         filters.area === "applications" &&
         !application
       )
+        return false;
+      if (activeArea && !lifecycle && !filters.status && !triageFilter &&
+        (TERMINAL.includes(application?.status) || ["Skipped", "Closed", "Expired"].includes(j.review_status)))
         return false;
       if (
         filters.area === "applications" &&
@@ -244,6 +251,23 @@ export function filterJobs(data, filters = {}) {
         (application?.status || j.review_status) !== filters.status
       )
         return false;
+      if (lifecycle && lifecycle !== "All") {
+        const interview = ["HR Interview", "User / Hiring Manager Interview", "Technical / Case Interview", "Final Interview"];
+        const matches = lifecycle === "To Review"
+          ? !application && ["Found", "Reviewing"].includes(j.review_status)
+          : ["Apply ASAP", "Apply", "Research First", "Skip"].includes(lifecycle)
+            ? triageDecisionMatches(j, lifecycle)
+            : lifecycle === "Assessment"
+              ? application?.status === "Assessment / OA"
+              : lifecycle === "Interview"
+                ? interview.includes(application?.status)
+                : lifecycle === "Offer"
+                  ? application?.status === "Offer"
+                  : lifecycle === "Closed"
+                    ? TERMINAL.includes(application?.status) || ["Skipped", "Closed", "Expired"].includes(j.review_status)
+                    : application?.status === lifecycle;
+        if (!matches) return false;
+      }
       if (
         filters.location &&
         !normalize(j.location_text).includes(normalize(filters.location))

@@ -16,7 +16,7 @@ const renderApp = (path = "/", props = {}) =>
     </MemoryRouter>,
   );
 describe("private workspace UI", () => {
-  it("starts from the dashboard and moves a reviewed card into Applications and Attention", async () => {
+  it("starts from the dashboard and moves a reviewed card through Jobs", async () => {
     const u = userEvent.setup();
     renderApp("/", {
       initialUser: { id: LOCAL_USER, email: "Local" },
@@ -32,14 +32,14 @@ describe("private workspace UI", () => {
     await waitFor(() =>
       expect(screen.queryByRole("dialog")).not.toBeInTheDocument(),
     );
-    await u.click(screen.getByRole("link", { name: "Review inbox" }));
+    await u.click(screen.getByRole("link", { name: "Review jobs" }));
     await u.click(screen.getByRole("button", { name: "Review", exact: true }));
     expect(await screen.findByText("Marked Reviewing")).toBeVisible();
     await u.click(
       screen.getByRole("button", { name: "Ready to Apply", exact: true }),
     );
     expect(
-      await screen.findByText("Ready to Apply — continue under Applications"),
+      await screen.findByText("Ready to Apply — continue in Jobs"),
     ).toBeVisible();
     await u.click(
       within(
@@ -79,7 +79,7 @@ describe("private workspace UI", () => {
   });
   it("creates, edits, prepares, changes stage and persists an application question through the UI", async () => {
     const user = userEvent.setup();
-    renderApp("/inbox", {
+    renderApp("/jobs", {
       initialUser: { id: LOCAL_USER, email: "Local" },
       repository: createLocalRepository(),
     });

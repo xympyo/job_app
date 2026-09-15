@@ -19,8 +19,8 @@ import JobForm from "../components/JobForm";
 export function AttentionList({ items, limit }) {
   const hrefFor = (item) => {
     if (item.type === "Deadline" && !item.application_id)
-      return `/inbox/${item.job_id}`;
-    return `/applications/${item.job_id}`;
+      return `/jobs/${item.job_id}`;
+    return `/jobs/${item.job_id}`;
   };
   return (
     <div className="attention-list">
@@ -133,8 +133,8 @@ export default function Dashboard({ attentionOnly = false }) {
               ? "Keep your shortlist moving"
               : "Start with one opportunity"}
           </h2>
-          <p>
-            Add a vacancy or import research. Review it in your Inbox, choose a
+            <p>
+            Add a vacancy or import research. Review it in Jobs, choose a
             CV, then prepare and record your application.
           </p>
         </div>
@@ -147,8 +147,8 @@ export default function Dashboard({ attentionOnly = false }) {
             Import research
           </Link>
           {data.jobs.length > 0 && (
-            <Link className="btn" to="/inbox">
-              Review inbox
+            <Link className="btn" to="/jobs">
+              Review jobs
             </Link>
           )}
         </div>
@@ -159,21 +159,21 @@ export default function Dashboard({ attentionOnly = false }) {
             title: "To review",
             value: review,
             icon: Inbox,
-            to: "/inbox",
+            to: "/jobs?lifecycle=To%20Review",
             sub: "Opportunities to explore",
           },
           {
             title: "Ready to apply",
             value: ready,
             icon: CheckCircle2,
-            to: "/inbox?status=Ready%20to%20Apply",
+            to: "/jobs?status=Ready%20to%20Apply",
             sub: "Take the next step",
           },
           {
             title: "In progress",
             value: active,
             icon: BriefcaseBusiness,
-            to: "/applications",
+            to: "/jobs?application=active",
             sub: "Applications moving forward",
           },
           {
@@ -198,11 +198,11 @@ export default function Dashboard({ attentionOnly = false }) {
         ))}
       </div>
       <section className="panel triage-shortcuts" aria-label="Triage decisions">
-        <div className="panel-heading"><div><h2>Research decisions</h2><p>Open Inbox with a triage decision already selected.</p></div></div>
+            <div className="panel-heading"><div><h2>Research decisions</h2><p>Open Jobs with a triage decision already selected.</p></div></div>
         <div className="triage-shortcut-grid">
           {triageShortcuts.map(({ decision, count }) => (
-            <Link key={decision} className="triage-shortcut" to={`/inbox?triage=${encodeURIComponent(decision)}`}>
-              <strong>{decision}</strong><span>{count}</span><small>Open in Inbox <ArrowUpRight size={13} /></small>
+            <Link key={decision} className="triage-shortcut" to={`/jobs?triage=${encodeURIComponent(decision)}`}>
+              <strong>{decision}</strong><span>{count}</span><small>Open in Jobs <ArrowUpRight size={13} /></small>
             </Link>
           ))}
         </div>

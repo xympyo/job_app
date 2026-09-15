@@ -108,3 +108,8 @@ an application workspace remain in Inbox until preparation begins.
 Read-only verification found 27 jobs and 8 application records for the owner: 7 active
 records (2 Preparing, 5 Applied) and 1 terminal Closed record. The default Applications
 view renders 7 rows; the Closed status filter retrieves the one terminal row.
+## Jobs navigation — 2026-09-15
+
+Primary navigation is Overview, Jobs, Attention, Companies and History. Jobs combines
+opportunities and application-backed records using lifecycle filters; Inbox and
+Applications remain compatibility redirects.
