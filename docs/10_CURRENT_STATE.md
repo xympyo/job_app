@@ -1,10 +1,10 @@
 # Current State
 
-Last Updated: 2026-09-14
+Last Updated: 2026-09-15
 
 ## Current Phase
-Controlled remediation for the product audit implemented locally and deployed for
-production acceptance.
+V1 workflow is implemented and production-accepted; the documentation operating system
+is now the maintenance and research handover layer.
 
 ## Completed
 - Overview has direct Add vacancy/import actions, operational counts and next steps.
@@ -22,16 +22,26 @@ production acceptance.
   questions, HR Interview, phone editing, refresh/relogin and rejection. Import passed.
 - All eight populated tables passed live isolation/anonymous checks; foreign ownership,
   stale writes and partial transactions were rejected. QA accounts/data removed.
-- npm run check: 38 tests, lint and production build pass. SQL integration: 10 groups pass.
+- npm run check: 50 tests, lint and production build pass. SQL integration: 10 groups pass.
 - Research import now accepts the descriptive source labels used by curated batches.
 - Public production URL: https://pyoloker.vercel.app/ through Vercel.
 - Authentication remains intact: verified signup, password login, resend/recovery.
 
 ## Next
-Use Add vacancy or Import research, review in Inbox, then prepare and record applications.
-Owner workspace currently contains three CVs, seven imported jobs, seven companies,
-seven sources and one research run, with no application, question or event rows.
-Keep regular exports. No remaining blocker for this milestone.
+Use Add vacancy or Import research, review in Jobs, then prepare and record applications.
+Latest read-only owner snapshot: three CVs, 27 jobs, eight application records (seven
+active: two Preparing and five Applied; one terminal Closed), with current application,
+question and event counts governed by the live workspace. The dated 20-job research batch
+is still a manual-review artifact and has not been imported. Keep regular exports.
+
+## Data reconciliation note — 2026-09-15
+
+The original bootstrap request mentioned an approximate 47-job / 11-application state,
+while the latest repository-recorded read-only snapshot is 27 jobs / 8 applications.
+No local data export is present to resolve that difference, so it is not treated as a
+fact or used to mutate records. Before future triage, load the live/local workspace and
+report its counts; separately reconcile newer closure evidence against owner posting
+status and application history under `06_RESEARCH_RULES.md`.
 
 ## Accepted Limits
 Custom SMTP deferred; default email limits accepted for private use. Physical phone
@@ -113,3 +123,28 @@ view renders 7 rows; the Closed status filter retrieves the one terminal row.
 Primary navigation is Overview, Jobs, Attention, Companies and History. Jobs combines
 opportunities and application-backed records using lifecycle filters; Inbox and
 Applications remain compatibility redirects.
+
+## Live job-market research batch — 2026-09-15
+
+Completed a read-only, multi-source research pass: approximately 82 vacancy candidates
+were inspected and 20 survived final open-status verification, conservative eligibility
+screening and duplicate review. The manual-review artifacts are
+`output/research-report-2026-09-15.md` and `output/research-import-2026-09-15.json`.
+No owner records, applications, CV files or production data were changed. One existing
+BCA Digital Business Analyst source was confirmed closed; HashMicro was excluded from
+the import as an existing workspace duplicate. Recheck aging listings immediately before
+application because portal status can change.
+
+## Documentation bootstrap — 2026-09-15
+
+Added the agent entry point `docs/README.md`, `AGENT_RUNBOOK.md`, `CV_STRATEGY.md` and
+`TRIAGE.md`; refactored the canonical profile and expanded the actual data/import,
+research and application contracts. Root `README.md` and `AGENTS.md` now point agents to
+progressive disclosure. No code, owner records, production data, applications or CV files
+were changed by this milestone.
+
+## Start Here guide — 2026-09-15
+
+Added `/guide` with deterministic next-step guidance, four workflow cards, seven
+copy-ready Astra prompts and direct links to existing research, Jobs, Attention and
+History actions. It performs no mutations simply by being viewed.

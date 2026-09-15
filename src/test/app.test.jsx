@@ -16,6 +16,20 @@ const renderApp = (path = "/", props = {}) =>
     </MemoryRouter>,
   );
 describe("private workspace UI", () => {
+  it("shows Start Here workflows and copy-ready prompts without mutating data", async () => {
+    const u = userEvent.setup();
+    renderApp("/guide", {
+      initialUser: { id: LOCAL_USER, email: "Local" },
+      repository: createLocalRepository(),
+    });
+    expect(await screen.findByRole("heading", { name: "Start Here" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Find jobs" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Triage jobs" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Apply today" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Track progress" })).toBeVisible();
+    await u.click(screen.getByRole("button", { name: "Copy Research new jobs prompt" }));
+    expect(await screen.findByRole("button", { name: "Copy Research new jobs prompt" })).toHaveTextContent("Copied");
+  });
   it("starts from the dashboard and moves a reviewed card through Jobs", async () => {
     const u = userEvent.setup();
     renderApp("/", {

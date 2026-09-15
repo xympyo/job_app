@@ -31,6 +31,7 @@ import Dashboard from "./pages/Dashboard";
 import Workspace from "./pages/Workspace";
 import Research from "./pages/Research";
 import Library from "./pages/Library";
+import Guide from "./pages/Guide";
 
 function Loading({ label = "Loading your workspace…" }) {
   return (
@@ -55,6 +56,7 @@ export function ProtectedRoute() {
 const navigation = [
   { to: "/", label: "Overview", icon: LayoutDashboard },
   { to: "/jobs", label: "Jobs", icon: BriefcaseBusiness },
+  { to: "/guide", label: "Start Here", icon: CircleHelp },
   { to: "/attention", label: "Attention", icon: Flag },
   { to: "/history", label: "History", icon: Clock3 },
 ];
@@ -265,6 +267,7 @@ export default function App() {
       <Route element={<ProtectedRoute />}>
         <Route element={<Layout />}>
           <Route index element={<Dashboard />} />
+          <Route path="guide" element={<Guide />} />
           <Route path="attention" element={<Dashboard attentionOnly />} />
           <Route path="jobs/:id?" element={<Workspace area="jobs" />} />
           <Route path="inbox/:id?" element={<LegacyWorkspaceRedirect />} />

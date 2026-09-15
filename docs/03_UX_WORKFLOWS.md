@@ -39,3 +39,10 @@ unapplied opportunities and application-backed records together; an application 
 is the primary lifecycle label once a workspace exists. `/inbox` redirects to Jobs and
 `/applications` redirects to Jobs with active application filtering for old bookmarks.
 
+
+## Start Here guide
+
+`/guide` is the human-facing operating manual for Find → Evaluate → Apply → Progress.
+It derives one recommended next step from current workspace state, links to the existing
+Jobs, Research, Attention and History actions, and provides concise copy-ready Astra
+prompts for research, triage, applying, analysis, preparation, interviews and progress.

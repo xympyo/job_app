@@ -87,3 +87,31 @@ Inbox and Applications are consolidated in the user-facing navigation as Jobs wh
 jobs and applications tables remain separate. Application status dominates display state;
 terminal records are excluded from the default Jobs view and remain filterable/available
 in History. Legacy routes redirect without changing stored records.
+
+## 2026-09-15 — Diversified live research batch
+
+Decision: Use a conservative, multi-source manual research pass with explicit final-pass
+open-status evidence, eligibility confidence and competition tiers; exclude uncertain or
+conflicting vacancies from the actionable set and preserve them only in the research report.
+Rationale: the prior batch over-weighted prestige funnels and included false-open listings,
+which reduced application efficiency. Implication: this batch contains 20 verified records
+with a 20% Reach / 55% Target / 25% Safer balance, remains a review import, and must be
+rechecked before applying because vacancy state is time-sensitive.
+
+## 2026-09-15 — Repository documentation as the career operating system
+
+Decision: `docs/README.md` is the AI-agent entry point, while the profile, CV strategy,
+data model, research, triage and application documents are the progressive-disclosure
+operating layer. Existing audit/QA documents remain supporting history.
+Rationale: repeated prompts were recreating policy and producing inconsistent triage;
+the repository already contains the facts and enforced contracts needed to operate it.
+Implications: future sessions should read the relevant workflow docs before acting, use
+current PyoLoker records as facts, preserve dated research as temporary evidence, and
+append policy changes here rather than duplicating them in reports.
+
+## 2026-09-15 — Start Here guide
+
+Add a concise in-app guide at `/guide` so Moshe can operate the documented career
+workflow without opening repository Markdown. Keep prompts short and repository-aware;
+the Markdown operating system remains authoritative. Derive the recommended next step
+from existing workspace state and do not add tutorial persistence or automation.
