@@ -2,7 +2,7 @@
 
 - Status: **awaiting_owner_review**
 - Mode: read-only shadow migration
-- Candidate hash: fnv1a64:2e18d7c3380796e9
+- Candidate hash: fnv1a64:8dfc4141079a9c34
 - Deterministic repeat: yes
 
 ## Sources used
@@ -23,6 +23,11 @@
 - leadership
 - skills
 - career direction
+### Owner confirmed
+- Primary employment goal: Full-time work
+- Preferred locations: Jakarta, Cikarang, Bekasi, Jabodetabek
+- Work modes: Onsite, Hybrid, Remote acceptable where appropriate
+- Relocation: Case-by-case
 ### Normalized
 - careerStage.graduation: Expected graduation retained without inferring pre-graduation unavailability.
 - experiences: Mattel remains internship; Homize remains freelance/project.
@@ -32,7 +37,6 @@
 ### Unresolved
 - Exact Mattel role wording and internship date boundaries
 - Exact Homize dates and preferred title wording
-- Location, relocation and work-mode preferences
 - Future document versions for the three CV variants
 ### Excluded
 - Work authorisation
@@ -48,7 +52,7 @@
 
 ## Operational history compatibility
 - No V1 jobs, sources, research runs, applications, questions, events, outcomes or snapshots are recreated.
-- No authorized current snapshot was available; live IDs/counts remain unresolved.
+- Snapshot status: no authorized current snapshot; live IDs/counts remain unresolved.
 
 ## Gate 1 fixture comparison
 - Preserved: PT Mattel Indonesia, Homize, EDEN, OMNI, Pyomanizer, Deep Learning Product Package Verification
@@ -59,8 +63,8 @@
 - Fixture-only exclusion: Fixture-only contact placeholder and any unsupported availability/work-authorisation implication.
 
 ## Compiler validation
-- career: pass; 3805 approximate tokens
-- research: pass; 4290 approximate tokens
+- career: pass; 4008 approximate tokens
+- research: pass; 4942 approximate tokens
 
 ## Safety boundary
 - No database writes, production migrations, owner mutations, document uploads, credentials, secrets or local paths were used.

@@ -4,6 +4,7 @@ import { mosheShadowMigrationInput } from "../v2/migration-fixtures.js";
 import { profileRevisionPayloadSchema } from "../v2/profile.js";
 import { compileCareerPack } from "../v2/compiler.js";
 import { syntheticFinanceFixture } from "../v2/fixtures.js";
+import { preferenceQuestionForTask } from "../v2/tasks.js";
 
 const build = () => buildShadowMigration({ ...mosheShadowMigrationInput, legacySnapshot: null });
 
@@ -44,6 +45,31 @@ describe("Gate 3A shadow Moshe migration", () => {
     expect(JSON.stringify(result.payload)).not.toMatch(/password|token|secret/i);
   });
 
+  it("renders an owner-review document without implementation artifacts", () => {
+    const result = build();
+    const review = renderMigrationReview({ profile: result.profile, report: result.report, cvReport: result.cvReport });
+    expect(review).toContain("Primary employment goal: Full-time");
+    expect(review).toContain("Relocation: Case-by-case");
+    expect(review).toContain("I want work at the intersection of technology, operations, products, and leadership.");
+    expect(review).toContain("### Homize — Freelance Software Developer / Technical Project Lead");
+    expect(review).toContain("Dates: Not provided");
+    expect(review).toContain("## Owner-confirmed preferences");
+    expect(review).toContain("## Needs confirmation");
+    expect(review).not.toContain("[object Object]");
+    expect(review).not.toMatch(/undefined|null/);
+    expect(result.report.ambiguity.some((item) => /location|relocation|work-mode/i.test(item.item))).toBe(false);
+    expect(result.report.semantic_diff.owner_confirmed.map((item) => item.item)).toContain("Primary employment goal");
+  });
+
+  it("keeps preference provenance and applies the generic materiality rule", () => {
+    const result = build();
+    expect(result.payload.sourceMapJson.workPreferences[0].kind).toBe("user_confirmation");
+    expect(result.profile.workPreferences.employmentType.primary).toBe("Full-time");
+    expect(preferenceQuestionForTask({ preference: "employmentType", materiallyRelevant: true })).toMatch(/employment type/);
+    expect(preferenceQuestionForTask({ preference: "relocation", materiallyRelevant: false })).toBeNull();
+    expect(preferenceQuestionForTask({ preference: "relocation", value: "Bali for this role", materiallyRelevant: true })).toBeNull();
+  });
+
   it("reports that operational history is preserved without an authorized snapshot", () => {
     const result = build();
     expect(result.report.operational_history.recreation_required).toBe(false);
@@ -67,6 +93,9 @@ describe("Gate 3A shadow Moshe migration", () => {
     expect(packs.research.lint.ok).toBe(true);
     expect(packs.career.markdown).toContain("## Education");
     expect(packs.career.markdown).toContain("## Experience");
+    expect(packs.research.markdown).toContain("full-time graduate");
+    expect(packs.research.markdown).toContain("Unknown stays unknown");
+    expect(packs.career.markdown).toContain("Context: PT Mattel Indonesia — Process Engineering Intern");
     expect(packs.career.markdown).not.toMatch(/[A-Z]:\\/);
     expect(packs.career.markdown).not.toContain("docs/02_USER_PROFILE.md");
     expect(renderMigrationReview({ profile: result.profile, report: result.report, cvReport: result.cvReport })).toContain("## Needs confirmation");

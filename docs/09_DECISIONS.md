@@ -185,3 +185,15 @@ run. Local Career Pack artifacts are generated for review, while live owner IDs/
 remain unresolved because no authorized current export was available. No database writes,
 production migration, document upload or runtime Moshe branch is permitted. Status:
 shadow migration prepared / awaiting owner review; Gate 3B requires explicit approval.
+
+## 2026-09-16 — Gate 3A owner-confirmed preference correction
+
+Moshe explicitly confirmed full-time work as the primary employment goal, Jakarta,
+Cikarang, Bekasi and Jabodetabek as preferred locations, onsite/hybrid/appropriate
+remote work modes, and case-by-case relocation. These preferences carry
+`user_confirmation` provenance and guide research without making other employment types
+absolute exclusions. The generic V2 rule is that preferences are personal and mutable:
+unknown stays unknown, missing preferences are queried only when materially relevant,
+and opportunity-specific choices are not generalized without explicit confirmation.
+The shadow review renderer now presents unresolved claims and freeform context as human
+language. No profile or production record was published.

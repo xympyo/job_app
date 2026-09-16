@@ -157,3 +157,12 @@ Gate 2C adds a local, review-first source import and external-AI-assisted profil
 The `build_profile` task reuses the Gate 1 compiler and includes a portable profile policy plus a complete `pyoloker.profile-proposal` 1.0 output contract. Profile proposals are strict, versioned envelopes with allow-listed targets and `add`/`change`/`remove` operations. Imports are parsed and reviewed without mutation; accepted items are written only to the current draft with `accepted_ai_proposal` provenance. Publishing remains a separate explicit action. Stale source revision/hash context is surfaced and requires explicit acknowledgement. Plain text and source material remain untrusted data and are rendered with an explicit boundary.
 
 Gate 2C profile packs default to the private-minimum preset, expose a selectable privacy preset and preview, and redact obvious contact/secret patterns from transient source text before handoff. Deterministic local extraction is deliberately conservative; it produces the same reviewable proposal shape as an AI result and never publishes by itself. Conflicting current values remain visible for user review.
+
+## Preference resolution rule — 2026-09-16
+
+Preferences are user-specific and mutable. Packs and task policies must not infer
+employment type, location, work mode, relocation, timing, compensation or other
+constraints from unrelated facts. Unknown remains unknown. If a missing preference is
+material to the current task, the user's AI should ask one concise targeted question;
+otherwise it should continue. An opportunity-specific answer remains scoped to that
+opportunity unless the user explicitly confirms it as a general preference.

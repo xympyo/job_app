@@ -34,7 +34,7 @@
   "source_limitations": [
     "No authorized current owner V1 export or cloud snapshot was available in the repository."
   ],
-  "candidate_hash": "fnv1a64:2e18d7c3380796e9",
+  "candidate_hash": "fnv1a64:8dfc4141079a9c34",
   "profile_revision": {
     "schema_version": "1.0",
     "created_by": "migration",
@@ -64,10 +64,6 @@
       "reason": "Current documents support freelance/project technical leadership but do not establish a complete date range."
     },
     {
-      "item": "Location, relocation and work-mode preferences",
-      "reason": "Current documents identify Jakarta/Cikarang/Jabodetabek priorities; flexibility should be reviewed."
-    },
-    {
       "item": "Future document versions for the three CV variants",
       "reason": "Legacy local files are not uploaded into V2 and require explicit user action."
     }
@@ -92,6 +88,28 @@
     {
       "item": "Unsupported salary preferences and older targets",
       "reason": "Not present in current accepted source material."
+    }
+  ],
+  "owner_confirmed_preferences": [
+    {
+      "item": "Primary employment goal",
+      "value": "Full-time work",
+      "source": "owner confirmation"
+    },
+    {
+      "item": "Preferred locations",
+      "value": "Jakarta, Cikarang, Bekasi, Jabodetabek",
+      "source": "owner confirmation"
+    },
+    {
+      "item": "Work modes",
+      "value": "Onsite, Hybrid, Remote acceptable where appropriate",
+      "source": "owner confirmation"
+    },
+    {
+      "item": "Relocation",
+      "value": "Case-by-case",
+      "source": "owner confirmation"
     }
   ],
   "cv_compatibility": [
@@ -243,10 +261,31 @@
       "stable item IDs",
       "area-level migration provenance"
     ],
+    "owner_confirmed": [
+      {
+        "item": "Primary employment goal",
+        "value": "Full-time work",
+        "source": "owner confirmation"
+      },
+      {
+        "item": "Preferred locations",
+        "value": "Jakarta, Cikarang, Bekasi, Jabodetabek",
+        "source": "owner confirmation"
+      },
+      {
+        "item": "Work modes",
+        "value": "Onsite, Hybrid, Remote acceptable where appropriate",
+        "source": "owner confirmation"
+      },
+      {
+        "item": "Relocation",
+        "value": "Case-by-case",
+        "source": "owner confirmation"
+      }
+    ],
     "unresolved": [
       "Exact Mattel role wording and internship date boundaries",
       "Exact Homize dates and preferred title wording",
-      "Location, relocation and work-mode preferences",
       "Future document versions for the three CV variants"
     ],
     "excluded": [
@@ -267,8 +306,8 @@
   },
   "idempotency": {
     "deterministic": true,
-    "candidate_hash_repeat": "fnv1a64:2e18d7c3380796e9",
-    "report_hash_repeat": "fnv1a64:e18c87644a71a749"
+    "candidate_hash_repeat": "fnv1a64:8dfc4141079a9c34",
+    "report_hash_repeat": "fnv1a64:13f82faeba6d944f"
   },
   "compiler_validation": {
     "career": {
@@ -277,9 +316,9 @@
         "issues": []
       },
       "metrics": {
-        "characters": 15217,
-        "words": 1612,
-        "approximateTokens": 3805
+        "characters": 16029,
+        "words": 1696,
+        "approximateTokens": 4008
       },
       "manifest": {
         "taskType": "career_discussion",
@@ -306,7 +345,7 @@
           "document binaries"
         ],
         "generatedAt": "2026-09-16T00:00:00.000Z",
-        "contentHash": "fnv1a64:7bbe930cfec019b7"
+        "contentHash": "fnv1a64:c8997601c7265950"
       }
     },
     "research": {
@@ -315,9 +354,9 @@
         "issues": []
       },
       "metrics": {
-        "characters": 17159,
-        "words": 1805,
-        "approximateTokens": 4290
+        "characters": 19768,
+        "words": 2126,
+        "approximateTokens": 4942
       },
       "manifest": {
         "taskType": "research_jobs",
@@ -346,7 +385,7 @@
           "document binaries"
         ],
         "generatedAt": "2026-09-16T00:00:00.000Z",
-        "contentHash": "fnv1a64:1d51f6c579bc2310"
+        "contentHash": "fnv1a64:2be587a22e9099e1"
       }
     }
   }

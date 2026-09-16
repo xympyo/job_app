@@ -217,3 +217,13 @@ history compatibility checks, and Career Pack samples. No authorized live V1 exp
 available, so live owner IDs/counts remain unresolved. No career profile, revision, job,
 application, CV document, migration or production record was created or changed. Gate 3B
 has not started.
+
+## Gate 3A correction pass — 2026-09-16
+
+Owner-confirmed general preferences now appear in the shadow candidate with
+`user_confirmation` provenance: full-time work is primary; preferred locations are
+Jakarta, Cikarang, Bekasi and Jabodetabek; work modes are onsite, hybrid and appropriate
+remote; relocation is case-by-case. Research policy prioritizes full-time roles while
+retaining strategically relevant non-full-time opportunities. Review/report rendering
+now handles unresolved claims and missing values in human language and preserves the
+freeform career note. Artifacts remain local and read-only; Gate 3B has not started.

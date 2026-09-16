@@ -20,6 +20,13 @@ Evidence may come from direct user entry, approved source material, accepted ext
 
 There is one active career profile per user in beta. It contains versioned canonical facts, evidence/provenance, target roles, locations, work modes, relocation/work-authorisation/timing constraints, and user-authored freeform notes. Career preferences that affect reasoning live in the versioned profile; `career_profiles.preferences_json` is only for product/account preferences such as privacy defaults and UI settings. Multiple personas are deferred.
 
+Preferences are personal and mutable. They must not be inferred from a CV or unrelated
+profile facts; missing preferences remain unknown. When a missing preference materially
+affects the current task, ask one concise targeted question. Otherwise continue without
+interruption. Keep opportunity-specific decisions separate from general preferences: a
+situational answer becomes canonical only after the user explicitly confirms it as a
+general preference.
+
 New users start empty: no Moshe facts, CVs, paths, jobs, applications, achievements, or seeded records. Manual onboarding, source import, and optional AI-assisted proposals are all first-class.
 
 ## 5. CV and document model
@@ -85,4 +92,3 @@ V1 research import and triage formats remain readable. Existing UUIDs and null/b
 ## 16. Explicit non-goals
 
 No autonomous research, scraping, vacancy harvesting, background monitoring, auto-apply, recruiter messaging, scheduled agents, native/provider AI integration, paid LLM dependency, automatic CV rewriting, team workspaces, social/job-marketplace features, generic workflow engine, or premature permanent pack/artifact storage.
-

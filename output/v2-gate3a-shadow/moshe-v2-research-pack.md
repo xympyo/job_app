@@ -28,8 +28,13 @@
 
 ## Task policy
 
+- Preferences are personal and mutable; do not infer them from a CV or unrelated profile facts.
+- Unknown stays unknown. If a missing preference materially affects the task, ask one concise targeted question; otherwise continue without interruption.
+- Keep opportunity-specific decisions separate from general preferences. A situational answer must not become a permanent preference without explicit confirmation.
+- Relevant preferences may include employment type, location, work mode, relocation, start timing, compensation, or another task-specific constraint.
 - Search responsibilities and actual work, not title keywords alone.
 - Apply the user's target roles, location/work-mode preferences, timing, and final-year reasoning.
+- Treat the user's primary employment preference as the default target: prioritize full-time graduate, permanent and entry-level professional roles. Include internships, freelance or contract roles only when explicitly requested, unusually strategic, or clearly suitable while the user is still a student, and label the difference.
 - Keep internship, freelance, project, and leadership experience types intact; assess realistic experience eligibility.
 - Use an official employer posting first when available. Search snippets are discovery leads, not proof.
 - Open the actual posting/application destination and make a second pass that actively attempts to disprove open status.
@@ -75,12 +80,14 @@
 ### EDEN
 
 - Internal manufacturing/engineering information system.
+- Context: PT Mattel Indonesia — Process Engineering Intern
 - Evidence:
   - Centralized 267,000+ records for capacity planning, tooling readiness, milestone tracking, workload visibility and engineering-data management.
 
 ### OMNI
 
 - Optigrid Metaheuristics Nesting Intelligence manufacturing-layout optimization.
+- Context: PT Mattel Indonesia — Process Engineering Intern
 - Evidence:
   - Selected planning workflows reduced from days to approximately 60 minutes.
   - Approximately 4% throughput improvement.
@@ -130,12 +137,21 @@
 - Target roles: Management Trainee / Graduate Program, Product, Analyst, Digital Transformation, Technology Consulting
 - Locations: Jakarta, Cikarang, Bekasi, Jabodetabek
 - Work preferences: {
+  "employmentType": {
+    "primary": "Full-time",
+    "rule": "Prioritize full-time work; consider other types when explicitly requested, unusually strategic, or suitable while still a student.",
+    "secondary": [
+      "Internship",
+      "Freelance",
+      "Contract"
+    ]
+  },
   "modes": [
     "Onsite",
     "Hybrid",
     "Remote acceptable where appropriate"
   ],
-  "relocation": "Not specified; assess per opportunity"
+  "relocation": "Case-by-case"
 }
 - Constraints: {
   "availabilityBeforeGraduation": "Unknown; evaluate each employer's actual start-date and eligibility requirement. Do not infer general unavailability before graduation.",
@@ -247,7 +263,7 @@ Target roles:
 ```json
 
 {
-  "contentHash": "fnv1a64:1d51f6c579bc2310",
+  "contentHash": "fnv1a64:2be587a22e9099e1",
   "excludedSections": [
     "applicationAnswers",
     "interviews",

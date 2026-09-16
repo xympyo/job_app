@@ -26,8 +26,8 @@ const profile = {
     ] },
   ],
   projects: [
-    { name: "EDEN", description: "Internal manufacturing/engineering information system.", evidence: ["Centralized 267,000+ records for capacity planning, tooling readiness, milestone tracking, workload visibility and engineering-data management."] },
-    { name: "OMNI", description: "Optigrid Metaheuristics Nesting Intelligence manufacturing-layout optimization.", evidence: ["Selected planning workflows reduced from days to approximately 60 minutes.", "Approximately 4% throughput improvement."] },
+    { name: "EDEN", description: "Internal manufacturing/engineering information system.", context: "PT Mattel Indonesia — Process Engineering Intern", evidence: ["Centralized 267,000+ records for capacity planning, tooling readiness, milestone tracking, workload visibility and engineering-data management."] },
+    { name: "OMNI", description: "Optigrid Metaheuristics Nesting Intelligence manufacturing-layout optimization.", context: "PT Mattel Indonesia — Process Engineering Intern", evidence: ["Selected planning workflows reduced from days to approximately 60 minutes.", "Approximately 4% throughput improvement."] },
     { name: "Pyomanizer", description: "Public AI/text-rephrasing web application.", evidence: ["Approximately 1.1M+ characters and 1,500+ documents of usage.", "Product ownership, deployment and software delivery."] },
     { name: "Deep Learning Product Package Verification", description: "Four-person academic proof of concept.", evidence: ["Pipeline design and dataset/data work.", "YOLO, Hi-SAM, Parseq OCR and Llama 4."] },
   ],
@@ -40,7 +40,7 @@ const profile = {
   languages: ["Indonesian", "English"],
   targetRoles: ["Management Trainee / Graduate Program", "Product", "Analyst", "Digital Transformation", "Technology Consulting"],
   locationPreferences: ["Jakarta", "Cikarang", "Bekasi", "Jabodetabek"],
-  workPreferences: { modes: ["Onsite", "Hybrid", "Remote acceptable where appropriate"], relocation: "Not specified; assess per opportunity" },
+  workPreferences: { employmentType: { primary: "Full-time", secondary: ["Internship", "Freelance", "Contract"], rule: "Prioritize full-time work; consider other types when explicitly requested, unusually strategic, or suitable while still a student." }, modes: ["Onsite", "Hybrid", "Remote acceptable where appropriate"], relocation: "Case-by-case" },
   constraints: { expectedGraduation: "December 2026", availabilityBeforeGraduation: "Unknown; evaluate each employer's actual start-date and eligibility requirement. Do not infer general unavailability before graduation." },
   evidence: ["Mattel is an internship, not full-time employment.", "Homize is freelance/project work, not ordinary full-time employment.", "PUMA/HIMA evidence is leadership, separate from employment.", "Expected graduation does not establish general unavailability before graduation.", "No supported work-authorisation claim is included."],
   freeformNotes: "I want work at the intersection of technology, operations, products, and leadership. I use coding as a tool for solving broader business and process problems, and I want to grow toward work with wider ownership.",
@@ -78,7 +78,6 @@ export const mosheShadowMigrationInput = {
     ambiguity: [
       { item: "Exact Mattel role wording and internship date boundaries", reason: "Current documents support the internship boundary but should be confirmed before publication." },
       { item: "Exact Homize dates and preferred title wording", reason: "Current documents support freelance/project technical leadership but do not establish a complete date range." },
-      { item: "Location, relocation and work-mode preferences", reason: "Current documents identify Jakarta/Cikarang/Jabodetabek priorities; flexibility should be reviewed." },
       { item: "Future document versions for the three CV variants", reason: "Legacy local files are not uploaded into V2 and require explicit user action." },
     ],
     exclusions: [
@@ -87,6 +86,12 @@ export const mosheShadowMigrationInput = {
       { item: "Legacy filesystem paths", reason: "Paths are diagnostic metadata only and are excluded from the candidate and Career Packs." },
       { item: "Assistant-generated career interpretations", reason: "Interpretations such as 'strong product manager' are not factual evidence." },
       { item: "Unsupported salary preferences and older targets", reason: "Not present in current accepted source material." },
+    ],
+    ownerConfirmedPreferences: [
+      { item: "Primary employment goal", value: "Full-time work", source: "owner confirmation" },
+      { item: "Preferred locations", value: "Jakarta, Cikarang, Bekasi, Jabodetabek", source: "owner confirmation" },
+      { item: "Work modes", value: "Onsite, Hybrid, Remote acceptable where appropriate", source: "owner confirmation" },
+      { item: "Relocation", value: "Case-by-case", source: "owner confirmation" },
     ],
   },
 };

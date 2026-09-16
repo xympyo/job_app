@@ -202,3 +202,13 @@ no database calls, migrations, profile creation, CV/document upload, job/applica
 recreation, or owner-data mutation. No authorized live owner export was available, so
 current V1 IDs/counts remain unresolved. Status is **shadow migration prepared / awaiting
 owner review**; Gate 3B is not started.
+
+### Gate 3A owner-review correction — 2026-09-16
+
+The shadow candidate now records explicitly confirmed general preferences with
+`user_confirmation` provenance: full-time work is primary, preferred locations are
+Jakarta/Cikarang/Bekasi/Jabodetabek, work modes are onsite/hybrid/appropriate remote,
+and relocation is case-by-case. Research policy prioritizes full-time roles while
+retaining strategically relevant alternatives. Human review output renders unknown
+values as clear language, preserves the freeform note, and links EDEN/OMNI to the Mattel
+internship context. No owner or production data was changed.

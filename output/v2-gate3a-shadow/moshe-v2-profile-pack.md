@@ -72,12 +72,14 @@ Use supplied evidence to explore career direction. Ask focused questions where m
 ### EDEN
 
 - Internal manufacturing/engineering information system.
+- Context: PT Mattel Indonesia — Process Engineering Intern
 - Evidence:
   - Centralized 267,000+ records for capacity planning, tooling readiness, milestone tracking, workload visibility and engineering-data management.
 
 ### OMNI
 
 - Optigrid Metaheuristics Nesting Intelligence manufacturing-layout optimization.
+- Context: PT Mattel Indonesia — Process Engineering Intern
 - Evidence:
   - Selected planning workflows reduced from days to approximately 60 minutes.
   - Approximately 4% throughput improvement.
@@ -127,12 +129,21 @@ Use supplied evidence to explore career direction. Ask focused questions where m
 - Target roles: Management Trainee / Graduate Program, Product, Analyst, Digital Transformation, Technology Consulting
 - Locations: Jakarta, Cikarang, Bekasi, Jabodetabek
 - Work preferences: {
+  "employmentType": {
+    "primary": "Full-time",
+    "rule": "Prioritize full-time work; consider other types when explicitly requested, unusually strategic, or suitable while still a student.",
+    "secondary": [
+      "Internship",
+      "Freelance",
+      "Contract"
+    ]
+  },
   "modes": [
     "Onsite",
     "Hybrid",
     "Remote acceptable where appropriate"
   ],
-  "relocation": "Not specified; assess per opportunity"
+  "relocation": "Case-by-case"
 }
 - Constraints: {
   "availabilityBeforeGraduation": "Unknown; evaluate each employer's actual start-date and eligibility requirement. Do not infer general unavailability before graduation.",
@@ -196,7 +207,7 @@ Target roles:
 ```json
 
 {
-  "contentHash": "fnv1a64:7bbe930cfec019b7",
+  "contentHash": "fnv1a64:c8997601c7265950",
   "excludedSections": [
     "jobs",
     "applications",

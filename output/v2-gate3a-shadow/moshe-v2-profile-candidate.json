@@ -54,7 +54,8 @@
         "description": "Internal manufacturing/engineering information system.",
         "evidence": [
           "Centralized 267,000+ records for capacity planning, tooling readiness, milestone tracking, workload visibility and engineering-data management."
-        ]
+        ],
+        "context": "PT Mattel Indonesia — Process Engineering Intern"
       },
       {
         "id": "migration-project-omni-optigrid-metaheuristics-nesting-intelligence-manufacturing-layout",
@@ -63,7 +64,8 @@
         "evidence": [
           "Selected planning workflows reduced from days to approximately 60 minutes.",
           "Approximately 4% throughput improvement."
-        ]
+        ],
+        "context": "PT Mattel Indonesia — Process Engineering Intern"
       },
       {
         "id": "migration-project-pyomanizer-public-ai-text-rephrasing-web-application",
@@ -125,12 +127,21 @@
       "Jabodetabek"
     ],
     "workPreferences": {
+      "employmentType": {
+        "primary": "Full-time",
+        "secondary": [
+          "Internship",
+          "Freelance",
+          "Contract"
+        ],
+        "rule": "Prioritize full-time work; consider other types when explicitly requested, unusually strategic, or suitable while still a student."
+      },
       "modes": [
         "Onsite",
         "Hybrid",
         "Remote acceptable where appropriate"
       ],
-      "relocation": "Not specified; assess per opportunity"
+      "relocation": "Case-by-case"
     },
     "constraints": {
       "expectedGraduation": "December 2026",
