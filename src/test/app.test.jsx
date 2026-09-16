@@ -16,8 +16,7 @@ const renderApp = (path = "/", props = {}) =>
     </MemoryRouter>,
   );
 describe("private workspace UI", () => {
-  it("shows Start Here workflows and copy-ready prompts without mutating data", async () => {
-    const u = userEvent.setup();
+  it("shows the concise Help playbook and reset control", async () => {
     renderApp("/guide", {
       initialUser: { id: LOCAL_USER, email: "Local" },
       repository: createLocalRepository(),
@@ -27,8 +26,19 @@ describe("private workspace UI", () => {
     expect(screen.getByRole("heading", { name: "Triage jobs" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Apply today" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Track progress" })).toBeVisible();
-    await u.click(screen.getByRole("button", { name: "Copy Research new jobs prompt" }));
-    expect(await screen.findByRole("button", { name: "Copy Research new jobs prompt" })).toHaveTextContent("Copied");
+    expect(screen.getByRole("button", { name: "Restart Getting Started" })).toBeVisible();
+    expect(screen.queryByRole("heading", { name: "Copy a prompt" })).not.toBeInTheDocument();
+  });
+  it("teaches a new user the workflow and lets them defer the welcome", async () => {
+    const u = userEvent.setup();
+    renderApp("/", {
+      initialUser: { id: LOCAL_USER, email: "Local" },
+      repository: createLocalRepository(),
+    });
+    expect(await screen.findByRole("heading", { name: "Build your career profile" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Getting started" })).toBeVisible();
+    await u.click(screen.getByRole("button", { name: "I'll do this later" }));
+    expect(screen.queryByRole("heading", { name: "Build your career profile" })).not.toBeInTheDocument();
   });
   it("starts from the dashboard and moves a reviewed card through Jobs", async () => {
     const u = userEvent.setup();

@@ -233,3 +233,11 @@ freeform career note. Artifacts remain local and read-only; Gate 3B has not star
 Production reconciliation and activation completed after the approved Gate 3A candidate passed its hash check (`fnv1a64:8dfc4141079a9c34`). The live owner snapshot before activation contained 47 jobs, 45 companies, 58 job sources, 3 research runs, 11 applications, 0 questions, 0 events and the existing 3 CV variants. The V2 career-profile foundation was applied through the Management API because this project has no production `supabase_migrations` history table; the SQL is idempotent and only the approved profile tables/RPCs were added.
 
 Moshe now has one owner-scoped published career profile with revision 1. The revision was created and published through the normal Gate 2A RPC operations with the approved structured content, freeform note and provenance. A private ignored backup and activation report are under `private/gate3b/`; they are not source-controlled. Post-activation V1 IDs, counts, CV references, application stages/dates and snapshot hashes remained unchanged. Cloud Career capability uses the generic profile capability path; no Moshe-specific runtime branch or document/AI-artifact tables were introduced.
+
+## V2 first-run guidance — 2026-09-16
+
+Implemented locally: deterministic next-action guidance, a canonical-state Getting Started
+checklist, user-scoped tutorial reset/dismissal state, contextual explanations across Jobs,
+applications, Attention and Career, and a concise Help/Playbook at `/guide`. The flow
+teaches Find → Evaluate → Apply → Progress without requiring AI or repeated Guide visits.
+No database schema or owner data changed in this usability pass.

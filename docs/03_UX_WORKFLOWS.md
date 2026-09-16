@@ -28,10 +28,11 @@ changes applications, questions, events or history.
 
 ## Navigation mental model
 
-Inbox is the vacancy browser and evaluation workspace. Applications contains active or
-submitted application work. Attention contains actionable reminders. History is the
-historical record. Overview cards link directly to relevant views; triage shortcuts open
-Inbox with a URL-backed decision filter selected.
+Jobs is the vacancy browser and lifecycle workspace. It shows opportunities from review
+through application while the underlying job and application records remain separate.
+Attention contains actionable reminders. History is the historical record. Overview cards
+link directly to relevant Jobs or Attention views; triage shortcuts open Jobs with a
+URL-backed decision filter selected.
 ## Jobs workspace
 
 Overview shortcuts open `/jobs` with URL-backed lifecycle or triage filters. Jobs shows
@@ -42,7 +43,23 @@ is the primary lifecycle label once a workspace exists. `/inbox` redirects to Jo
 
 ## Start Here guide
 
-`/guide` is the human-facing operating manual for Find → Evaluate → Apply → Progress.
-It derives one recommended next step from current workspace state, links to the existing
-Jobs, Research, Attention and History actions, and provides concise copy-ready Astra
-prompts for research, triage, applying, analysis, preparation, interviews and progress.
+`/guide` is the human-facing Help/Playbook for Find → Evaluate → Apply → Progress. It
+derives one recommended next step from current workspace state and links to the existing
+Jobs, Research, Attention and History actions. When outside help is useful, it refers to
+the user's AI in provider-neutral language; AI remains optional.
+
+## First-run and guidance rules
+
+`/guide` is Help/Playbook for Find → Evaluate → Apply → Progress. Home provides a
+Getting Started checklist for genuinely new accounts and one recommended next action.
+The checklist is based on canonical profile, job, review and application state, collapses
+when complete, and can be reopened from Help. Contextual explanations clarify that Ready
+to Apply is a decision, Preparing is an unsent workspace, and Applied means the user
+submitted externally. PyoLoker can prepare context for the user's AI, but AI is optional
+and provider-neutral.
+
+The pure guidance engine prioritizes dated operational work, active application blockers,
+Ready-to-Apply preparation, unreviewed opportunities, missing profile setup, and finding
+the first opportunity. It does not create state or infer facts. Tutorial seen/dismissed
+flags are scoped to the authenticated user in browser storage, cleared on logout, and
+are convenience state rather than workflow truth.

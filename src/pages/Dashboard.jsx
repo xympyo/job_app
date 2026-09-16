@@ -12,9 +12,11 @@ import {
 } from "lucide-react";
 import { useWorkspace } from "../context";
 import { attentionItems, today, triageDecisionMatches } from "../lib/domain";
-import { LOCAL_USER, TERMINAL } from "../lib/constants";
+import { TERMINAL } from "../lib/constants";
+import { deriveGettingStarted, deriveRecommendedAction } from "../lib/guidance";
 import { Badge, Button, Empty, formatDateTime } from "../components/ui";
 import JobForm from "../components/JobForm";
+import { ContextualGuidance, GettingStarted } from "../components/Guidance";
 
 export function AttentionList({ items, limit }) {
   const hrefFor = (item) => {
@@ -52,12 +54,13 @@ export function AttentionList({ items, limit }) {
   );
 }
 export default function Dashboard({ attentionOnly = false }) {
-  const { data, profile, user } = useWorkspace();
+  const { data, profile, tutorial, resetTutorial, dismissGettingStarted, markTutorialSeen } = useWorkspace();
   const [adding, setAdding] = useState(false);
-  const [setupDismissed, setSetupDismissed] = useState(false);
   if (!attentionOnly && profile.loading) return <div className="standard-page"><div className="loading-screen">Preparing your workspace…</div></div>;
-  if (!attentionOnly && profile.available && !profile.current && !profile.draft && !setupDismissed && user?.id !== LOCAL_USER) return <div className="standard-page profile-welcome-page"><section className="panel profile-welcome"><div className="eyebrow">START WITH TRUSTED CONTEXT</div><h1>Build your career profile</h1><p>PyoLoker uses your career profile to evaluate opportunities, choose relevant CVs, prepare applications and build useful context for the AI you already use.</p><div className="primary-actions"><Link className="btn primary" to="/career?start=1">Set up my profile</Link><Button onClick={() => setSetupDismissed(true)}>I'll do this later</Button></div></section></div>;
   const attention = attentionItems(data);
+  const next = deriveRecommendedAction({ data, profile, attention });
+  const gettingStarted = deriveGettingStarted(data, profile);
+  const isFreshWorkspace = !profile.current && !data.jobs.length && !data.applications.length;
   const review = data.jobs.filter(
     (j) =>
       ["Found", "Reviewing"].includes(j.review_status) &&
@@ -101,6 +104,9 @@ export default function Dashboard({ attentionOnly = false }) {
           </div>
           <Badge>{attention.length} items</Badge>
         </header>
+        <ContextualGuidance milestone="attention" title="Attention is your action queue">
+          Deadlines, next actions, unfinished questions and planned interviews appear here. Jobs remains the place to browse every opportunity.
+        </ContextualGuidance>
         <section className="panel">
           {attention.length ? (
             <AttentionList items={attention} />
@@ -129,6 +135,19 @@ export default function Dashboard({ attentionOnly = false }) {
           }).format(new Date())}
         </span>
       </header>
+      {isFreshWorkspace && !tutorial?.state?.seen?.home && (
+        <section className="panel profile-welcome first-run-welcome">
+          <div className="eyebrow">WELCOME TO PYOlOKER</div>
+          <h2>Build your career profile</h2>
+          <p>Find → Evaluate → Apply → Progress. Keep opportunities, decisions and application progress in one private workspace. AI is optional; you stay in control.</p>
+          <div className="primary-actions"><Link className="btn primary" to="/career?start=1">Set up my profile</Link><Link className="btn" to="/research">Add or import a job</Link><Button onClick={() => markTutorialSeen?.("home")}>I'll do this later</Button></div>
+        </section>
+      )}
+      <GettingStarted items={gettingStarted} onRestart={resetTutorial} onHide={dismissGettingStarted} />
+      {!isFreshWorkspace && <section className="panel recommended-step" aria-labelledby="recommended-action-title">
+        <div><span className="eyebrow">ONE NEXT MOVE</span><h2 id="recommended-action-title">{next.title}</h2><p>{next.description}</p></div>
+        <Link className="btn primary" to={next.href}>{next.actionLabel}<ArrowRight size={16} /></Link>
+      </section>}
       <section className="panel workflow-start" aria-label="Next career step">
         <div>
           <h2>

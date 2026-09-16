@@ -23,6 +23,7 @@ import {
   toLocalInput,
   toTimestamp,
 } from "./ui";
+import { ContextualGuidance } from "./Guidance";
 
 function QuestionForm({ question, applicationId, onClose }) {
   const { mutate } = useWorkspace();
@@ -395,6 +396,16 @@ export default function ApplicationPanel({ application }) {
     );
   return (
     <div className="application-panel">
+      {application.status === "Preparing" && (
+        <ContextualGuidance milestone="preparing" title="Preparing means you have not submitted yet">
+          Choose the CV, capture questions and get your materials ready. PyoLoker never submits an application for you.
+        </ContextualGuidance>
+      )}
+      {application.status === "Applied" && (
+        <ContextualGuidance milestone="applied" title="Applied means you submitted externally">
+          Keep the application date and next action up to date here, then record assessments, interviews and outcomes as they happen.
+        </ContextualGuidance>
+      )}
       <section className="detail-section">
         <div className="section-heading">
           <h3>Application progress</h3>

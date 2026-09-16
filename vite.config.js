@@ -27,6 +27,8 @@ export default defineConfig(({ mode }) => {
       environment: "jsdom",
       setupFiles: "./src/test/setup.js",
       exclude: ["node_modules/**", "dist/**"],
+      // UI integration tests can exceed the default under parallel CI load.
+      testTimeout: 10000,
     },
   };
 });

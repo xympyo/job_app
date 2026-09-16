@@ -203,3 +203,12 @@ language. No profile or production record was published.
 Decision: activate the approved V2 career-profile foundation for the owner only after a read-only live reconciliation, private backup, schema/RLS checks and V1 identity comparison. Apply the career-profile migration through the Management API because the production project records prior V1 schema changes outside `supabase_migrations`, then use the normal `career_profile_create`, draft-save and publish RPC sequence. Existing CV variants and all jobs/applications/history remain authoritative and unchanged.
 
 The procedure is idempotent: an existing matching published revision switches to verification-only mode and cannot create a duplicate profile or revision. Gate 3B does not add document storage, context-export or AI-artifact persistence. Cloud Career availability is generic capability detection with an explicit emergency opt-out, never a Moshe-specific branch.
+
+## 2026-09-16 — V2 first-run guidance
+
+Decision: teach Find → Evaluate → Apply → Progress through a deterministic Home next-action
+card, a derived Getting Started checklist and short contextual explanations. `/guide`
+remains secondary Help/Playbook rather than a prompt wall. Tutorial flags are user-scoped
+browser convenience state, cleared on logout; canonical workspace records remain the only
+source for milestone completion. Guidance is provider-neutral and never writes workflow
+state.

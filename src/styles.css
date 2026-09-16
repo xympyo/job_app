@@ -2330,6 +2330,33 @@
 .prompt-card pre { margin:14px 0 0; padding:14px; white-space:pre-wrap; overflow-wrap:anywhere; font:13px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace; color:#30483e; background:#f0f4ee; border-radius:7px; }
 @media (max-width: 700px) { .guide-grid { grid-template-columns:1fr; } .recommended-step { align-items:flex-start; flex-direction:column; } .guide-question { font-size:21px; } .prompt-card-head { flex-direction:column; } .prompt-card-head .btn { width:100%; } }
 
+.first-run-welcome { padding: 28px; border-left: 4px solid #285444; }
+.first-run-welcome h2 { margin: 8px 0; }
+.first-run-welcome p { max-width: 700px; line-height: 1.7; }
+.getting-started { margin: 20px 0; }
+.getting-started-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 16px 0 0; padding: 0; list-style: none; }
+.getting-started-list li { display: flex; align-items: flex-start; gap: 10px; padding: 13px; border: 1px solid #dfe8dc; border-radius: 9px; background: #fbfcfa; min-width: 0; }
+.getting-started-list li.complete { background: #f2f7ef; color: #53634f; }
+.getting-started-check { display: grid; place-items: center; flex: 0 0 24px; width: 24px; height: 24px; border-radius: 50%; background: #e5eee0; color: #31552c; font-size: 12px; font-weight: 700; }
+.getting-started-list strong { display: block; font-size: 13px; line-height: 1.35; }
+.getting-started-list a { display: inline-block; margin-top: 5px; font-size: 12px; color: #285444; }
+.context-guidance { display: flex; align-items: flex-start; gap: 12px; margin: 16px 0; padding: 14px 16px; border: 1px solid #dbe7d4; border-radius: 9px; background: #f4f8f1; }
+.context-guidance-icon { display: grid; place-items: center; flex: 0 0 30px; width: 30px; height: 30px; color: #285444; background: #e3eee0; border-radius: 8px; }
+.context-guidance p { margin: 4px 0 7px; color: #53634f; line-height: 1.55; }
+.context-guidance-link { display: inline-flex; align-items: center; gap: 5px; color: #285444; font-size: 13px; font-weight: 600; }
+.guide-help-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.guide-help-section { display: flex; gap: 15px; padding: 21px; border: 1px solid #d9e2da; border-radius: 12px; background: #fff; }
+.guide-help-section h2 { margin: 0 0 6px; }
+.guide-help-section p { margin: 0 0 10px; color: #65725f; }
+.guide-help-section ul { margin: 0 0 16px; padding-left: 19px; color: #53634f; line-height: 1.65; }
+.guide-glossary { margin-top: 20px; }
+.guide-glossary dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; margin: 0; }
+.guide-glossary dl div { padding: 11px 0; border-top: 1px solid #e5ebe1; }
+.guide-glossary dt { font-weight: 700; }
+.guide-glossary dd { margin: 3px 0 0; color: #65725f; }
+@media (max-width: 800px) { .getting-started-list, .guide-help-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .getting-started-list, .guide-help-grid, .guide-glossary dl { grid-template-columns: 1fr; } .first-run-welcome { padding: 22px 18px; } .context-guidance { gap: 9px; padding: 13px; } .context-guidance > .btn { padding-inline: 5px; } }
+
 /* V2 manual career profile */
 .profile-welcome-page { max-width: 920px; }
 .profile-welcome { padding: 42px; max-width: 720px; }

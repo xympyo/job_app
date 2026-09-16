@@ -130,7 +130,7 @@ function Layout() {
         <nav aria-label="Resources">
           <NavLink to="/guide" onClick={() => setMenu(false)}>
             <CircleHelp size={18} />
-            Start Here
+            Help
           </NavLink>
           <NavLink to="/research" onClick={() => setMenu(false)}>
             <Upload size={18} />
@@ -194,7 +194,7 @@ function Layout() {
             <strong>
               {[
                 ...navigation,
-                { to: "/guide", label: "Start Here" },
+                { to: "/guide", label: "Help" },
                 { to: "/research", label: "Research import" },
                 { to: "/companies", label: "Companies" },
                 { to: "/library", label: "Career toolkit" },

@@ -21,6 +21,7 @@ import { POSTING_STATES, REVIEW_STATES, STATUS_HELP } from "../lib/constants";
 import { Badge, Button, Confirm, ExternalLink, Select, formatDate } from "./ui";
 import JobForm from "./JobForm";
 import ApplicationPanel from "./ApplicationPanel";
+import { ContextualGuidance } from "./Guidance";
 
 export default function JobDetail({ job, area = "inbox" }) {
   const { data, mutate, saving } = useWorkspace();
@@ -131,6 +132,16 @@ export default function JobDetail({ job, area = "inbox" }) {
           )}
         </div>
       </header>
+      {!application && job.review_status === "Ready to Apply" && (
+        <ContextualGuidance milestone="ready-to-apply" title="Ready to Apply is your decision">
+          You decided this opportunity is worth pursuing. Preparing opens a workspace for your CV, questions and notes; nothing is submitted automatically.
+        </ContextualGuidance>
+      )}
+      {!application && job.review_status !== "Ready to Apply" && (
+        <ContextualGuidance milestone="job-detail" title="What happens here?">
+          Check the employer facts, review the research assessment, decide whether the opportunity fits, then choose the next action.
+        </ContextualGuidance>
+      )}
       <div className="detail-tabs">
         <button
           className={tab === "overview" ? "active" : ""}

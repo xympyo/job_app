@@ -18,6 +18,7 @@ import {
 } from "./lib/repository";
 import { errorMessage } from "./lib/schema";
 import { createLocalProfileRepository, createCloudProfileRepository } from "./v2/profile-repository.js";
+import { clearTutorialState, markTutorialSeen as markSeen, readTutorialState, writeTutorialState } from "./lib/tutorial-state";
 
 const Context = createContext(null);
 export const useWorkspace = () => useContext(Context);
@@ -34,6 +35,7 @@ export function WorkspaceProvider({
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [profileView, setProfileView] = useState({ profile: null, draft: null, current: null, history: [], loading: false, error: "", available: true });
+  const [tutorialState, setTutorialState] = useState({});
   const version = useRef(0);
   const busy = useRef(false);
   const repository = useRef(
@@ -106,6 +108,7 @@ export function WorkspaceProvider({
     setError("");
     setNotice("");
     setProfileView((value) => ({ ...value, profile: null, draft: null, current: null, history: [], error: "", loading: Boolean(user), available: !configured }));
+    setTutorialState(user ? readTutorialState(window.localStorage, user.id) : {});
     if (user) reload();
     // This is an async request generation counter, not a DOM ref.
     return () => {
@@ -185,7 +188,25 @@ export function WorkspaceProvider({
     setUser(null);
     setData(emptyData());
     setProfileView({ profile: null, draft: null, current: null, history: [], loading: false, error: "", available: true });
+    if (user) clearTutorialState(window.localStorage, user.id);
+    setTutorialState({});
   };
+  const markTutorialSeen = useCallback((milestone) => {
+    if (!user || !milestone) return;
+    setTutorialState(markSeen(window.localStorage, user.id, milestone));
+  }, [user]);
+  const resetTutorial = useCallback(() => {
+    if (!user) return;
+    const state = { reopenChecklist: true };
+    writeTutorialState(window.localStorage, user.id, state);
+    setTutorialState(state);
+  }, [user]);
+  const dismissGettingStarted = useCallback(() => {
+    if (!user) return;
+    const state = { ...tutorialState, reopenChecklist: false, dismissedChecklist: true };
+    writeTutorialState(window.localStorage, user.id, state);
+    setTutorialState(state);
+  }, [user, tutorialState]);
   return (
     <Context.Provider
       value={{
@@ -207,6 +228,10 @@ export function WorkspaceProvider({
         configured,
         configurationError,
         localAllowed,
+        tutorial: { state: tutorialState },
+        markTutorialSeen,
+        resetTutorial,
+        dismissGettingStarted,
       }}
     >
       {children}

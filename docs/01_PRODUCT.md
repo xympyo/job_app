@@ -38,3 +38,11 @@ preparation and recruitment. Applications remain separate backend records, but u
 not need to choose between Inbox and Applications. Attention is for action now; History
 is for terminal and past activity.
 
+
+## First-run guidance (2026-09-16)
+
+New users learn the operating loop through a short Home welcome, a derived Getting
+Started checklist and one recommended next action. The checklist reflects canonical
+profile, job, review and application records; it is never manually ticked. Established
+users go straight to operational work. `/guide` is Help/Playbook, while contextual
+explanations appear where a decision is made.
