@@ -1,6 +1,6 @@
 # PyoLoker V2 planning package
 
-Status: Gate 2B manual career-profile UX implemented locally 2026-09-16, building on the Gate 2A persistent foundation. Migrations, profile enablement and tests remain local-only; no production onboarding or owner-data mutation is included.
+Status: Gate 3B production activation completed 2026-09-16 for the approved Moshe shadow candidate. The package remains the V2 planning and contract reference; no further production mutation is authorized by this document alone.
 
 ## Purpose
 
@@ -101,5 +101,18 @@ Gate 3A is a local read-only compatibility exercise. It produces a deterministic
 profile candidate, provenance and ambiguity/exclusion report, CV-variant preservation
 report, operational-history checks, and Career Pack samples without creating a profile
 or writing any database. Run `npm run v2:gate3a`; artifacts are written to
-`output/v2-gate3a-shadow/`. The result is **awaiting owner review**. Gate 3B must not
-begin until Moshe approves the human review checklist.
+`output/v2-gate3a-shadow/`. The owner-approved candidate was used for Gate 3B; the
+artifacts remain the review record and are not a production source of truth.
+
+## Gate 3B production activation — 2026-09-16
+
+Gate 3B completed after read-only reconciliation and backup. The approved candidate
+(`fnv1a64:8dfc4141079a9c34`) produced exactly one owner-scoped published profile and
+revision 1 through the normal Gate 2A RPCs. The live V1 workspace snapshot was 47 jobs,
+45 companies, 58 job sources, 3 research runs, 11 applications, 0 questions and 0
+events, with the original three CV variant IDs and application relationships unchanged.
+The career-profile foundation was applied once through the authorized Management API
+because production has no migration-history table; no deferred document, context-export
+or AI-artifact tables were added. Re-running `npm run v2:gate3b` is verification-only
+when the matching profile exists. Hosted Career smoke passed after the cloud row adapter
+fix in `bc1e071`; a disposable QA account was removed and owner counts remained intact.
