@@ -2362,6 +2362,13 @@
 .career-intro-panel h1 { margin: 10px 0 14px; }
 .career-intro-panel p { color: #5f6d58; line-height: 1.8; max-width: 620px; }
 .career-summary, .cv-summary, .revision-history { padding: 28px; margin-bottom: 20px; }
+.source-suggestions, .source-pack, .proposal-import { margin-top: 20px; padding: 22px; }
+.proposal-row { display: grid; gap: 10px; padding: 16px 0; border-top: 1px solid #e5ebe1; }
+.proposal-row > label { display: flex; gap: 8px; align-items: flex-start; }
+.proposal-values { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.proposal-values pre, .source-pack pre, .source-suggestions pre { max-height: 260px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: #f7faf5; border-radius: 8px; padding: 12px; font-size: 12px; }
+.privacy-preview { background: #f3f7f0; border: 1px solid #dbe7d4; border-radius: 8px; padding: 12px 14px; margin: 14px 0; }
+.privacy-preview p { margin: 5px 0; }
 .summary-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .career-summary > h2 { margin: 22px 0 7px; }
 .summary-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 22px; margin-top: 28px; }
@@ -2376,4 +2383,4 @@
 .cv-summary-row span { color: #65725f; font-size: 13px; }
 .history-row span:nth-child(2), .history-row span:nth-child(3) { margin-left: auto; color: #65725f; font-size: 12px; }
 @media (max-width: 800px) { .career-editor { grid-template-columns: 1fr; } .career-steps { position: static; display: flex; overflow-x: auto; padding-bottom: 3px; } .career-steps button { flex: 0 0 auto; white-space: nowrap; } .career-steps button span { display: none; } }
-@media (max-width: 600px) { .profile-welcome, .career-intro-panel, .career-form-panel, .career-summary, .cv-summary, .revision-history { padding: 22px 18px; } .career-page { padding-inline: 14px; } .career-actions { flex-wrap: wrap; justify-content: stretch; } .career-actions .btn { flex: 1 1 130px; } .review-checklist > div, .cv-summary-row, .history-row { align-items: flex-start; flex-direction: column; gap: 5px; } .review-checklist span, .history-row span:nth-child(2), .history-row span:nth-child(3) { margin-left: 0; text-align: left; } }
+@media (max-width: 600px) { .profile-welcome, .career-intro-panel, .career-form-panel, .career-summary, .cv-summary, .revision-history { padding: 22px 18px; } .career-page { padding-inline: 14px; } .career-actions { flex-wrap: wrap; justify-content: stretch; } .career-actions .btn { flex: 1 1 130px; } .review-checklist > div, .cv-summary-row, .history-row { align-items: flex-start; flex-direction: column; gap: 5px; } .review-checklist span, .history-row span:nth-child(2), .history-row span:nth-child(3) { margin-left: 0; text-align: left; } .proposal-values { grid-template-columns: 1fr; } .source-suggestions, .source-pack, .proposal-import { padding: 16px; } }

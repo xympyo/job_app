@@ -90,3 +90,7 @@ Gate 2B adds a local-only, manual Career profile experience at `/career`. New us
 A profile may be published when it has at least one target direction and one evidence entry (education, experience, project or leadership). Optional fields such as GPA, work authorisation and relocation are never required or inferred. Repeated entries have stable IDs and an explicit experience type. Draft edits autosave locally with visible saving status; publishing is a separate explicit action. Editing a published profile creates a copied draft, and discard requires confirmation. Published revisions remain available as read-only history.
 
 Gate 2B is intentionally a local implementation boundary. It does not add AI onboarding, Markdown/resume import, document storage, Career Pack UI, production migration, cloud profile enablement or Moshe profile migration. The V2 profile repository uses a separate versioned local-storage key and does not merge with V1 browser data.
+
+## Gate 2C status — 2026-09-16
+
+The local Career area now supports transient text/Markdown source review, portable Profile Builder Pack generation, strict proposal import, per-item review, stale acknowledgement, and selective acceptance into a draft. Canonical structured facts remain authoritative; imported material and AI output do not publish or mutate the current profile without explicit review. No database schema or production data changed.

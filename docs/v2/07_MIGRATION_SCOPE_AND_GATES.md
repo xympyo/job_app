@@ -181,4 +181,8 @@ Exit criteria:
 
 ## Gate 2B status — 2026-09-16
 
-Gate 2B manual onboarding is implemented locally and validated through focused React tests, lint and the production build. It adds no migration and performs no cloud or owner-data writes. The V2 profile repository is selected separately from the V1 repository; configured cloud workspaces keep the profile UI unavailable until a later authorized enablement step. Gate 2C and later AI/document/migration work remain deferred.
+Gate 2B manual onboarding is implemented locally and validated through focused React tests, lint and the production build. It adds no migration and performs no cloud or owner-data writes. The V2 profile repository is selected separately from the V1 repository; configured cloud workspaces keep the profile UI unavailable until a later authorized enablement step. The final sentence records the historical Gate 2B boundary; Gate 2C is recorded below and does not change it.
+
+## Gate 2C status — 2026-09-16
+
+Gate 2C is implemented locally as a reviewed source-import and external-AI profile-proposal flow. It adds no migrations, no persistence tables, no provider integration, and no cloud or owner-data writes. The Gate 1 compiler now supports a self-contained `build_profile` task with portable policy and a strict proposal contract. Gate 3 Moshe migration remains deferred.

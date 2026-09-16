@@ -169,3 +169,7 @@ Gate 2A validation, while existing V1 local storage remains unchanged.
 Decision: add a local-only guided Career profile editor with optional setup, private autosaved drafts, explicit publish, copied drafts for edits, discard confirmation and read-only revision history. Require only one target direction plus one evidence entry to publish; do not require GPA, degree, work authorisation or other inferred facts.
 
 Rationale: a first-class manual path is needed before any AI or migration workflow, and the profile contract requires user review and explicit publication. Implications: the editor uses a separate versioned local-storage boundary and no production migration, cloud profile enablement, document storage, AI onboarding or Career Pack UI is included in Gate 2B.
+
+## 2026-09-16 — Gate 2C source import and AI profile proposals
+
+Gate 2C keeps structured profile facts canonical and treats pasted/Markdown source and external-AI output as transient untrusted material. The new `build_profile` Career Pack is self-contained and portable. Strict proposal envelopes use allow-listed targets and explicit add/change/remove operations; accepted items update only a draft and carry `accepted_ai_proposal` provenance. Stale source context requires explicit acknowledgement. No migrations, storage tables, provider APIs, production data, or owner records were changed.

@@ -64,4 +64,16 @@ describe("Gate 2B manual career profile UX", () => {
     document.title = "Career Command Center";
     expect((await axe.run(document)).violations).toEqual([]);
   });
+
+  it("reviews imported source claims before accepting them into a draft", async () => {
+    const u = userEvent.setup();
+    renderApp("/career");
+    await u.click(await screen.findByRole("button", { name: "Import existing information" }));
+    await u.type(await screen.findByLabelText("Paste source text or Markdown"), "Name: Rina\nTarget roles: Product, Analyst\nEducation: Example University | Informatics | July 2027");
+    await u.click(screen.getByRole("button", { name: "Analyse source" }));
+    expect(await screen.findByRole("heading", { name: "Suggested claims" })).toBeVisible();
+    expect(screen.getByText(/Nothing is saved yet/)).toBeVisible();
+    await u.click(screen.getByRole("button", { name: "Accept selected to draft" }));
+    await waitFor(() => expect(createLocalProfileRepository().state.revisions.filter((revision) => revision.status === "draft")).toHaveLength(1));
+  });
 });

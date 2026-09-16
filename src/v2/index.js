@@ -5,3 +5,5 @@ export * from "./tasks.js";
 export * from "./profile.js";
 export * from "./profile-domain.js";
 export * from "./profile-repository.js";
+export * from "./source-import.js";
+export * from "./profile-proposals.js";

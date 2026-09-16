@@ -98,3 +98,7 @@ Before public beta:
 ## 7. What is explicitly deferred
 
 Native AI API calls, storing provider credentials, automatic document uploads to a model, background extraction, and model billing are deferred. BYO-AI means the user remains in control of the external conversation during beta.
+
+## Gate 2C security and privacy boundary — 2026-09-16
+
+Source import is transient and bounded to 200 KB. Only text/Markdown is accepted in this gate; binary document extraction is deferred. Imported text and Markdown are treated as adversarial user data and are rendered as quoted content, never protocol instructions or HTML. The Profile Builder Pack shows included/excluded sections before copy/download and excludes contact details, account identifiers, secrets, document binaries, and unrelated records. Proposal JSON is strict and versioned; unknown keys, unsupported targets, duplicate proposal IDs, missing evidence, and invalid operations are rejected before any draft mutation. Accepted proposals carry source references in the profile source map. No profile is published automatically.

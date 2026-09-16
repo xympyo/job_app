@@ -113,3 +113,9 @@ No path creates Moshe records. A new user starts with no jobs, no companies, no 
 The manual onboarding journey described here is now implemented locally at `/career`. It is the first-class no-AI path: a new account can start from Home, skip setup, create a private draft, autosave changes, review a human-readable summary, publish explicitly, edit through a copied draft, discard with confirmation and inspect published revision history. The minimum publish rule is one target direction plus one evidence entry; all other sections remain optional.
 
 The current Gate 2B UI deliberately does not implement the planned AI-assisted onboarding, source/Markdown/resume import, document upload, Career Pack handoff or cloud migration flows. Those remain later gates and must not be implied by the editor copy.
+
+This paragraph records the Gate 2B boundary at the time. Gate 2C below now implements the limited local source/Markdown review and portable Profile Builder Pack described next; document upload, binary extraction, cloud enablement and migration remain deferred.
+
+## Gate 2C source and AI profile journey — 2026-09-16
+
+Career setup now offers three compact choices: set up manually, import existing information, or build a portable Profile Builder Pack for the user's AI. Import accepts pasted text/Markdown and `.txt`/`.md`; deterministic extraction produces suggestions only. A strict proposal envelope can be pasted back, reviewed by concept with current/proposed values and source evidence, selectively accepted into a private draft, edited in the normal editor, and published explicitly. Empty, conflicting, stale, or unsupported claims remain visible for review. The normal manual path remains first-class and does not require AI.

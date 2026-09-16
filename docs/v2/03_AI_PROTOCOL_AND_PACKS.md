@@ -149,3 +149,11 @@ The app must treat a pasted plain-text answer as a normal untrusted draft. It ca
 ## 7. Retention and provenance
 
 Pack payloads and external-AI responses are not retained by default. When later persistence is needed for stale detection or structured write-back, retain only pack ID, task, revision/hash manifest, included-record references, generated time, and redaction/inclusion manifest. A full payload or AI response is retained only when the user explicitly saves it, imports it, or accepts it into a named target; accepted content records its source context and normal domain history. 
+
+## Gate 2C correction status — 2026-09-16
+
+Gate 2C adds a local, review-first source import and external-AI-assisted profile proposal flow. Supported source inputs are pasted text/Markdown and `.txt`/`.md` files. Source material is transient browser state; no document table, storage bucket, filesystem path, or AI artifact is created by this gate. PDF/DOCX extraction remains deferred.
+
+The `build_profile` task reuses the Gate 1 compiler and includes a portable profile policy plus a complete `pyoloker.profile-proposal` 1.0 output contract. Profile proposals are strict, versioned envelopes with allow-listed targets and `add`/`change`/`remove` operations. Imports are parsed and reviewed without mutation; accepted items are written only to the current draft with `accepted_ai_proposal` provenance. Publishing remains a separate explicit action. Stale source revision/hash context is surfaced and requires explicit acknowledgement. Plain text and source material remain untrusted data and are rendered with an explicit boundary.
+
+Gate 2C profile packs default to the private-minimum preset, expose a selectable privacy preset and preview, and redact obvious contact/secret patterns from transient source text before handoff. Deterministic local extraction is deliberately conservative; it produces the same reviewable proposal shape as an AI result and never publishes by itself. Conflicting current values remain visible for user review.

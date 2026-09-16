@@ -203,3 +203,7 @@ canonical only as user-authored text; generated Markdown is a projection/export.
 Implemented the local manual Career profile UX at `/career`: Home setup CTA with skip, nine guided sections, stable repeated entries, explicit experience types, debounced draft autosave with status, review-before-publish, minimum useful-profile validation, copied drafts for editing, discard confirmation and published revision history. Focused UI tests cover new-user setup/publish, edit/discard, skip and accessibility smoke. `npm run check` and database/RLS checks remain required before commit.
 
 This gate is local-only. No production deployment, cloud profile enablement, migration, Moshe profile seed, owner-data mutation, AI onboarding, document storage or Career Pack UI was performed. V1 jobs/applications/CV records remain untouched.
+
+## Gate 2C — 2026-09-16
+
+Implemented locally: source/Markdown import (`.txt`/`.md` and paste), conservative suggestions, self-contained `build_profile` Career Pack, strict versioned profile-proposal validation, source evidence review, stale acknowledgement, and selective draft-only acceptance. PDF/DOCX extraction, document storage, AI provider integrations, Gate 3 migration, and production enablement remain deferred. Gate 2C performs no database writes.
