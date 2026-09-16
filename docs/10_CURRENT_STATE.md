@@ -197,3 +197,9 @@ context export/artifact tables or Gate 2B/Gate 3 work has started.
 The V1 operational note that Markdown is canonical applies to the legacy V1 profile
 workflow. In V2, structured career facts are canonical and freeform notes are separately
 canonical only as user-authored text; generated Markdown is a projection/export.
+
+## V2 Gate 2B — 2026-09-16
+
+Implemented the local manual Career profile UX at `/career`: Home setup CTA with skip, nine guided sections, stable repeated entries, explicit experience types, debounced draft autosave with status, review-before-publish, minimum useful-profile validation, copied drafts for editing, discard confirmation and published revision history. Focused UI tests cover new-user setup/publish, edit/discard, skip and accessibility smoke. `npm run check` and database/RLS checks remain required before commit.
+
+This gate is local-only. No production deployment, cloud profile enablement, migration, Moshe profile seed, owner-data mutation, AI onboarding, document storage or Career Pack UI was performed. V1 jobs/applications/CV records remain untouched.

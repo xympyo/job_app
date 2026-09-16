@@ -17,6 +17,7 @@ import {
   createLocalRepository,
 } from "./lib/repository";
 import { errorMessage } from "./lib/schema";
+import { createLocalProfileRepository, createCloudProfileRepository } from "./v2/profile-repository.js";
 
 const Context = createContext(null);
 export const useWorkspace = () => useContext(Context);
@@ -32,11 +33,15 @@ export function WorkspaceProvider({
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+  const [profileView, setProfileView] = useState({ profile: null, draft: null, current: null, history: [], loading: false, error: "", available: true });
   const version = useRef(0);
   const busy = useRef(false);
   const repository = useRef(
     injectedRepository ||
       (configured ? createCloudRepository(supabase) : createLocalRepository()),
+  );
+  const profileRepository = useRef(
+    injectedRepository?.profileRepository || (configured ? createCloudProfileRepository(supabase) : createLocalProfileRepository()),
   );
   const currentData = useRef(data);
   useEffect(() => {
@@ -100,6 +105,7 @@ export function WorkspaceProvider({
     currentData.current = emptyData();
     setError("");
     setNotice("");
+    setProfileView((value) => ({ ...value, profile: null, draft: null, current: null, history: [], error: "", loading: Boolean(user), available: !configured }));
     if (user) reload();
     // This is an async request generation counter, not a DOM ref.
     return () => {
@@ -107,6 +113,32 @@ export function WorkspaceProvider({
       version.current++;
     };
   }, [user, reload]);
+  const reloadProfile = useCallback(async () => {
+    if (!user) return;
+    if (configured && !import.meta.env.VITE_V2_PROFILE_ENABLED) {
+      setProfileView({ profile: null, draft: null, current: null, history: [], loading: false, error: "", available: false });
+      return;
+    }
+    setProfileView((value) => ({ ...value, loading: true, error: "" }));
+    try {
+      const repo = profileRepository.current;
+      const profile = repo.createProfile ? await repo.createProfile(user.id) : null;
+      const profileId = profile?.id;
+      const [current, draft, history] = profileId && repo.current ? await Promise.all([repo.current(profileId, user.id), repo.draft(profileId, user.id), repo.history(profileId, user.id)]) : [null, null, []];
+      setProfileView({ profile, draft, current, history, loading: false, error: "", available: true });
+    } catch (e) {
+      setProfileView((value) => ({ ...value, loading: false, error: errorMessage(e), available: false }));
+    }
+  }, [user]);
+  useEffect(() => { if (user) reloadProfile(); }, [user, reloadProfile]);
+  const profileCommand = useCallback(async (command) => {
+    if (!user || !profileView.available) throw new Error("Profile setup is not available in this workspace yet.");
+    try {
+      const result = await command(profileRepository.current, user.id);
+      await reloadProfile();
+      return result;
+    } catch (e) { setProfileView((value) => ({ ...value, error: errorMessage(e) })); throw e; }
+  }, [user, profileView.available, reloadProfile]);
   const mutate = async (command, message = "Saved") => {
     if (busy.current)
       throw new Error("A save is still in progress. Please wait.");
@@ -148,6 +180,7 @@ export function WorkspaceProvider({
     version.current++;
     setUser(null);
     setData(emptyData());
+    setProfileView({ profile: null, draft: null, current: null, history: [], loading: false, error: "", available: true });
   };
   return (
     <Context.Provider
@@ -163,7 +196,10 @@ export function WorkspaceProvider({
         reload,
         mutate,
         enterLocal,
-        signOut,
+    signOut,
+        profile: profileView,
+        reloadProfile,
+        profileCommand,
         configured,
         configurationError,
         localAllowed,

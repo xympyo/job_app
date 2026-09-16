@@ -107,3 +107,9 @@ No path creates Moshe records. A new user starts with no jobs, no companies, no 
 - Keep a draft profile private until published.
 - Provide a complete export and delete path before encouraging a user to upload documents.
 
+
+## Gate 2B implementation status — 2026-09-16
+
+The manual onboarding journey described here is now implemented locally at `/career`. It is the first-class no-AI path: a new account can start from Home, skip setup, create a private draft, autosave changes, review a human-readable summary, publish explicitly, edit through a copied draft, discard with confirmation and inspect published revision history. The minimum publish rule is one target direction plus one evidence entry; all other sections remain optional.
+
+The current Gate 2B UI deliberately does not implement the planned AI-assisted onboarding, source/Markdown/resume import, document upload, Career Pack handoff or cloud migration flows. Those remain later gates and must not be implied by the editor copy.

@@ -1,6 +1,6 @@
 # PyoLoker V2 planning package
 
-Status: Gate 2A persistent career-profile foundation implemented 2026-09-16. The migration and domain tests are local-only; no production migration, onboarding UI, or owner-data mutation is included.
+Status: Gate 2B manual career-profile UX implemented locally 2026-09-16, building on the Gate 2A persistent foundation. Migrations, profile enablement and tests remain local-only; no production onboarding or owner-data mutation is included.
 
 ## Purpose
 
@@ -77,8 +77,16 @@ structured schema, stable item IDs, provenance and deterministic content represe
 `src/v2/profile-domain.js` provides provider-independent domain semantics and
 `profileRevisionToCompilerInput` adapts a published revision into the Gate 1 compiler.
 
-The local adapter is an explicit in-memory/domain test adapter only. Existing V1 local
-browser storage and the production UI remain unchanged until a later onboarding gate.
-Moshe is still a fixture; his profile is not seeded or migrated by Gate 2A. Documents,
-Storage, AI result write-back, context/artifact tables and production migration remain
-deferred.
+At Gate 2A this foundation was an explicit in-memory/domain test adapter and the
+production UI remained unchanged. Gate 2B now adds a separate local browser adapter
+and manual `/career` editor for non-Moshe users; it still does not enable cloud profile
+access or seed/migrate Moshe. Documents, Storage, AI result write-back,
+context/artifact tables and production migration remain deferred.
+
+## Gate 2B manual profile UX — 2026-09-16
+
+Gate 2B adds a local-only, manual Career profile experience at `/career`. New users see a Home setup prompt and can either open the guided editor or choose “I’ll do this later.” The editor uses small sections for basics, career direction, education, experience, projects/leadership, skills/languages, preferences, additional context and review.
+
+A profile may be published when it has at least one target direction and one evidence entry (education, experience, project or leadership). Optional fields such as GPA, work authorisation and relocation are never required or inferred. Repeated entries have stable IDs and an explicit experience type. Draft edits autosave locally with visible saving status; publishing is a separate explicit action. Editing a published profile creates a copied draft, and discard requires confirmation. Published revisions remain available as read-only history.
+
+Gate 2B is intentionally a local implementation boundary. It does not add AI onboarding, Markdown/resume import, document storage, Career Pack UI, production migration, cloud profile enablement or Moshe profile migration. The V2 profile repository uses a separate versioned local-storage key and does not merge with V1 browser data.

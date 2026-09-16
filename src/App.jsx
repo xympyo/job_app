@@ -23,6 +23,7 @@ import {
   Menu,
   Upload,
   X,
+  UserRound,
 } from "lucide-react";
 import { useWorkspace } from "./context";
 import { Login, Signup, VerifyEmail, ConfirmEmail } from "./pages/Auth";
@@ -32,6 +33,7 @@ import Workspace from "./pages/Workspace";
 import Research from "./pages/Research";
 import Library from "./pages/Library";
 import Guide from "./pages/Guide";
+import Career from "./pages/Career";
 
 function Loading({ label = "Loading your workspace…" }) {
   return (
@@ -56,7 +58,7 @@ export function ProtectedRoute() {
 const navigation = [
   { to: "/", label: "Overview", icon: LayoutDashboard },
   { to: "/jobs", label: "Jobs", icon: BriefcaseBusiness },
-  { to: "/guide", label: "Start Here", icon: CircleHelp },
+  { to: "/career", label: "Career", icon: UserRound },
   { to: "/attention", label: "Attention", icon: Flag },
   { to: "/history", label: "History", icon: Clock3 },
 ];
@@ -126,6 +128,10 @@ function Layout() {
         </nav>
         <div className="sidebar-label">RESOURCES</div>
         <nav aria-label="Resources">
+          <NavLink to="/guide" onClick={() => setMenu(false)}>
+            <CircleHelp size={18} />
+            Start Here
+          </NavLink>
           <NavLink to="/research" onClick={() => setMenu(false)}>
             <Upload size={18} />
             Research import
@@ -188,6 +194,7 @@ function Layout() {
             <strong>
               {[
                 ...navigation,
+                { to: "/guide", label: "Start Here" },
                 { to: "/research", label: "Research import" },
                 { to: "/companies", label: "Companies" },
                 { to: "/library", label: "Career toolkit" },
@@ -268,6 +275,7 @@ export default function App() {
         <Route element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="guide" element={<Guide />} />
+          <Route path="career" element={<Career />} />
           <Route path="attention" element={<Dashboard attentionOnly />} />
           <Route path="jobs/:id?" element={<Workspace area="jobs" />} />
           <Route path="inbox/:id?" element={<LegacyWorkspaceRedirect />} />

@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { useWorkspace } from "../context";
 import { attentionItems, today, triageDecisionMatches } from "../lib/domain";
-import { TERMINAL } from "../lib/constants";
+import { LOCAL_USER, TERMINAL } from "../lib/constants";
 import { Badge, Button, Empty, formatDateTime } from "../components/ui";
 import JobForm from "../components/JobForm";
 
@@ -52,8 +52,11 @@ export function AttentionList({ items, limit }) {
   );
 }
 export default function Dashboard({ attentionOnly = false }) {
-  const { data } = useWorkspace();
+  const { data, profile, user } = useWorkspace();
   const [adding, setAdding] = useState(false);
+  const [setupDismissed, setSetupDismissed] = useState(false);
+  if (!attentionOnly && profile.loading) return <div className="standard-page"><div className="loading-screen">Preparing your workspace…</div></div>;
+  if (!attentionOnly && profile.available && !profile.current && !profile.draft && !setupDismissed && user?.id !== LOCAL_USER) return <div className="standard-page profile-welcome-page"><section className="panel profile-welcome"><div className="eyebrow">START WITH TRUSTED CONTEXT</div><h1>Build your career profile</h1><p>PyoLoker uses your career profile to evaluate opportunities, choose relevant CVs, prepare applications and build useful context for the AI you already use.</p><div className="primary-actions"><Link className="btn primary" to="/career?start=1">Set up my profile</Link><Button onClick={() => setSetupDismissed(true)}>I'll do this later</Button></div></section></div>;
   const attention = attentionItems(data);
   const review = data.jobs.filter(
     (j) =>

@@ -125,3 +125,7 @@ Before implementation, test five scenarios:
 3. User with stale job verification sees a source-freshness task, not a generic “research more” recommendation.
 4. User with a ready application sees Prepare/Submit as the next move, not a fresh research prompt.
 5. User returning from an AI session sees the pack/result review action, with revision and stale context visible.
+
+## Gate 2B UX boundary — 2026-09-16
+
+Career is now a primary workspace destination for manual profile setup and review. `/guide` remains secondary help/orientation; normal profile editing does not require repeatedly visiting it. The Gate 2B editor follows the V2 design direction with progressive sections, explicit save status, review-before-publish, contextual explanations and mobile responsive layouts. Career Pack and “Ask your AI” controls remain deferred.

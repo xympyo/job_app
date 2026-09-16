@@ -163,3 +163,9 @@ Implications: the migration is local-only and unapplied to production; Moshe rem
 fixture; no onboarding UI, document storage, context/artifact persistence or AI
 write-back is included. The local profile adapter is in-memory/provider-independent for
 Gate 2A validation, while existing V1 local storage remains unchanged.
+
+## 2026-09-16 — V2 Gate 2B manual onboarding UX
+
+Decision: add a local-only guided Career profile editor with optional setup, private autosaved drafts, explicit publish, copied drafts for edits, discard confirmation and read-only revision history. Require only one target direction plus one evidence entry to publish; do not require GPA, degree, work authorisation or other inferred facts.
+
+Rationale: a first-class manual path is needed before any AI or migration workflow, and the profile contract requires user review and explicit publication. Implications: the editor uses a separate versioned local-storage boundary and no production migration, cloud profile enablement, document storage, AI onboarding or Career Pack UI is included in Gate 2B.
