@@ -148,3 +148,32 @@ were changed by this milestone.
 Added `/guide` with deterministic next-step guidance, four workflow cards, seven
 copy-ready Astra prompts and direct links to existing research, Jobs, Attention and
 History actions. It performs no mutations simply by being viewed.
+
+## V2 planning audit — 2026-09-15
+
+Created the planning-only package in `docs/v2/`. It covers the multi-user product
+model, current architecture findings, Moshe-to-user generalisation, source-of-truth
+and interchange design, portable Career Packs, task minimisation, onboarding journeys,
+private-document/security strategy, `/guide` visual audit, migration/compatibility map,
+failure modes, open decisions and implementation gates. Local `/guide` screenshots are
+in `output/playwright/guide-audit-*.png` for the audit record. No V2 code, migrations,
+owner records, CV files or production data were changed.
+
+## V2 Gate 1 — 2026-09-16
+
+Implemented a read-only, framework-independent Career Pack compiler in `src/v2/`.
+It supports Moshe and synthetic-user fixtures, seven task types, three privacy presets,
+stable Markdown/JSON output, manifests, metrics, self-containment linting and adversarial
+freeform-note coverage. Full `npm run check` passes 62 tests. `npm run v2:gate1` writes non-production review samples to
+`output/v2-gate1-samples/`. No database tables, migrations, Supabase writes, owner records,
+CV files or production behavior changed. Gate 2 profile persistence and AI result write-back
+remain unimplemented.
+
+## V2 Gate 1 correction pass — 2026-09-16
+
+Corrected Moshe timing to expected graduation only, with pre-graduation availability left for
+employer-specific eligibility review and work authorisation unspecified. Removed duplicated task
+context, made manifests derive from actual payload sections, enforced task inputs, added modular
+portable policies and task-specific structured contracts for research/triage, and improved semantic
+Markdown/user-text boundaries. Regenerated six review samples. No database or production behavior
+changed.

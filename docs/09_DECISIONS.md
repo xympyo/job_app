@@ -115,3 +115,37 @@ Add a concise in-app guide at `/guide` so Moshe can operate the documented caree
 workflow without opening repository Markdown. Keep prompts short and repository-aware;
 the Markdown operating system remains authoritative. Derive the recommended next step
 from existing workspace state and do not add tutorial persistence or automation.
+
+## 2026-09-15 — V2 planning boundary and BYO-AI architecture
+
+Create a planning-only V2 package under `docs/v2/` for a future multi-user, BYO-AI
+Career Operating System. Keep the current eight-table job/application core, make
+Moshe an explicit migration fixture rather than a code-level default, preserve
+user-authored Markdown as the canonical profile narrative, and introduce portable,
+versioned Career Packs with task-specific minimization and stale-output review.
+
+Rationale: the current `/guide` is useful for a repository-aware Moshe workflow but is
+not portable to a new user or an arbitrary external AI; current CV seed constants and
+local paths are also incompatible with public multi-user initialization. Implications:
+this pass must not implement V2, create migrations, mutate production/owner data, or
+refactor V1 opportunistically. Future implementation is gated by the package’s open
+decisions, RLS/storage tests, migration dry run, new-user isolation fixture, and
+manual/AI-assisted onboarding review.
+
+## 2026-09-16 — V2 Gate 1 read-only Career Pack compiler
+
+Implement the first V2 gate as a framework-independent compiler over non-production fixtures only.
+Structured career facts and freeform notes follow the locked V2 contract; generated Markdown is a
+projection. Support provider-neutral, self-contained Markdown and JSON packs, privacy presets,
+manifests, deterministic output and linting without database writes or persistence tables. Rationale:
+prove the portable AI-context abstraction before profile persistence or onboarding. No external AI
+call or result write-back exists in this gate.
+
+## 2026-09-16 — Gate 1 correction pass
+
+Correct the read-only fixtures and compiler to keep expected December 2026 graduation separate
+from availability, leave unsupported work-authorisation unknown, place factual task context only
+under Relevant context, derive manifests from assembled payload sections, and include centralized
+portable task policy plus complete structured contracts only for research and triage. Semantic
+Markdown renderers and explicit user-data boundaries improve review without changing V1 data or
+starting Gate 2.

@@ -1,6 +1,6 @@
 # PyoLoker V2 planning package
 
-Status: planning only. Prepared 2026-09-15. No V2 code, migrations, production-data changes, or owner-data mutations are included in this package.
+Status: Gate 1 read-only prototype implemented 2026-09-16. No V2 migrations, production-data changes, or owner-data mutations are included.
 
 ## Purpose
 
@@ -51,4 +51,18 @@ The central design constraint is ownership. PyoLoker owns durable career facts, 
 
 ## Required implementation posture later
 
-The locked decisions are consolidated in [V2_PRODUCT_CONTRACT.md](V2_PRODUCT_CONTRACT.md). Future implementation should read it together with the relevant detailed document, then pass the gates in [07_MIGRATION_SCOPE_AND_GATES.md](07_MIGRATION_SCOPE_AND_GATES.md). This package remains planning only.
+The locked decisions are consolidated in [V2_PRODUCT_CONTRACT.md](V2_PRODUCT_CONTRACT.md). Gate 1 now provides a read-only compiler under `src/v2/`, using only non-production fixtures and transient output. Future implementation should read the contract together with the relevant detailed document, then pass the remaining gates in [07_MIGRATION_SCOPE_AND_GATES.md](07_MIGRATION_SCOPE_AND_GATES.md).
+
+## Gate 1 implementation note
+
+The read-only prototype is intentionally independent of React and Supabase:
+
+- `src/v2/protocol.js` — provider-neutral Universal AI Protocol;
+- `src/v2/fixtures.js` — clearly labelled Moshe and synthetic finance fixtures;
+- `src/v2/tasks.js` — centralized seven-task registry;
+- `src/v2/compiler.js` — privacy selection, context minimisation, Markdown/JSON rendering,
+  manifest/hash/size metrics, validation, and self-containment linting.
+
+Run `npm run v2:gate1` to generate transient Markdown, JSON, and manifest samples under
+`output/v2-gate1-samples/`. These fixtures are non-production and contain no account IDs,
+secrets, real contact details, local CV paths, network calls, or database writes.

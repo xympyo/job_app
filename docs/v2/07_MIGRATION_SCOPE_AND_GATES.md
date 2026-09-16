@@ -81,6 +81,11 @@ Exit criteria:
 
 Scope: generate a pack from fixtures/local memory without DB writes or persistence tables (`context_exports` and `ai_artifacts` are deferred).
 
+Current prototype: `src/v2/protocol.js`, `fixtures.js`, `tasks.js`, and `compiler.js` provide
+the provider-neutral protocol, Moshe/synthetic fixtures, centralized task registry, privacy
+selection, Markdown/JSON renderers, manifests, deterministic hashes, metrics, and linting.
+`npm run v2:gate1` generates transient samples for manual inspection.
+
 Exit criteria:
 
 - Moshe and a synthetic new-user fixture produce different packs;
