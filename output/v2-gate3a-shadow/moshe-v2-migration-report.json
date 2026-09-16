@@ -1,0 +1,353 @@
+{
+  "format": "pyoloker.v2-shadow-migration-report",
+  "format_version": "1.0",
+  "migration_id": "shadow-moshe-v2",
+  "generated_at": "2026-09-16T00:00:00.000Z",
+  "mode": "read_only_shadow",
+  "status": "awaiting_owner_review",
+  "source_material": [
+    {
+      "reference": "docs/02_USER_PROFILE.md",
+      "label": "Canonical user profile",
+      "authority": "user_confirmed",
+      "availability": "available"
+    },
+    {
+      "reference": "docs/CV_STRATEGY.md",
+      "label": "Accepted CV strategy",
+      "authority": "user_confirmed",
+      "availability": "available"
+    },
+    {
+      "reference": "docs/TRIAGE.md",
+      "label": "Current timing and triage rules",
+      "authority": "source_material",
+      "availability": "available"
+    },
+    {
+      "reference": "docs/v2/V2_PRODUCT_CONTRACT.md",
+      "label": "Locked V2 contract",
+      "authority": "source_material",
+      "availability": "available"
+    }
+  ],
+  "source_limitations": [
+    "No authorized current owner V1 export or cloud snapshot was available in the repository."
+  ],
+  "candidate_hash": "fnv1a64:2e18d7c3380796e9",
+  "profile_revision": {
+    "schema_version": "1.0",
+    "created_by": "migration",
+    "source_map_areas": [
+      "identity",
+      "careerStage",
+      "education",
+      "experiences",
+      "projects",
+      "leadership",
+      "skills",
+      "languages",
+      "targetRoles",
+      "locationPreferences",
+      "workPreferences",
+      "constraints",
+      "freeformNotes"
+    ]
+  },
+  "ambiguity": [
+    {
+      "item": "Exact Mattel role wording and internship date boundaries",
+      "reason": "Current documents support the internship boundary but should be confirmed before publication."
+    },
+    {
+      "item": "Exact Homize dates and preferred title wording",
+      "reason": "Current documents support freelance/project technical leadership but do not establish a complete date range."
+    },
+    {
+      "item": "Location, relocation and work-mode preferences",
+      "reason": "Current documents identify Jakarta/Cikarang/Jabodetabek priorities; flexibility should be reviewed."
+    },
+    {
+      "item": "Future document versions for the three CV variants",
+      "reason": "Legacy local files are not uploaded into V2 and require explicit user action."
+    }
+  ],
+  "exclusions": [
+    {
+      "item": "Work authorisation",
+      "reason": "No current canonical evidence supports a work-authorisation claim."
+    },
+    {
+      "item": "Historical job/application counts",
+      "reason": "Documented counts are stale snapshots and no authorized live export is available."
+    },
+    {
+      "item": "Legacy filesystem paths",
+      "reason": "Paths are diagnostic metadata only and are excluded from the candidate and Career Packs."
+    },
+    {
+      "item": "Assistant-generated career interpretations",
+      "reason": "Interpretations such as 'strong product manager' are not factual evidence."
+    },
+    {
+      "item": "Unsupported salary preferences and older targets",
+      "reason": "Not present in current accepted source material."
+    }
+  ],
+  "cv_compatibility": [
+    {
+      "existing_cv_id": null,
+      "slug": "master",
+      "label": "Master",
+      "positioning": "Broad technical problem-solving, systems, and manufacturing digitalisation.",
+      "application_references": [],
+      "legacy_local_path": "unknown",
+      "proposed_document_status": "legacy/missing-file metadata until explicit upload"
+    },
+    {
+      "existing_cv_id": null,
+      "slug": "analyst",
+      "label": "Analyst",
+      "positioning": "Requirements, process analysis, systems, workflows, and measurable improvement.",
+      "application_references": [],
+      "legacy_local_path": "unknown",
+      "proposed_document_status": "legacy/missing-file metadata until explicit upload"
+    },
+    {
+      "existing_cv_id": null,
+      "slug": "management-product",
+      "label": "Management/Product",
+      "positioning": "Leadership, product thinking, stakeholders, ownership, and business outcomes.",
+      "application_references": [],
+      "legacy_local_path": "unknown",
+      "proposed_document_status": "legacy/missing-file metadata until explicit upload"
+    }
+  ],
+  "operational_history": {
+    "recreation_required": false,
+    "compatibility": {
+      "available": false,
+      "checks": [],
+      "note": "No authorized current V1 snapshot was available; live IDs/counts remain unresolved."
+    },
+    "preservation": [
+      "jobs",
+      "job_sources",
+      "research_runs",
+      "applications",
+      "application_questions",
+      "application_events",
+      "outcomes",
+      "snapshots"
+    ]
+  },
+  "fixture_comparison": {
+    "facts_preserved": [
+      "PT Mattel Indonesia",
+      "Homize",
+      "EDEN",
+      "OMNI",
+      "Pyomanizer",
+      "Deep Learning Product Package Verification"
+    ],
+    "facts_added": [],
+    "facts_removed": [],
+    "wording_normalized": [
+      "Expected graduation is retained without an availability inference.",
+      "Mattel internship and Homize freelance/project boundaries are explicit."
+    ],
+    "unsupported_fixture_facts_removed": [
+      "Fixture-only contact placeholder and any unsupported availability/work-authorisation implication."
+    ],
+    "unresolved_differences": [
+      "Exact dates/title wording and live CV IDs require owner review."
+    ]
+  },
+  "semantic_diff": {
+    "accepted_equivalent": [
+      {
+        "area": "identity",
+        "sources": [
+          "Canonical user profile",
+          "Accepted CV strategy",
+          "Current timing and triage rules",
+          "Locked V2 contract"
+        ]
+      },
+      {
+        "area": "education",
+        "sources": [
+          "Canonical user profile",
+          "Accepted CV strategy",
+          "Current timing and triage rules",
+          "Locked V2 contract"
+        ]
+      },
+      {
+        "area": "experiences",
+        "sources": [
+          "Canonical user profile",
+          "Accepted CV strategy",
+          "Current timing and triage rules",
+          "Locked V2 contract"
+        ]
+      },
+      {
+        "area": "projects",
+        "sources": [
+          "Canonical user profile",
+          "Accepted CV strategy",
+          "Current timing and triage rules",
+          "Locked V2 contract"
+        ]
+      },
+      {
+        "area": "leadership",
+        "sources": [
+          "Canonical user profile",
+          "Accepted CV strategy",
+          "Current timing and triage rules",
+          "Locked V2 contract"
+        ]
+      },
+      {
+        "area": "skills",
+        "sources": [
+          "Canonical user profile",
+          "Accepted CV strategy",
+          "Current timing and triage rules",
+          "Locked V2 contract"
+        ]
+      },
+      {
+        "area": "career direction",
+        "sources": [
+          "Canonical user profile",
+          "Accepted CV strategy",
+          "Current timing and triage rules",
+          "Locked V2 contract"
+        ]
+      }
+    ],
+    "normalized": [
+      {
+        "area": "careerStage.graduation",
+        "change": "Expected graduation retained without inferring pre-graduation unavailability."
+      },
+      {
+        "area": "experiences",
+        "change": "Mattel remains internship; Homize remains freelance/project."
+      }
+    ],
+    "newly_represented": [
+      "stable item IDs",
+      "area-level migration provenance"
+    ],
+    "unresolved": [
+      "Exact Mattel role wording and internship date boundaries",
+      "Exact Homize dates and preferred title wording",
+      "Location, relocation and work-mode preferences",
+      "Future document versions for the three CV variants"
+    ],
+    "excluded": [
+      "Work authorisation",
+      "Historical job/application counts",
+      "Legacy filesystem paths",
+      "Assistant-generated career interpretations",
+      "Unsupported salary preferences and older targets"
+    ]
+  },
+  "safety": {
+    "database_writes": false,
+    "production_migration": false,
+    "owner_records_modified": false,
+    "runtime_moshe_branch": false,
+    "secrets_included": false,
+    "local_paths_in_profile_pack": false
+  },
+  "idempotency": {
+    "deterministic": true,
+    "candidate_hash_repeat": "fnv1a64:2e18d7c3380796e9",
+    "report_hash_repeat": "fnv1a64:e18c87644a71a749"
+  },
+  "compiler_validation": {
+    "career": {
+      "lint": {
+        "ok": true,
+        "issues": []
+      },
+      "metrics": {
+        "characters": 15217,
+        "words": 1612,
+        "approximateTokens": 3805
+      },
+      "manifest": {
+        "taskType": "career_discussion",
+        "privacyPreset": "working_context",
+        "profileRevision": "shadow-migration-revision",
+        "includedSections": [
+          "protocol",
+          "policy",
+          "profile",
+          "cvVariants",
+          "task"
+        ],
+        "excludedSections": [
+          "jobs",
+          "applications",
+          "applicationAnswers",
+          "recruiterContacts",
+          "accountMetadata"
+        ],
+        "redactions": [
+          "contact",
+          "secrets",
+          "account identifiers",
+          "document binaries"
+        ],
+        "generatedAt": "2026-09-16T00:00:00.000Z",
+        "contentHash": "fnv1a64:7bbe930cfec019b7"
+      }
+    },
+    "research": {
+      "lint": {
+        "ok": true,
+        "issues": []
+      },
+      "metrics": {
+        "characters": 17159,
+        "words": 1805,
+        "approximateTokens": 4290
+      },
+      "manifest": {
+        "taskType": "research_jobs",
+        "privacyPreset": "private_minimum",
+        "profileRevision": "shadow-migration-revision",
+        "includedSections": [
+          "protocol",
+          "policy",
+          "profile",
+          "cvVariants",
+          "task",
+          "context.searchPreferences"
+        ],
+        "excludedSections": [
+          "applicationAnswers",
+          "interviews",
+          "recruiterContacts",
+          "unrelatedJobs",
+          "documentBinaries"
+        ],
+        "redactions": [
+          "contact",
+          "preferred name",
+          "freeform notes",
+          "account identifiers",
+          "document binaries"
+        ],
+        "generatedAt": "2026-09-16T00:00:00.000Z",
+        "contentHash": "fnv1a64:1d51f6c579bc2310"
+      }
+    }
+  }
+}

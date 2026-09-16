@@ -94,3 +94,12 @@ Gate 2B is intentionally a local implementation boundary. It does not add AI onb
 ## Gate 2C status — 2026-09-16
 
 The local Career area now supports transient text/Markdown source review, portable Profile Builder Pack generation, strict proposal import, per-item review, stale acknowledgement, and selective acceptance into a draft. Canonical structured facts remain authoritative; imported material and AI output do not publish or mutate the current profile without explicit review. No database schema or production data changed.
+
+## Gate 3A shadow migration — 2026-09-16
+
+Gate 3A is a local read-only compatibility exercise. It produces a deterministic Moshe
+profile candidate, provenance and ambiguity/exclusion report, CV-variant preservation
+report, operational-history checks, and Career Pack samples without creating a profile
+or writing any database. Run `npm run v2:gate3a`; artifacts are written to
+`output/v2-gate3a-shadow/`. The result is **awaiting owner review**. Gate 3B must not
+begin until Moshe approves the human review checklist.

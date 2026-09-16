@@ -207,3 +207,13 @@ This gate is local-only. No production deployment, cloud profile enablement, mig
 ## Gate 2C — 2026-09-16
 
 Implemented locally: source/Markdown import (`.txt`/`.md` and paste), conservative suggestions, self-contained `build_profile` Career Pack, strict versioned profile-proposal validation, source evidence review, stale acknowledgement, and selective draft-only acceptance. PDF/DOCX extraction, document storage, AI provider integrations, Gate 3 migration, and production enablement remain deferred. Gate 2C performs no database writes.
+
+## Gate 3A shadow migration — 2026-09-16
+
+Shadow migration prepared / awaiting owner review. A generic read-only migration builder
+maps current documented Moshe evidence into a schema-valid V2 profile candidate with
+deterministic item IDs, provenance, ambiguity/exclusion reporting, CV-variant and V1
+history compatibility checks, and Career Pack samples. No authorized live V1 export was
+available, so live owner IDs/counts remain unresolved. No career profile, revision, job,
+application, CV document, migration or production record was created or changed. Gate 3B
+has not started.

@@ -173,3 +173,15 @@ Rationale: a first-class manual path is needed before any AI or migration workfl
 ## 2026-09-16 — Gate 2C source import and AI profile proposals
 
 Gate 2C keeps structured profile facts canonical and treats pasted/Markdown source and external-AI output as transient untrusted material. The new `build_profile` Career Pack is self-contained and portable. Strict proposal envelopes use allow-listed targets and explicit add/change/remove operations; accepted items update only a draft and carry `accepted_ai_proposal` provenance. Stale source context requires explicit acknowledgement. No migrations, storage tables, provider APIs, production data, or owner records were changed.
+
+## 2026-09-16 — Gate 3A shadow Moshe migration
+
+Decision: prepare a generic, read-only migration candidate and compatibility report from
+current documented evidence before any V2 profile is published. The candidate uses the
+Gate 2A schema, deterministic semantic item IDs and area-level provenance; unresolved or
+unsupported claims remain visible rather than guessed. Existing V1 CV variants and
+operational history are referenced for preservation and are never recreated by the shadow
+run. Local Career Pack artifacts are generated for review, while live owner IDs/counts
+remain unresolved because no authorized current export was available. No database writes,
+production migration, document upload or runtime Moshe branch is permitted. Status:
+shadow migration prepared / awaiting owner review; Gate 3B requires explicit approval.

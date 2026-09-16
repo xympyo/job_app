@@ -7,3 +7,5 @@ export * from "./profile-domain.js";
 export * from "./profile-repository.js";
 export * from "./source-import.js";
 export * from "./profile-proposals.js";
+export * from "./shadow-migration.js";
+export * from "./migration-fixtures.js";

@@ -186,3 +186,19 @@ Gate 2B manual onboarding is implemented locally and validated through focused R
 ## Gate 2C status — 2026-09-16
 
 Gate 2C is implemented locally as a reviewed source-import and external-AI profile-proposal flow. It adds no migrations, no persistence tables, no provider integration, and no cloud or owner-data writes. The Gate 1 compiler now supports a self-contained `build_profile` task with portable policy and a strict proposal contract. Gate 3 Moshe migration remains deferred.
+
+## Gate 3A status — 2026-09-16
+
+Gate 3A prepares a generic, read-only shadow migration for Moshe from current documented
+V1 evidence. `src/v2/shadow-migration.js` normalizes a source-bounded candidate through
+the Gate 2A profile schema, assigns deterministic item IDs, attaches provenance, reports
+unresolved and excluded claims, checks compatibility when an authorized V1 snapshot is
+supplied, and adapts the candidate through the existing Career Pack compiler. The
+Moshe mapping is isolated to `src/v2/migration-fixtures.js`; runtime behavior has no
+Moshe-specific branch.
+
+The generator writes local review artifacts under `output/v2-gate3a-shadow/` and performs
+no database calls, migrations, profile creation, CV/document upload, job/application
+recreation, or owner-data mutation. No authorized live owner export was available, so
+current V1 IDs/counts remain unresolved. Status is **shadow migration prepared / awaiting
+owner review**; Gate 3B is not started.
