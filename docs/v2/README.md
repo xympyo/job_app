@@ -1,6 +1,6 @@
 # PyoLoker V2 planning package
 
-Status: Gate 1 read-only prototype implemented 2026-09-16. No V2 migrations, production-data changes, or owner-data mutations are included.
+Status: Gate 2A persistent career-profile foundation implemented 2026-09-16. The migration and domain tests are local-only; no production migration, onboarding UI, or owner-data mutation is included.
 
 ## Purpose
 
@@ -42,7 +42,7 @@ The central design constraint is ownership. PyoLoker owns durable career facts, 
 ## Non-goals and safety boundary
 
 - Do not implement this design as part of the planning pass.
-- Do not create Supabase migrations yet.
+- Do not apply V2 migrations to production without a separately authorized gate.
 - Do not rewrite current components or “clean up” V1 opportunistically.
 - Do not move private CV binaries into Git or public URLs.
 - Do not let an external AI mutate owner records directly.
@@ -51,7 +51,7 @@ The central design constraint is ownership. PyoLoker owns durable career facts, 
 
 ## Required implementation posture later
 
-The locked decisions are consolidated in [V2_PRODUCT_CONTRACT.md](V2_PRODUCT_CONTRACT.md). Gate 1 now provides a read-only compiler under `src/v2/`, using only non-production fixtures and transient output. Future implementation should read the contract together with the relevant detailed document, then pass the remaining gates in [07_MIGRATION_SCOPE_AND_GATES.md](07_MIGRATION_SCOPE_AND_GATES.md).
+The locked decisions are consolidated in [V2_PRODUCT_CONTRACT.md](V2_PRODUCT_CONTRACT.md). Gate 1 provides a read-only compiler under `src/v2/`, using only non-production fixtures and transient output. Gate 2A adds the persistent profile foundation described below. Future implementation should read the contract together with the relevant detailed document, then pass the remaining gates in [07_MIGRATION_SCOPE_AND_GATES.md](07_MIGRATION_SCOPE_AND_GATES.md).
 
 ## Gate 1 implementation note
 
@@ -66,3 +66,19 @@ The read-only prototype is intentionally independent of React and Supabase:
 Run `npm run v2:gate1` to generate transient Markdown, JSON, and manifest samples under
 `output/v2-gate1-samples/`. These fixtures are non-production and contain no account IDs,
 secrets, real contact details, local CV paths, network calls, or database writes.
+
+## Gate 2A implementation note
+
+Gate 2A adds the persistent profile foundation without exposing a half-built production
+profile UI. `supabase/migrations/202609160001_career_profile_foundation.sql` defines
+user-owned profiles and immutable, versioned revisions with RLS and atomic create-draft,
+save-draft, publish, and discard operations. `src/v2/profile.js` defines the versioned
+structured schema, stable item IDs, provenance and deterministic content representation;
+`src/v2/profile-domain.js` provides provider-independent domain semantics and
+`profileRevisionToCompilerInput` adapts a published revision into the Gate 1 compiler.
+
+The local adapter is an explicit in-memory/domain test adapter only. Existing V1 local
+browser storage and the production UI remain unchanged until a later onboarding gate.
+Moshe is still a fixture; his profile is not seeded or migrated by Gate 2A. Documents,
+Storage, AI result write-back, context/artifact tables and production migration remain
+deferred.

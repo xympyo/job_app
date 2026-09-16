@@ -177,3 +177,23 @@ context, made manifests derive from actual payload sections, enforced task input
 portable policies and task-specific structured contracts for research/triage, and improved semantic
 Markdown/user-text boundaries. Regenerated six review samples. No database or production behavior
 changed.
+
+## V2 Gate 2A — 2026-09-16
+
+Implemented the persistent career-profile foundation locally. The new migration
+`202609160001_career_profile_foundation.sql` adds one owner-scoped `career_profiles` row
+per user and immutable/versioned `career_profile_revisions`, with RLS, composite owner
+foreign keys, one-draft enforcement through domain/RPC operations, deterministic content
+hashes, provenance JSON and published-revision immutability guards. A pure adapter feeds
+published revisions into the existing Gate 1 compiler; the compiler itself remains
+database/framework independent.
+
+Validation: 5 Gate 2A domain tests, 14 PostgreSQL/RLS integration checks, and the full
+repository check (67 tests, lint and production build) pass. No migration was applied to
+production. Moshe remains a fixture and his owner jobs, applications, CVs and profile
+data were not seeded or changed. No onboarding UI, document storage, AI result write-back,
+context export/artifact tables or Gate 2B/Gate 3 work has started.
+
+The V1 operational note that Markdown is canonical applies to the legacy V1 profile
+workflow. In V2, structured career facts are canonical and freeform notes are separately
+canonical only as user-authored text; generated Markdown is a projection/export.

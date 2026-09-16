@@ -8,6 +8,8 @@ const A = "11111111-1111-4111-8111-111111111111",
 const C = "33333333-3333-4333-8333-333333333333",
   J = "44444444-4444-4444-8444-444444444444",
   AP = "55555555-5555-4555-8555-555555555555";
+const P = "66666666-6666-4666-8666-666666666666",
+  PR = "77777777-7777-4777-8777-777777777777";
 await db.exec(`create role anon; create role authenticated; create schema auth;
 create table auth.users(id uuid primary key);
 insert into auth.users values('${A}'),('${B}');
@@ -99,6 +101,53 @@ try {
       await fail(`select public.apply_changes('[]')`, /permission denied/);
     },
   );
+  await asUser(A);
+  await check("Career profile creation is one-per-user and drafts are owner scoped", async () => {
+    const created = (await db.query("select public.career_profile_create() as profile")).rows[0].profile;
+    assert.equal(created.id.length, 36);
+    assert.deepEqual(created.preferences_json, {});
+    assert.equal((await db.query("select count(*)::int as count from public.career_profile_revisions where user_id = $1", [A])).rows[0].count, 0);
+    const repeated = (await db.query("select public.career_profile_create() as profile")).rows[0].profile;
+    assert.equal(repeated.id, created.id);
+    const draft = (await db.query("select public.career_profile_create_draft($1::uuid, true) as revision", [created.id])).rows[0].revision;
+    assert.equal(draft.status, "draft");
+    assert.equal(draft.revision_number, 1);
+    const sameDraft = (await db.query("select public.career_profile_create_draft($1::uuid, true) as revision", [created.id])).rows[0].revision;
+    assert.equal(sameDraft.id, draft.id);
+    await asUser(B);
+    assert.equal((await db.query("select * from public.career_profiles")).rows.length, 0);
+    await fail(`select public.career_profile_create_draft('${created.id}', true)`, /Profile not found/);
+    await asUser(A);
+  });
+  await check("Career profile publish is atomic and published revisions are immutable", async () => {
+    const profile = (await db.query("select id from public.career_profiles where user_id = $1", [A])).rows[0].id;
+    const draft = (await db.query("select id, updated_at from public.career_profile_revisions where profile_id = $1 and status = 'draft'", [profile])).rows[0];
+    const payload = { schemaVersion: "1.0", structuredJson: { identity: { displayName: "QA" } }, freeformNotes: "User note", sourceMapJson: {}, createdBy: "user" };
+    const saved = (await db.query("select public.career_profile_save_draft($1::uuid,$2::uuid,$3::jsonb,$4::timestamptz) as revision", [profile, draft.id, JSON.stringify(payload), draft.updated_at])).rows[0].revision;
+    const published = (await db.query("select public.career_profile_publish_draft($1::uuid,$2::uuid,$3::timestamptz) as revision", [profile, draft.id, saved.updated_at])).rows[0].revision;
+    assert.equal(published.status, "published");
+    assert.equal((await db.query("select current_revision_id from public.career_profiles where id = $1", [profile])).rows[0].current_revision_id, draft.id);
+    await fail(`update public.career_profile_revisions set status='published' where id='${draft.id}'`, /publish operation|immutable/);
+    await fail(`update public.career_profile_revisions set freeform_notes='tampered' where id='${draft.id}'`, /immutable/);
+    await fail(`delete from public.career_profile_revisions where id='${draft.id}'`, /preserved/);
+    const next = (await db.query("select public.career_profile_create_draft($1::uuid, true) as revision", [profile])).rows[0].revision;
+    assert.equal(next.revision_number, 2);
+    await db.query("select public.career_profile_discard_draft($1::uuid,$2::uuid)", [profile, next.id]);
+    assert.equal((await db.query("select count(*)::int as count from public.career_profile_revisions where profile_id=$1 and status='published'", [profile])).rows[0].count, 1);
+  });
+  await check("Career profile foreign-key and pointer ownership are enforced", async () => {
+    const profile = (await db.query("select id from public.career_profiles where user_id = $1", [A])).rows[0].id;
+    await asUser(B);
+    await fail(`insert into public.career_profile_revisions(profile_id,structured_json) values('${profile}','{}')`, /foreign key|row-level security|not-null/);
+    await asUser(A);
+    await fail(`update public.career_profiles set current_revision_id='${PR}' where id='${profile}'`, /current profile revision|Current revision/);
+  });
+  await check("Anonymous access is denied on career profile foundation", async () => {
+    await db.exec("reset role; set role anon");
+    for (const table of ["career_profiles", "career_profile_revisions"])
+      await fail(`select * from public.${table}`, /permission denied/);
+    await fail("select public.career_profile_create()", /permission denied/);
+  });
   await asUser(A);
   await check(
     "Atomic batch rolls back earlier writes when later row fails validation",

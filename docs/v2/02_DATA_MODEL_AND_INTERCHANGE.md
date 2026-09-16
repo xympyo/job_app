@@ -1,6 +1,8 @@
 # V2 data model, interchange, and round-trip contract
 
-This is a planning model, not a migration. It intentionally leaves the eight V1 operational tables intact and adds only the smallest layer required for multi-user profile ownership, private documents, portable AI context, and reviewable AI outputs.
+This document remains the V2 interchange and future-extension model. Gate 2A now adds only
+the profile/revision foundation described below; document, pack-retention and AI-artifact
+tables remain later-gate concepts. The eight V1 operational tables are intact.
 
 ## 1. Existing V1 tables to preserve
 
@@ -17,7 +19,7 @@ One row per user. This is account-scoped product configuration, not a second ide
 | Field | Meaning |
 | --- | --- |
 | `id`, `user_id` | Stable profile identity and owner; one active profile per user in beta |
-| `display_name` | User-visible name; optional until onboarding is complete |
+| `display_name` | Not duplicated on the profile row in Gate 2A; identity/display name is canonical revision data |
 | `onboarding_status` | `not_started`, `draft`, `ready`, `migrating`, `blocked` |
 | `current_revision_id` | Pointer to the published canonical profile revision |
 | `preferences_json` | Product/account preferences only (for example privacy defaults); career reasoning facts/preferences live in the versioned profile revision |
@@ -31,7 +33,7 @@ Immutable revisions of user-authored profile content and its reviewed machine-re
 | --- | --- |
 | `id`, `profile_id`, `revision_number` | Stable revision and monotonic version within a profile |
 | `status` | `draft`, `published`, `archived`; only one current published revision |
-| `markdown_body` | Canonical user-authored profile narrative |
+| `markdown_body` | Later source/projection material; Gate 2A keeps only bounded `freeform_notes` as canonical user-authored text |
 | `structured_json` | Reviewed projection used for UI, pack assembly, and routing |
 | `source_map_json` | Pointers such as Markdown heading/line, document ID, or user-entered field for each structured claim |
 | `schema_version` | Projection schema version, independent of app version |
@@ -183,3 +185,23 @@ If the profile, job, application question, selected CV, or relevant document cha
 
 Every import shows: format/version, source, created date, owner/subject, included fields, redactions, conflicts, stale references, and proposed changes. The user chooses field-by-field or batch acceptance. The import screen never says “synced” when it only generated a proposal.
 
+## Gate 2A persistence boundary
+
+Gate 2A implements only `career_profiles` and `career_profile_revisions`. A profile is
+owned by one authenticated user and contains product/account preferences only; career
+reasoning preferences live in the revision's canonical structured data. A revision stores
+`schema_version`, `structured_json`, `freeform_notes`, `source_map_json`, `created_by`,
+`content_hash`, status and audit timestamps. Collection entries use stable opaque `id`
+values and preserve experience type. Structured facts and freeform notes are validated
+separately; generated Markdown is still a projection.
+
+Published revisions are immutable and remain in history. There is at most one draft per
+profile. Draft creation optionally copies the current published revision, saving is
+optimistic-concurrency aware, and publication atomically changes the profile's
+`current_revision_id` and onboarding status. Direct client edits cannot rewrite a
+published revision or point a profile at another owner's revision. The migration is not
+applied to production by Gate 2A.
+
+The migration is additive and has no automatic down migration. Recovery is by restoring
+the database backup or removing only the new profile rows through an explicit account
+deletion workflow; existing V1 tables are never rewritten.

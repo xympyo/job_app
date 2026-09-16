@@ -149,3 +149,17 @@ under Relevant context, derive manifests from assembled payload sections, and in
 portable task policy plus complete structured contracts only for research and triage. Semantic
 Markdown renderers and explicit user-data boundaries improve review without changing V1 data or
 starting Gate 2.
+
+## 2026-09-16 — Gate 2A persistent career-profile foundation
+
+Decision: add a minimal user-owned `career_profiles` / `career_profile_revisions` layer
+with one editable draft, explicit atomic publication, immutable published history,
+validated provenance and deterministic content hashes. Keep Gate 1's compiler pure and
+adapt published revisions into it through a domain adapter.
+Rationale: profile facts need durable ownership and revision semantics before onboarding
+or migration can be designed safely. Structured facts remain canonical; freeform notes
+remain separate user-authored content; generated Markdown remains a projection.
+Implications: the migration is local-only and unapplied to production; Moshe remains a
+fixture; no onboarding UI, document storage, context/artifact persistence or AI
+write-back is included. The local profile adapter is in-memory/provider-independent for
+Gate 2A validation, while existing V1 local storage remains unchanged.

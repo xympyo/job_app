@@ -98,6 +98,12 @@ Exit criteria:
 
 Scope: new profile tables, manual/Markdown onboarding, reviewed projection.
 
+Gate 2A (the persistent foundation) is implemented locally. It adds no onboarding UI and
+does not migrate Moshe. The migration creates `career_profiles` and
+`career_profile_revisions`, with owner RLS, immutable published history, one-draft
+semantics, provenance, deterministic content hashes and atomic domain RPCs. The pure
+adapter from a published revision to the Gate 1 compiler is covered by unit tests.
+
 Exit criteria:
 
 - RLS/cross-user tests pass;

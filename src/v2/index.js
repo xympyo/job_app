@@ -2,3 +2,6 @@ export * from "./compiler.js";
 export * from "./fixtures.js";
 export * from "./protocol.js";
 export * from "./tasks.js";
+export * from "./profile.js";
+export * from "./profile-domain.js";
+export * from "./profile-repository.js";
