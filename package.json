@@ -11,6 +11,7 @@
     "test:watch": "vitest",
     "v2:gate1": "node scripts/generate-gate1-packs.js",
     "v2:gate3a": "node scripts/generate-gate3a-migration.js",
+    "v2:gate3b": "node scripts/activate-gate3b.js",
     "lint": "eslint .",
     "check": "npm run lint && npm test && npm run build",
     "test:db": "node scripts/test-db.js"

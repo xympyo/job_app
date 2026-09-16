@@ -115,7 +115,11 @@ export function WorkspaceProvider({
   }, [user, reload]);
   const reloadProfile = useCallback(async () => {
     if (!user) return;
-    if (configured && !import.meta.env.VITE_V2_PROFILE_ENABLED) {
+    // Cloud capability is available when the profile RPC/table surface exists.
+    // An explicit false flag remains a safe emergency opt-out; undefined is no
+    // longer treated as disabled so a verified production schema can activate
+    // the generic Career path without a user-specific branch.
+    if (configured && import.meta.env.VITE_V2_PROFILE_ENABLED === "false") {
       setProfileView({ profile: null, draft: null, current: null, history: [], loading: false, error: "", available: false });
       return;
     }

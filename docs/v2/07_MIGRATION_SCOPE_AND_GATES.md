@@ -212,3 +212,9 @@ and relocation is case-by-case. Research policy prioritizes full-time roles whil
 retaining strategically relevant alternatives. Human review output renders unknown
 values as clear language, preserves the freeform note, and links EDEN/OMNI to the Mattel
 internship context. No owner or production data was changed.
+
+## Gate 3B status — 2026-09-16
+
+Gate 3B production activation completed for the approved owner after read-only reconciliation and backup. The live V1 snapshot was 47 jobs, 45 companies, 58 job sources, 3 research runs, 11 applications, 0 questions and 0 events, with the original three CV variant IDs and all application relationships intact. The foundation migration was applied once through the authorized Management API because no production migration history table exists; no deferred document/context-export/AI-artifact tables were added.
+
+One owner-scoped profile and published revision 1 were created through the normal Gate 2A RPCs from candidate hash `fnv1a64:8dfc4141079a9c34`. Post-migration V1 identity and snapshot comparisons were unchanged. The activation script is re-run safe and changes to verification-only when the matching profile/revision already exists. Status: **V2 profile activated; Gate 3B browser/deployment verification pending**.
