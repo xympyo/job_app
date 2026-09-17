@@ -1,0 +1,29 @@
+{
+  "taskType": "build_profile",
+  "privacyPreset": "private_minimum",
+  "profileRevision": "fixture-synthetic-finance-v1",
+  "includedSections": [
+    "protocol",
+    "policy",
+    "profile",
+    "cvVariants",
+    "task",
+    "context.sourceMaterial"
+  ],
+  "excludedSections": [
+    "contactDetails",
+    "accountMetadata",
+    "documentBinaries",
+    "applications",
+    "jobs"
+  ],
+  "redactions": [
+    "contact",
+    "preferred name",
+    "freeform notes",
+    "account identifiers",
+    "document binaries"
+  ],
+  "generatedAt": "2026-09-16T00:00:00.000Z",
+  "contentHash": "fnv1a64:e38455177cf7eaf7"
+}

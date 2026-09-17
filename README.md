@@ -83,7 +83,7 @@ instructions when credentials are absent; use `npm run dev` for the local worksp
 The default CSP allows Supabase's standard `*.supabase.co` domain; custom Supabase
 domains require updating `connect-src` in `vercel.json`.
 
-Production is connected at https://job-app-nine-lake.vercel.app. Hosted password sign-in,
+Production is connected at https://pyoloker.vercel.app. Hosted password sign-in,
 record persistence between separate browser sessions and account isolation were verified
 on 2026-09-14. Signup requires email verification and is rate-limited by Supabase Auth.
 Owner login is in the ignored local file
@@ -136,8 +136,9 @@ Browser QA artifacts and methodology: `docs/12_QA.md`, `output/playwright/`.
 
 ## Continue this project
 
-Read every document in `docs`, especially `00_HANDOVER.md`, `02_USER_PROFILE.md`,
-`09_DECISIONS.md` and `10_CURRENT_STATE.md`, before making changes. `AGENTS.md` gives
+Start with [`docs/README.md`](docs/README.md), then follow its progressive-disclosure
+workflow. Before coding, read `00_HANDOVER.md`, `02_USER_PROFILE.md`, `09_DECISIONS.md`
+and `10_CURRENT_STATE.md`, plus the relevant contract document. `AGENTS.md` gives
 maintenance rules. Markdown candidate profile is canonical; the database has no competing
 editable profile in V1. Append decisions; keep current state concise and honest.
 

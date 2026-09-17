@@ -1,307 +1,118 @@
 # Canonical candidate profile
 
-6. CANDIDATE PROFILE — CANONICAL STARTING POINT
-Populate 02_USER_PROFILE.md using the following.
-Identity
-Name: Moshe Dayan
-Location: Cikarang / Jakarta metropolitan area, Indonesia
-Education:
-Bachelor of Informatics
-President University
-Aug 2023 – expected Dec 2026
-Current GPA: approximately 3.80 / 4.00
-Jababeka Scholarship 75% Awardee
-Career stage:
-Final-year student / fresh-graduate candidate with significant internship and project experience.
-Professional identity
-Do not reduce Moshe to merely:
-- software developer
-- AI engineer
-- web developer
-- process engineer
-His preferred professional identity is:
-Technical problem-solver who turns messy business and operational problems into systems, processes, products, and practical solutions.
+This file is the authoritative human-readable profile for career reasoning. It is
+evidence-bounded: use the facts below, keep uncertainty visible, and do not let a job
+description or an old report silently rewrite them.
 
-He enjoys ambiguous problems where the first response is effectively:
-“Hmm… what the fuck is actually happening here?”
+## Identity and eligibility
 
-He wants to investigate, brainstorm, understand constraints, talk to stakeholders, model problems, evaluate alternatives, and help determine what should be built or changed.
-He does not want his career centered around being a pure “code monkey” executing endless implementation tickets.
-He is comfortable coding and wants to remain technically capable, but coding is a tool rather than the entirety of his desired professional identity.
-Long-term ambition:
-leadership / management
+- Name: Moshe Dayan
+- Location: Cikarang / Jakarta metropolitan area, Indonesia
+- Education: Bachelor of Informatics / Computer Science, President University
+- Study period: August 2023 – expected graduation December 2026
+- GPA: approximately 3.80 / 4.00
+- Jababeka Scholarship: 75%
+- Career stage: final-year student / fresh-graduate candidate with significant internship,
+  project and leadership experience
 
-He finds managerial roles attractive and wants progressively larger ownership of problems, people, projects, systems, or business outcomes.
-7. TARGET CAREER FAMILIES
-Primary career tracks:
-Analyst / Transformation
-Target titles may include:
-- System Analyst
-- Business Analyst
-- IT Business Analyst
-- Business Systems Analyst
-- Digital Transformation Analyst
-- Technology Analyst
-- Technology Consultant
-- Digitalization roles
-- Process Improvement
-- Operational Excellence
-- Business Process Improvement
-Management / Product
-Target titles may include:
-- Management Trainee
-- Management Development Program
-- Graduate Development Program
-- Graduate Trainee
-- Future Leaders Program
-- Associate Product Manager
-- Product Analyst
-- Junior Product roles
-- Project / Program graduate roles
-Secondary tracks:
-- Solutions Engineer
-- Technical Consultant
-- Automation Engineer
-- Manufacturing Systems Engineer
-- Software Engineer
-- Backend Engineer
-- Full-Stack Engineer
-Software roles remain valid but are not the central career identity.
-AI/ML roles are possible but currently secondary rather than the default target.
-8. GEOGRAPHIC STRATEGY
-Primary:
-Indonesia.
-Especially:
-- Jakarta
-- Greater Jakarta / Jabodetabek
-- Bekasi
-- Cikarang
-- nearby industrial/business centers
-Remote opportunities are acceptable and should be considered, including international ones.
-However:
-Remote should not automatically receive higher priority merely because it is remote.
-Career growth, ownership, problem complexity, mentorship, company quality, compensation, and role alignment matter more.
-The candidate is willing to consider challenging onsite or hybrid opportunities.
-9. PROFESSIONAL EXPERIENCE
-PT Mattel Indonesia
-Role:
-Process Engineering Intern | Data & Software Development
-Period:
-Aug 2025 – Aug 2026
-Internship is finished.
-Do not present it as current employment.
-Core work included manufacturing digitalization, software systems, process improvement, automation, optimization, data systems, and stakeholder delivery.
-Important accomplishments include:
-Project EDEN
-Internal manufacturing information / engineering system.
-Centralized approximately:
-267,000+ records
-Supported areas including:
-- capacity planning
-- tooling readiness
-- engineering milestone tracking
-- workload visibility
-- inventory / engineering-data management
-- planning workflows
-Technology included combinations of:
-- ASP.NET Core
-- SQL Server
-- Python
-- REST APIs
-- internal systems integration
-Moshe worked not merely as a developer.
-He investigated operational processes and translated requirements into systems and workflows.
-API / demand integration
-Replaced a manual Excel-oriented process taking:
-4+ hours
-with API-driven integration delivering updated information in:
-under 30 seconds
-Some historical portfolio material may contain slightly different timing such as ~10 seconds.
-The conservative CV fact currently used is:
-under 30 seconds.
-OMNI
-Official preferred project identity:
-OMNI
-Full historical expansion:
-Optigrid Metaheuristics Nesting Intelligence
-It is a manufacturing layout optimization system.
-A public white-label portfolio version was historically called:
-Autovas
-Autovas and OMNI are the same underlying project / system lineage, not two independent accomplishments.
-Prefer OMNI going forward.
-The system involved concepts including:
-- geometry analysis
-- production constraints
-- cavity layouts
-- SAT collision logic
-- 2D packing
-- heuristic/metaheuristic optimization
-- simulated annealing
-- equalization rules
-- operator workflow considerations
-Validated outcomes include approximately:
-planning workflow: days → ~60 minutes
-and
-~4% throughput improvement in validated cases
-Do not inflate these figures.
-Legacy automation
-Worked with:
-- IBM i / AS400
-- IBM Personal Communications / PCOMM
-- enterprise workflow automation
-- modern internal applications / integrations
-Stakeholders
-Presented solutions/results to:
-- engineering users
-- regional directors
-- VPs
-- global manufacturing leadership
-Major award
-Champion — Mattel Global Manufacturing Internship Project Competition 2026
-This is a major career signal.
-10. HOMIZE
-Homize was not normal employment.
-It was a contract/freelance software project.
-Preferred framing:
-Freelance Software Developer / Technical Project Lead
-or suitable equivalent.
-Do not falsely portray Homize as if the company employed Moshe full-time.
-The client approached the team with a startup-like service marketplace idea.
-Moshe helped:
-- interpret ambiguous client needs
-- scope the system
-- negotiate project value
-- design architecture
-- coordinate development
-- build product workflows
-- deliver/deploy the system
-Team size:
-2 developers
-Product included:
-- multi-vendor services
-- real-time chat
-- booking
-- vouchers
-- role-based functionality
-- service management
-- workflows/state transitions
-Approximate final project value to use publicly:
-~IDR 25 million
-Historical documents contain conflicting 25M / 30M figures.
-Use the conservative approximately IDR 25M unless Moshe later confirms otherwise.
-Do not repeat the old “12M → 30M” statement as hard fact.
-11. LEADERSHIP EXPERIENCE
-Moshe served as:
-Senior Treasurer & Treasurer
-President University Major Association Informatics / HIMA.
-Period approximately:
-Dec 2023 – Aug 2025
-Key evidence:
-- managed combined organizational cashflow exceeding IDR 100 million
-- managed end-to-end fiscal operations
-- Compsphere 2024 budget exceeded IDR 70 million
-- standardized treasury workflows
-- implemented financial controls
-- mentored junior treasurers
-- reduced dependency on individual team members
-This experience is particularly relevant for:
-- Management Trainee
-- graduate leadership programs
-- product/management roles
-- project management
-- roles assessing leadership potential
-12. SELECTED PROJECTS
-Pyomanizer
-Public AI/text rephrasing web application.
-Built end-to-end.
-Usage milestone currently used:
-- 1.1M+ characters
-- 1,500+ documents
-Do not position it as advanced ML if its implementation does not justify that claim.
-The important signal is:
-- product ownership
-- software development
-- deployment
-- real users
-- measurable usage
-Deep Learning Product Package Verification
-Academic concentration project / proof of concept using a Mattel-themed case study.
-Group size:
-4
-Completed before internship.
-Pipeline involved:
-- YOLO
-- Hi-SAM
-- Parseq OCR
-- Llama 4
-Moshe contributed to end-to-end pipeline design and dataset/data-scraping work.
-Keep its academic/proof-of-concept nature clear.
-13. CURRENT CV STRATEGY
-There are currently three one-page CV variants.
-They must be represented in the system as first-class entities.
-Do not assume one CV fits every vacancy.
-Master CV
-Broad baseline / source-of-truth.
-Positioning:
-technical problem-solving, manufacturing digitalization, process improvement, software systems, automation, optimization.
-Analyst / Digital Transformation CV
-Optimized for:
-- System Analyst
-- Business Analyst
-- IT Business Analyst
-- Digital Transformation
-- Technology Analyst
-- Technology Consultant
-- business systems
-- process improvement
-Keyword themes include:
-- System Analysis
-- Requirements Analysis
-- Business Process Improvement
-- Workflow Design
-- System Integration
-- Data Analysis
-- Automation
-- REST APIs
-- SQL
-This version emphasizes:
-requirements → process analysis → system/workflow → integration → measurable improvement.
-Management / Product CV
-Optimized for:
-- Management Trainee
-- Graduate Development
-- Associate Product Manager
-- Product Analyst
-- leadership-track roles
-Themes include:
-- Project Management
-- Stakeholder Management
-- Product Development
-- Requirements Analysis
-- Business Process Improvement
-- Cross-functional Collaboration
-- Data Analysis
-- Decision-Making
-This version emphasizes:
-leadership, coordination, product thinking, stakeholder communication, ownership, business outcomes, and trade-offs.
-14. LINKEDIN STRATEGY
-LinkedIn should remain a stable umbrella profile.
-Do not constantly rewrite LinkedIn for every job.
-The targeted CV carries role-specific positioning.
-LinkedIn should broadly communicate:
-- former Mattel Engineering Intern
-- manufacturing digitalization
-- software
-- automation
-- AI
-- systems/problem-solving
-Avoid making Moshe appear to change professional identity every few days.
-LinkedIn factual consistency matters:
-- Mattel ended Aug 2026
-- GPA approximately 3.80
-- Homize approximately IDR 25M
-- OMNI and Autovas are the same project lineage
+An expected December 2026 graduation is not the same as being unavailable before then.
+For example, 19 October 2026 is before graduation. Use the eligibility categories in
+`TRIAGE.md`; a Bachelor's requirement without an explicit completed-before-start gate is
+not an automatic rejection.
 
+## Professional identity
 
-## CV source verification — 2026-09-14
-All three September PDFs were found under D:\Moshe\CV_Revised (Master), Analyst, and Managerial. Each is one page. Text extraction agrees with the handover's Mattel end date, GPA, under-30-second integration result, OMNI figures and approximately IDR 25M Homize value. The supplied D:\Moshe\CV\_Revised path does not exist. The original handover governs if historical documents conflict. Binaries remain outside this repository.
+Moshe is a technical problem-solver who turns ambiguous business and operational problems
+into systems, processes, products and practical solutions. He wants to investigate the
+real problem, understand constraints, work with stakeholders, evaluate alternatives and
+help decide what should change. Coding is a tool and an important capability, not the
+whole desired identity. Long-term direction is toward leadership and management.
+
+Do not reduce the profile to pure Software Engineering, data science, AI engineering,
+UI/UX or process engineering. Those may be valid role components, but the strongest
+positioning combines technology, operations, business processes, systems, stakeholders
+and measurable improvement.
+
+## Experience and evidence
+
+### PT Mattel Indonesia — Process Engineering Intern | Data & Software Development
+
+August 2025 – August 2026; completed internship. Do not describe this as current
+employment or as a year of full-time professional employment.
+
+- **EDEN:** internal manufacturing/engineering information system centralizing 267,000+
+  records for capacity planning, tooling readiness, milestone tracking, workload
+  visibility and engineering-data management. Technologies included ASP.NET Core, SQL,
+  Python and APIs.
+- Replaced selected Excel/manual workflows taking 4+ hours with API-driven processing in
+  under 30 seconds. Use the conservative under-30-second figure.
+- **OMNI** (Optigrid Metaheuristics Nesting Intelligence): manufacturing-layout
+  optimization. Validated selected planning workflows from days to approximately 60
+  minutes and approximately 4% throughput improvement. Historical “Autovas” material is
+  the same project lineage, not a second accomplishment; prefer OMNI.
+- IBM i / AS400, IBM Personal Communications/PCOMM, enterprise integration, process
+  improvement and system/data automation.
+- Presented solutions/results to engineering users, regional directors, VPs and global
+  manufacturing leadership.
+- Champion — Mattel Global Manufacturing Internship Project Competition 2026.
+
+### Homize — Freelance Software Developer / Technical Project Lead
+
+Contract/freelance project with a two-person development team, not ordinary full-time
+employment. Moshe translated ambiguous client needs into scope and architecture,
+coordinated delivery and built a service marketplace with booking, chat, vouchers, RBAC,
+service management and workflow/state transitions. Public project value: approximately
+IDR 25 million. Do not repeat historical IDR 30M or “12M → 30M” claims as hard facts.
+
+### PUMA / HIMA Informatics — Senior Treasurer / Treasurer
+
+Approximately December 2023 – August 2025. Managed combined organizational cashflow above
+IDR 100 million, including a Compsphere 2024 budget above IDR 70 million; standardized
+treasury workflows, implemented controls and mentored junior treasurers. This is strong
+evidence for management, product, project and leadership-track roles.
+
+### Selected projects
+
+- **Pyomanizer:** end-to-end public AI/text-rephrasing web application with approximately
+  1.1M+ characters and 1,500+ documents of usage. Position as product ownership,
+  deployment, software delivery and measurable use; do not overclaim advanced ML.
+- **Deep Learning Product Package Verification:** four-person academic proof of concept
+  using YOLO, Hi-SAM, Parseq OCR and Llama 4. Moshe contributed to pipeline design and
+  dataset/data work. Keep its academic/proof-of-concept status clear.
+
+## Target direction
+
+Primary role families are Analyst/Transformation and Management/Product. Good examples
+include Business Analyst, IT Business Analyst, Business Systems Analyst, System Analyst,
+ERP/Functional/Implementation Consultant, Technology Consulting, Digital Transformation,
+Process Improvement, Operational Excellence, PMO/Project Analyst, Corporate/Business
+Planning, Product Operations, Business Operations, Product and aligned graduate or
+management-development programs.
+
+Secondary options include data-to-business/data-to-operations, Solutions/Technical
+Consulting, Automation, Manufacturing Systems and software roles. Pure SWE, pure data
+scientist and pure AI roles are not the default identity.
+
+Location priority: Jakarta; Cikarang/Bekasi; Jabodetabek; then wider Indonesia when
+quality strongly justifies it. Remote is acceptable but is not automatically higher
+priority than a strong onsite/hybrid role.
+
+## Current general career preferences — owner confirmed 2026-09-16
+
+- Primary employment goal: full-time work.
+- Preferred locations: Jakarta, Cikarang, Bekasi and Jabodetabek.
+- Work modes: onsite, hybrid, and remote acceptable where appropriate.
+- Relocation: evaluate case-by-case.
+
+These are general preferences, not absolute exclusions. Internships, freelance and
+contract roles may still be considered when explicitly requested, unusually strategic,
+or suitable while Moshe remains a final-year student. Expected graduation in December
+2026 does not imply general unavailability before graduation. Work authorisation remains
+unknown unless separately supported.
+
+## Fact discipline
+
+Use “approximately” where the evidence is approximate. Keep Mattel as internship,
+Homize as freelance, OMNI/Autovas as one lineage and December 2026 as expected
+graduation. If a future primary source confirms a different fact, append the change to
+`09_DECISIONS.md` when it affects policy and update this profile deliberately.

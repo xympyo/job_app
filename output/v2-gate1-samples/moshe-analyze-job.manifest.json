@@ -1,0 +1,35 @@
+{
+  "taskType": "analyze_job",
+  "privacyPreset": "working_context",
+  "profileRevision": "fixture-moshe-v1",
+  "includedSections": [
+    "protocol",
+    "policy",
+    "profile",
+    "cvVariants",
+    "task",
+    "context.selectedJob",
+    "context.relevantEvidence"
+  ],
+  "excludedSections": [
+    "unrelatedJobs",
+    "wholeApplicationHistory"
+  ],
+  "redactions": [
+    "contact",
+    "secrets",
+    "account identifiers",
+    "document binaries"
+  ],
+  "generatedAt": "2026-09-16T00:00:00.000Z",
+  "contentHash": "fnv1a64:90006698c2673077",
+  "metrics": {
+    "characters": 15796,
+    "words": 1702,
+    "approximateTokens": 3949
+  },
+  "lint": {
+    "ok": true,
+    "issues": []
+  }
+}

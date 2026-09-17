@@ -1,0 +1,241 @@
+{
+  "metadata": {
+    "format": "pyoloker.career-pack",
+    "formatVersion": "1.0",
+    "packId": "sample-moshe-triage-jobs",
+    "taskType": "triage_jobs",
+    "privacyPreset": "working_context",
+    "profileRevision": "fixture-moshe-v1",
+    "generatedAt": "2026-09-16T00:00:00.000Z"
+  },
+  "protocol": "Act as a career collaborator. The user remains the final decision-maker.\nUse supplied facts only for claims about the person; label FACT, INFERENCE, UNKNOWN, and SUGGESTION.\nNever invent dates, responsibilities, outcomes, qualifications, eligibility, or experience.\nPreserve internship, freelance, project, volunteer, and leadership distinctions.\nIdentify missing material information and ask focused questions instead of guessing.\nKeep external employer/current-vacancy facts separate from user facts and flag information that may be stale.\nRespect the task scope and follow the requested output contract.\nDo not claim that anything was saved, submitted, contacted, or changed in PyoLoker.\nMinimise unnecessary repetition of private information.",
+  "policy": "- Screen plausibility before ranking: substantive fit, eligibility, freshness/deadline, and practical location/work mode.\n- Consider career value, application effort, and strong differentiated evidence.\n- Use P0 (urgent/high-value action), P1 (important near-term), P2 (useful later), and DROP (not actionable) as workload guidance.\n- Exclude already-submitted or terminal work from new-application recommendations unless the user asks for an audit.\n- A recommendation is advice for the user, never the user's decision.",
+  "profile": {
+    "careerStage": {
+      "status": "final-year student",
+      "graduation": "December 2026"
+    },
+    "education": [
+      {
+        "institution": "President University",
+        "field": "Informatics / Computer Science",
+        "studyPeriod": "August 2023 – expected graduation December 2026",
+        "gpa": "approximately 3.80",
+        "expectedGraduation": "December 2026",
+        "scholarship": "Jababeka Scholarship: 75%"
+      }
+    ],
+    "experiences": [
+      {
+        "organization": "PT Mattel Indonesia",
+        "title": "Process Engineering Intern | Data & Software Development",
+        "type": "internship",
+        "dates": "August 2025 – August 2026 (completed)",
+        "evidence": [
+          "EDEN internal engineering information system centralizing 267,000+ records",
+          "replaced selected 4+ hour Excel/manual workflows with API-driven processing in under 30 seconds",
+          "OMNI manufacturing-layout optimization: selected workflows from days to approximately 60 minutes and approximately 4% throughput improvement",
+          "ASP.NET Core, SQL, Python, APIs, IBM i/AS400 and enterprise integration",
+          "presented solutions/results to engineering users, regional directors, VPs and global manufacturing leadership",
+          "Champion — Mattel Global Manufacturing Internship Project Competition 2026"
+        ]
+      },
+      {
+        "organization": "Homize",
+        "title": "Freelance Software Developer / Technical Project Lead",
+        "type": "freelance/project",
+        "evidence": [
+          "two-person development team",
+          "translated ambiguous client needs into scope and architecture",
+          "built a service marketplace with booking, chat, vouchers, RBAC, service management and workflow/state transitions",
+          "public project value approximately IDR 25 million"
+        ]
+      }
+    ],
+    "projects": [
+      {
+        "name": "EDEN",
+        "description": "Internal manufacturing/engineering information system.",
+        "evidence": [
+          "centralized 267,000+ records for capacity planning, tooling readiness, milestone tracking, workload visibility and engineering-data management"
+        ]
+      },
+      {
+        "name": "OMNI",
+        "description": "Optigrid Metaheuristics Nesting Intelligence manufacturing-layout optimization.",
+        "evidence": [
+          "selected planning workflows reduced from days to approximately 60 minutes",
+          "approximately 4% throughput improvement"
+        ]
+      },
+      {
+        "name": "Pyomanizer",
+        "description": "Public AI/text-rephrasing web application.",
+        "evidence": [
+          "approximately 1.1M+ characters and 1,500+ documents of usage",
+          "product ownership, deployment and software delivery"
+        ]
+      },
+      {
+        "name": "Deep Learning Product Package Verification",
+        "description": "Four-person academic proof of concept.",
+        "evidence": [
+          "pipeline design and dataset/data work",
+          "YOLO, Hi-SAM, Parseq OCR and Llama 4"
+        ]
+      }
+    ],
+    "leadership": [
+      {
+        "organization": "PUMA / HIMA Informatics",
+        "title": "Senior Treasurer / Treasurer",
+        "dates": "Approximately December 2023 – August 2025",
+        "evidence": [
+          "managed combined organizational cashflow above IDR 100 million",
+          "standardized treasury workflows and implemented controls",
+          "mentored junior treasurers"
+        ]
+      }
+    ],
+    "skills": [
+      "process improvement",
+      "digital transformation",
+      "requirements analysis",
+      "systems integration",
+      "software development",
+      "stakeholder communication"
+    ],
+    "languages": [
+      "Indonesian",
+      "English"
+    ],
+    "targetRoles": [
+      "Management Trainee / Graduate Program",
+      "Product",
+      "Analyst",
+      "Digital Transformation",
+      "Technology Consulting"
+    ],
+    "locationPreferences": [
+      "Jakarta",
+      "Cikarang",
+      "Jabodetabek"
+    ],
+    "workPreferences": {
+      "modes": [
+        "Onsite",
+        "Hybrid"
+      ],
+      "relocation": "open to relevant opportunities"
+    },
+    "constraints": {
+      "expectedGraduation": "December 2026",
+      "availabilityBeforeGraduation": "Not specified; evaluate each employer's start-date and eligibility requirement. Do not infer general unavailability before graduation."
+    },
+    "identity": {
+      "displayName": "Moshe Dayan"
+    },
+    "freeformNotes": "I want work at the intersection of technology, operations, products, and leadership."
+  },
+  "cvVariants": [
+    {
+      "name": "Master",
+      "positioning": "Broad technical problem-solving, systems, and manufacturing digitalisation.",
+      "targetRoles": [
+        "Software Engineering",
+        "Automation",
+        "Technology Consulting"
+      ],
+      "active": true
+    },
+    {
+      "name": "Analyst",
+      "positioning": "Requirements, process analysis, systems, workflows, and measurable improvement.",
+      "targetRoles": [
+        "Analyst",
+        "Digital Transformation",
+        "Consulting",
+        "Process Improvement"
+      ],
+      "active": true
+    },
+    {
+      "name": "Management/Product",
+      "positioning": "Leadership, product thinking, stakeholders, ownership, and business outcomes.",
+      "targetRoles": [
+        "Management Trainee / Graduate Program",
+        "Product"
+      ],
+      "active": true
+    }
+  ],
+  "task": {
+    "userRequest": "Rank these roles"
+  },
+  "context": {
+    "selectedJobs": [
+      {
+        "id": "job-moshe-1",
+        "company": "Example Logistics",
+        "title": "Operations Analyst",
+        "location": "Jakarta",
+        "roleFamily": "Analyst",
+        "reviewStatus": "Reviewing",
+        "postingStatus": "Verified open",
+        "foundAt": "2026-09-15",
+        "fitScore": 86,
+        "sources": [
+          {
+            "sourceName": "Company careers",
+            "sourceType": "Official careers",
+            "sourceUrl": "https://example.invalid/jobs/1"
+          }
+        ]
+      },
+      {
+        "id": "job-moshe-2",
+        "company": "Example Technology",
+        "title": "Associate Product Manager",
+        "location": "Cikarang",
+        "roleFamily": "Product",
+        "reviewStatus": "Ready to Apply",
+        "postingStatus": "Verified open",
+        "foundAt": "2026-09-14",
+        "fitScore": 91,
+        "sources": [
+          {
+            "sourceName": "Company careers",
+            "sourceType": "Official careers",
+            "sourceUrl": "https://example.invalid/jobs/2"
+          }
+        ]
+      }
+    ]
+  },
+  "manifest": {
+    "taskType": "triage_jobs",
+    "privacyPreset": "working_context",
+    "profileRevision": "fixture-moshe-v1",
+    "includedSections": [
+      "protocol",
+      "policy",
+      "profile",
+      "cvVariants",
+      "task",
+      "context.selectedJobs"
+    ],
+    "excludedSections": [
+      "unrelatedJobs",
+      "applicationAnswers",
+      "documentContent"
+    ],
+    "redactions": [
+      "contact",
+      "secrets",
+      "account identifiers",
+      "document binaries"
+    ],
+    "generatedAt": "2026-09-16T00:00:00.000Z",
+    "contentHash": "fnv1a64:0702266afc6fdce3"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "taskType": "career_discussion",
+  "privacyPreset": "working_context",
+  "profileRevision": "fixture-moshe-v1",
+  "includedSections": [
+    "protocol",
+    "policy",
+    "profile",
+    "cvVariants",
+    "task"
+  ],
+  "excludedSections": [
+    "jobs",
+    "applications",
+    "applicationAnswers",
+    "recruiterContacts",
+    "accountMetadata"
+  ],
+  "redactions": [
+    "contact",
+    "secrets",
+    "account identifiers",
+    "document binaries"
+  ],
+  "generatedAt": "2026-09-16T00:00:00.000Z",
+  "contentHash": "fnv1a64:0f3bea4c1352ff52",
+  "metrics": {
+    "characters": 13593,
+    "words": 1473,
+    "approximateTokens": 3399
+  },
+  "lint": {
+    "ok": true,
+    "issues": []
+  }
+}

@@ -1,43 +1,132 @@
-# Database
+# Data model and import contract
 
-PostgreSQL via Supabase, schema in supabase/migrations. UUID primary keys, timestamptz
-audit fields, user_id ownership referencing auth.users. RLS on every exposed table.
-Composite (user_id, id) foreign keys prevent linking another user's records even when
-a client knows their IDs. Index ownership and common filters. Authenticated role only.
+The authoritative schema is the SQL in `supabase/migrations/`. The frontend mirrors it
+with Zod schemas in `src/lib/schema.js`; constants in `src/lib/constants.js` define the
+allowed status vocabularies. There are eight user-owned tables and no database candidate
+profile in V1. Markdown profile knowledge remains canonical.
 
-## Entities
+## Ownership and persistence
 
-- companies: reusable normalized identity, website/careers, industry/size/HQ and notes.
-- cv_versions: Master, Analyst, Management/Product; description, targets, file reference.
-- jobs: company, role/location/mode/seniority, vacancy text, salary, dates, verification,
-  review state, explainable fit, strengths/gaps/red flags, CV, research/user notes.
-- job_sources: many per job, source/application URLs, type, requisition ID, verification.
-- applications: one per job in V1; flexible stage, applied date, CV used, immutable vacancy
-  snapshot, stage history, next action/date, cover letter, recruiter, outcome and notes.
-- application_questions: question/type/required/limit, draft/final, reasoning and status.
-- application_events: assessments/interviews/contact records with schedule, status and notes.
-- research_runs: goal, query, timestamps, counts, notes; jobs can reference their origin run.
+Every table has UUID `id`, `user_id`, `created_at` and `updated_at`. Supabase RLS permits
+authenticated users to access only rows with their own `user_id`; anonymous table access
+and RPC execution are denied. Composite `(user_id, id)` foreign keys prevent a client
+from linking another user's row. `apply_changes(jsonb)` is a security-invoker, whitelisted
+atomic batch RPC with optimistic `updated_at` checks. Applications and research runs are
+not deletable through the cloud mutation path. Local mode uses version-1 browser storage
+and is not cloud-synchronized or encrypted.
 
-Lists and evidence are JSONB where relational decomposition adds no value. Application
-snapshots and stage histories are JSONB. Company/CV deletion is restricted while referenced;
-job deletion is restricted with applications; source/question/event children cascade.
-No database candidate profile in V1; canonical Markdown avoids competing sources of truth.
+## Tables and relationships
 
-Atomic save/import uses a security-invoker RPC transaction over normalized tables, with
-RLS enforced. Optimistic updated_at checks reject stale writes. No service-role key in UI.
-Local adapter uses the same entities and validation with versioned browser storage.
-Local storage is a development/offline workspace, not protected multi-device storage.
+### `cv_versions`
 
-## Live verification — 2026-09-14
-The existing migration supplies this milestone without schema additions. Live inventory
-confirmed RLS on all eight tables, with authenticated ownership checks for reads/writes.
-Two disposable accounts verified isolation on every populated table, anonymous denial,
-ownership-aware foreign keys, stale RPC rejection and atomic rollback. Owner retains
-three CV records; QA data was removed. See 12_QA.md for the acceptance evidence.
-# Bulk triage persistence
+`name`, unique per-user `slug`, `description`, `target_roles` (JSON array), `active`,
+`file_reference` and `notes`. New workspaces seed Master, Analyst and Management/Product.
+PDFs are only referenced from outside this repository; they are not uploaded or published.
 
-Bulk triage uses the existing atomic repository commit/RPC. Its update whitelist is
-review status, recommendation, fit assessment fields, strengths, gaps, red flags,
-recommended CV, research notes and explicitly verified timestamp. Company/title,
-description, requirements, sources, applications, snapshots, questions and events are
-never modified by this workflow. Existing RLS and owner filtering remain authoritative.
+### `companies`
+
+Reusable `name`, unique per-user `normalized_name`, `website`, `careers_url`, `industry`,
+`size`, `headquarters` and `notes`. Adding a job creates or reuses a company by normalized
+name. A company referenced by a job cannot be deleted.
+
+### `research_runs`
+
+`research_goal`, `query_summary`, `notes`, `started_at`, `completed_at`, `result_count`
+and `created_jobs_count`. Jobs may reference the originating run through
+`research_run_id`. A manual job does not need a run.
+
+### `jobs`
+
+The vacancy/opportunity record. It references `company_id`, optional `recommended_cv_id`
+and optional `research_run_id`. Facts include `title`, `normalized_title`, location/city/
+country, `work_mode`, `employment_type`, `role_family`, `seniority`, description,
+responsibilities, requirements, preferred requirements, salary fields, `deadline`,
+`published_at`, `found_at`, `last_verified_at`, `posting_status` and `source_confidence`.
+
+Assessment fields are `fit_score` (nullable integer 0–100), `fit_label`, `fit_reason`,
+`strengths`, `gaps`, `red_flags`, `recommendation`, `custom_tailoring`,
+`research_notes` and user `notes`. Workflow fields are `review_status` and the optional
+recommended CV foreign key. A fit score requires an explanation. Lists are JSON arrays.
+
+### `job_sources`
+
+Many-to-one child of `jobs`: `source_name`, `source_type`, `source_url`, `apply_url`,
+`external_job_id`, `is_primary` and `verified_at`. One vacancy may have official,
+recruiter and platform sources. Stored source types are `Official careers`, `Official
+posting`, `Job platform`, `Secondary` and `Unknown`.
+
+### `applications`
+
+At most one per job in V1. References `job_id` and optional `cv_version_id`. Fields are
+`status`, `applied_at`, `job_snapshot`, `cv_snapshot`, `stage_history`,
+`cover_letter_used`, `next_action`, `next_action_at`, recruiter fields,
+`rejection_stage`, `rejection_reason`, `offer_details` and `notes`.
+
+The database trigger preserves `job_snapshot`, identity and ownership on update. A new
+application captures the current vacancy, company and sources plus the selected CV. A CV
+change updates the CV snapshot. `stage_history` is an ordered JSON array of `{status, at}`.
+
+### `application_questions`
+
+Child of an application: `question_text`, `question_type`, `required`, `character_limit`,
+`draft_answer`, `final_answer`, `reasoning_notes` and `status`. Draft and final answers
+are separate. Required Completed questions need a final answer; non-Draft final answers
+must fit the character limit. Drafts may temporarily exceed the limit while being edited.
+
+### `application_events`
+
+Child of an application for assessments, interviews and recruiter contacts: `kind`,
+`title`, `scheduled_at`, `status` and `notes`. Events are records, not automated reminders
+or outbound messages.
+
+## Meaning of important states
+
+Job `posting_status` describes the employer vacancy finding: Unknown, Verified open,
+Possibly open, Closed or Expired. `last_verified_at` describes when that evidence was
+checked. `freshness()` derives Unverified, Fresh (≤7 days), Recent (≤14), Aging (≤30),
+Possibly stale, Closed or Expired; a deadline or explicit closed/expired status takes
+precedence. A Verified open value without a timestamp is therefore recorded evidence with
+no timestamp—not proof of current freshness.
+
+Job `review_status` describes Moshe's decision: Found, Reviewing, Saved, Ready to Apply,
+Skipped, Expired or Closed. `Ready to Apply` is a shortlist decision. An application
+workspace starts at `Preparing`, which means not submitted. Application statuses and
+history are defined in `07_APPLICATION_WORKFLOW.md`.
+
+## Research import (version 1)
+
+Accepted shape is `{version: 1, research_run, jobs}`. `research_run.goal` is required;
+query summary and notes are optional. Each job requires `company` and `title`; source
+records use the stored source fields. Optional unknown values may be omitted or null and
+are normalized to defaults. Full HTTP(S) URLs without embedded credentials and ISO dates/
+timestamps are required where supplied. Numeric `fit_score` requires `fit_reason`.
+
+The parser in `src/lib/import.js` rejects malformed JSON, unknown keys, unsupported enums,
+invalid URLs/dates, oversized strings/arrays, more than 200 jobs or 2 MB. It normalizes
+common source labels such as “Official recruiter posting” and “University career center”
+to the compact stored categories. Preview parses and clones data without writing.
+
+On confirmation, a research run is created, companies are reused/created, and selected
+jobs/sources are written atomically. Duplicate choices are skip (default), merge sources
+into an existing job, or keep as a separate vacancy. Merge does not overwrite the existing
+job or its application. Import never creates an application, changes questions/events,
+submits an application or runs a background search.
+
+## Triage interchange
+
+The app's Export for triage emits version 1 data with stable existing `job_id` values and
+excludes jobs already Skipped/Expired/Closed. Import requires exact UUIDs, unique IDs,
+supported decisions and the decision-to-status mapping documented in `TRIAGE.md`.
+Preview shows old/new fields; confirmation updates existing jobs only. The whitelist is
+review status, recommendation, fit fields, strengths/gaps/red flags, recommended CV,
+research notes and an explicitly explained verification timestamp. It never creates jobs,
+changes factual vacancy fields, sources, applications, snapshots, questions, events or
+history.
+
+## Export and preservation
+
+Career Toolkit exports a full JSON backup containing all eight tables and JSON/CSV exports
+for jobs, applications and application questions. CSV cells are escaped and formula-like
+values are prefixed defensively. The full backup is portable data, not a research-import
+payload; V1 has no full-backup restore UI. Preserve it privately before changing browser
+origins or moving between local and cloud mode.

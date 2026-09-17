@@ -1,0 +1,35 @@
+{
+  "taskType": "triage_jobs",
+  "privacyPreset": "working_context",
+  "profileRevision": "fixture-moshe-v1",
+  "includedSections": [
+    "protocol",
+    "policy",
+    "profile",
+    "cvVariants",
+    "task",
+    "context.selectedJobs"
+  ],
+  "excludedSections": [
+    "unrelatedJobs",
+    "applicationAnswers",
+    "documentContent"
+  ],
+  "redactions": [
+    "contact",
+    "secrets",
+    "account identifiers",
+    "document binaries"
+  ],
+  "generatedAt": "2026-09-16T00:00:00.000Z",
+  "contentHash": "fnv1a64:0702266afc6fdce3",
+  "metrics": {
+    "characters": 17177,
+    "words": 1797,
+    "approximateTokens": 4295
+  },
+  "lint": {
+    "ok": true,
+    "issues": []
+  }
+}

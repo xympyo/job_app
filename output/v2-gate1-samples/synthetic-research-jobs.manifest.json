@@ -1,0 +1,38 @@
+{
+  "taskType": "research_jobs",
+  "privacyPreset": "working_context",
+  "profileRevision": "fixture-synthetic-finance-v1",
+  "includedSections": [
+    "protocol",
+    "policy",
+    "profile",
+    "cvVariants",
+    "task",
+    "context.existingOpportunityFingerprints",
+    "context.searchPreferences"
+  ],
+  "excludedSections": [
+    "applicationAnswers",
+    "interviews",
+    "recruiterContacts",
+    "unrelatedJobs",
+    "documentBinaries"
+  ],
+  "redactions": [
+    "contact",
+    "secrets",
+    "account identifiers",
+    "document binaries"
+  ],
+  "generatedAt": "2026-09-16T00:00:00.000Z",
+  "contentHash": "fnv1a64:5bd258c147dbc8e5",
+  "metrics": {
+    "characters": 10892,
+    "words": 1169,
+    "approximateTokens": 2723
+  },
+  "lint": {
+    "ok": true,
+    "issues": []
+  }
+}

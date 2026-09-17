@@ -1,0 +1,37 @@
+{
+  "taskType": "research_jobs",
+  "privacyPreset": "working_context",
+  "profileRevision": "fixture-moshe-v1",
+  "includedSections": [
+    "protocol",
+    "policy",
+    "profile",
+    "cvVariants",
+    "task",
+    "context.existingOpportunityFingerprints"
+  ],
+  "excludedSections": [
+    "applicationAnswers",
+    "interviews",
+    "recruiterContacts",
+    "unrelatedJobs",
+    "documentBinaries"
+  ],
+  "redactions": [
+    "contact",
+    "secrets",
+    "account identifiers",
+    "document binaries"
+  ],
+  "generatedAt": "2026-09-16T00:00:00.000Z",
+  "contentHash": "fnv1a64:ce84f4ea4f10d7fd",
+  "metrics": {
+    "characters": 16143,
+    "words": 1757,
+    "approximateTokens": 4036
+  },
+  "lint": {
+    "ok": true,
+    "issues": []
+  }
+}

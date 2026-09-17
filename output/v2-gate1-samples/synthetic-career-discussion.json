@@ -1,0 +1,154 @@
+{
+  "metadata": {
+    "format": "pyoloker.career-pack",
+    "formatVersion": "1.0",
+    "packId": "sample-synthetic-career-discussion",
+    "taskType": "career_discussion",
+    "privacyPreset": "working_context",
+    "profileRevision": "fixture-synthetic-finance-v1",
+    "generatedAt": "2026-09-16T00:00:00.000Z"
+  },
+  "protocol": "Act as a career collaborator. The user remains the final decision-maker.\nUse supplied facts only for claims about the person; label FACT, INFERENCE, UNKNOWN, and SUGGESTION.\nNever invent dates, responsibilities, outcomes, qualifications, eligibility, or experience.\nPreserve internship, freelance, project, volunteer, and leadership distinctions.\nIdentify missing material information and ask focused questions instead of guessing.\nKeep external employer/current-vacancy facts separate from user facts and flag information that may be stale.\nRespect the task scope and follow the requested output contract.\nDo not claim that anything was saved, submitted, contacted, or changed in PyoLoker.\nMinimise unnecessary repetition of private information.",
+  "policy": "Use supplied evidence to explore career direction. Ask focused questions where material facts are missing.",
+  "profile": {
+    "careerStage": {
+      "status": "final-year student",
+      "graduation": "July 2027"
+    },
+    "education": [
+      {
+        "institution": "Bandung School of Business",
+        "field": "Accounting",
+        "gpa": 3.62,
+        "expectedGraduation": "July 2027"
+      }
+    ],
+    "experiences": [
+      {
+        "organization": "Nusantara Ledger Co.",
+        "title": "Audit Intern",
+        "type": "internship",
+        "evidence": [
+          "reconciliations",
+          "audit workpapers"
+        ]
+      }
+    ],
+    "projects": [
+      {
+        "name": "Campus Budget Lab",
+        "evidence": [
+          "forecasting",
+          "financial analysis"
+        ]
+      }
+    ],
+    "leadership": [
+      {
+        "organization": "Finance Society",
+        "evidence": [
+          "treasurer",
+          "event budgeting"
+        ]
+      }
+    ],
+    "skills": [
+      "financial modelling",
+      "Excel",
+      "reconciliation",
+      "audit testing",
+      "business writing"
+    ],
+    "languages": [
+      "Indonesian",
+      "English"
+    ],
+    "targetRoles": [
+      "Audit",
+      "Finance",
+      "Accounting",
+      "Banking",
+      "Financial Analyst"
+    ],
+    "locationPreferences": [
+      "Bandung",
+      "Surabaya",
+      "Yogyakarta"
+    ],
+    "workPreferences": {
+      "modes": [
+        "Hybrid",
+        "Onsite"
+      ],
+      "relocation": "open within Indonesia"
+    },
+    "constraints": {
+      "expectedGraduation": "July 2027",
+      "availabilityBeforeGraduation": "Not specified; evaluate each employer's start-date and eligibility requirement."
+    },
+    "identity": {
+      "displayName": "Rina Santoso"
+    },
+    "freeformNotes": "I enjoy making financial information understandable for operating teams."
+  },
+  "cvVariants": [
+    {
+      "name": "General",
+      "positioning": "Broad accounting and business foundation.",
+      "targetRoles": [
+        "Accounting",
+        "Banking"
+      ],
+      "active": true
+    },
+    {
+      "name": "Audit",
+      "positioning": "Controls, testing, reconciliations, and audit evidence.",
+      "targetRoles": [
+        "Audit",
+        "Risk"
+      ],
+      "active": true
+    },
+    {
+      "name": "Finance",
+      "positioning": "Forecasting, modelling, and decision support.",
+      "targetRoles": [
+        "Finance",
+        "Financial Analyst"
+      ],
+      "active": true
+    }
+  ],
+  "task": {
+    "userRequest": "What direction fits?"
+  },
+  "context": {},
+  "manifest": {
+    "taskType": "career_discussion",
+    "privacyPreset": "working_context",
+    "profileRevision": "fixture-synthetic-finance-v1",
+    "includedSections": [
+      "protocol",
+      "policy",
+      "profile",
+      "cvVariants",
+      "task"
+    ],
+    "excludedSections": [
+      "jobs",
+      "applications",
+      "applicationAnswers",
+      "recruiterContacts",
+      "accountMetadata"
+    ],
+    "redactions": [
+      "contact",
+      "secrets",
+      "account identifiers",
+      "document binaries"
+    ],
+    "generatedAt": "2026-09-16T00:00:00.000Z",
+    "contentHash": "fnv1a64:e7f6e89e92e5be7a"
+  }
+}

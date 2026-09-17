@@ -1,0 +1,36 @@
+{
+  "taskType": "career_discussion",
+  "privacyPreset": "working_context",
+  "profileRevision": "fixture-synthetic-finance-v1",
+  "includedSections": [
+    "protocol",
+    "policy",
+    "profile",
+    "cvVariants",
+    "task"
+  ],
+  "excludedSections": [
+    "jobs",
+    "applications",
+    "applicationAnswers",
+    "recruiterContacts",
+    "accountMetadata"
+  ],
+  "redactions": [
+    "contact",
+    "secrets",
+    "account identifiers",
+    "document binaries"
+  ],
+  "generatedAt": "2026-09-16T00:00:00.000Z",
+  "contentHash": "fnv1a64:e7f6e89e92e5be7a",
+  "metrics": {
+    "characters": 8082,
+    "words": 862,
+    "approximateTokens": 2021
+  },
+  "lint": {
+    "ok": true,
+    "issues": []
+  }
+}

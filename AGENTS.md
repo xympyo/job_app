@@ -1,5 +1,11 @@
 # Project instructions
 
+Before coding or changing documentation, start with [docs/README.md](docs/README.md).
+It is the agent entry point. Read the workflow-specific documents it names, then inspect
+the actual code/schema and `docs/10_CURRENT_STATE.md`. The numbered documents preserve
+the original handover and implementation history; `02_USER_PROFILE.md` is the canonical
+candidate profile and `09_DECISIONS.md` is append-oriented.
+
 Read every file in docs before modifying this project, especially 00_HANDOVER.md,
 02_USER_PROFILE.md, 09_DECISIONS.md, and 10_CURRENT_STATE.md. The handover's product
 scope is authoritative. Keep the current state concise and update it after milestones.
