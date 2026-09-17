@@ -61,5 +61,7 @@ and provider-neutral.
 The pure guidance engine prioritizes dated operational work, active application blockers,
 Ready-to-Apply preparation, unreviewed opportunities, missing profile setup, and finding
 the first opportunity. It does not create state or infer facts. Tutorial seen/dismissed
-flags are scoped to the authenticated user in browser storage, cleared on logout, and
-are convenience state rather than workflow truth.
+flags are scoped to the authenticated user in browser storage and survive an ordinary
+logout/login on the same browser. Logout clears only in-memory/session state; a different
+user loads a separate namespaced state. These flags are convenience state rather than
+workflow truth.

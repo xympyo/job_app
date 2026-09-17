@@ -18,7 +18,7 @@ import {
 } from "./lib/repository";
 import { errorMessage } from "./lib/schema";
 import { createLocalProfileRepository, createCloudProfileRepository } from "./v2/profile-repository.js";
-import { clearTutorialState, markTutorialSeen as markSeen, readTutorialState, writeTutorialState } from "./lib/tutorial-state";
+import { markTutorialSeen as markSeen, readTutorialState, writeTutorialState } from "./lib/tutorial-state";
 
 const Context = createContext(null);
 export const useWorkspace = () => useContext(Context);
@@ -188,7 +188,8 @@ export function WorkspaceProvider({
     setUser(null);
     setData(emptyData());
     setProfileView({ profile: null, draft: null, current: null, history: [], loading: false, error: "", available: true });
-    if (user) clearTutorialState(window.localStorage, user.id);
+    // Keep this user's browser-scoped guidance preferences across logout. The
+    // next authenticated user loads only their own namespaced state.
     setTutorialState({});
   };
   const markTutorialSeen = useCallback((milestone) => {

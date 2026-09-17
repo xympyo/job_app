@@ -243,6 +243,7 @@ describe("Supabase email/password interaction (mocked service)", () => {
       }),
     ).toBeVisible();
     expect(repository.load).toHaveBeenCalledWith(LOCAL_USER);
+    localStorage.setItem(`pyoloker:tutorial:${LOCAL_USER}`, JSON.stringify({ seen: { home: true }, dismissedChecklist: true }));
     await user.click(screen.getByRole("button", { name: "Sign out" }));
     await waitFor(() =>
       expect(screen.getByRole("button", { name: "Sign in" })).toBeVisible(),
@@ -250,5 +251,6 @@ describe("Supabase email/password interaction (mocked service)", () => {
     expect(
       screen.queryByRole("heading", { name: "Make your next move count." }),
     ).not.toBeInTheDocument();
+    expect(localStorage.getItem(`pyoloker:tutorial:${LOCAL_USER}`)).not.toBeNull();
   });
 });

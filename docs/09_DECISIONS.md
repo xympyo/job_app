@@ -209,6 +209,7 @@ The procedure is idempotent: an existing matching published revision switches to
 Decision: teach Find → Evaluate → Apply → Progress through a deterministic Home next-action
 card, a derived Getting Started checklist and short contextual explanations. `/guide`
 remains secondary Help/Playbook rather than a prompt wall. Tutorial flags are user-scoped
-browser convenience state, cleared on logout; canonical workspace records remain the only
-source for milestone completion. Guidance is provider-neutral and never writes workflow
-state.
+browser convenience state and survive ordinary logout/login for that same user; logout
+clears only in-memory/session state and another user loads a separate namespace. Canonical
+workspace records remain the only source for milestone completion. Guidance is
+provider-neutral and never writes workflow state.

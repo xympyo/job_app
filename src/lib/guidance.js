@@ -16,8 +16,11 @@ export const guidanceMilestones = {
 export function deriveGettingStarted(data, profile) {
   const jobs = data?.jobs || [];
   const applications = data?.applications || [];
+  // Career setup is complete only when the authoritative published/current
+  // revision exists. Drafts and imported proposals remain review material.
+  const hasPublishedProfile = profile?.current?.status === "published";
   return [
-    { id: "profile", label: "Set up your career context", complete: Boolean(profile?.current), href: "/career?start=1" },
+    { id: "profile", label: "Set up your career context", complete: hasPublishedProfile, href: "/career?start=1" },
     { id: "opportunity", label: "Add or import an opportunity", complete: jobs.length > 0, href: jobs.length ? "/jobs" : "/research" },
     {
       id: "evaluation",
