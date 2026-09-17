@@ -26,6 +26,16 @@ Every assessment should answer:
 Keep employer facts, research inference and user notes visibly distinct. Do not treat a
 researcher's recommendation as an employer statement.
 
+## Independent employer-quality assessment
+
+Role fit is not employer quality. Before recommending substantial application effort,
+evaluate both dimensions independently. A strong fit can remain HOLD / RESEARCH or
+CAUTION when legitimacy, stability, culture, compensation, team conditions or contract
+terms are unresolved. Employer due diligence uses the statuses and evidence classes in
+`15_EMPLOYER_DUE_DILIGENCE.md`; it is explainable, source-backed and never a numeric
+proxy for role fit. `Ready to Apply` records Moshe's opportunity decision and does not
+mean the employer is cleared.
+
 ## Eligibility guardrails
 
 Use `TRIAGE.md` for Confirmed, Likely, Uncertain but applyable and Hard block. In

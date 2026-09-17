@@ -241,3 +241,15 @@ checklist, user-scoped tutorial reset/dismissal state, contextual explanations a
 applications, Attention and Career, and a concise Help/Playbook at `/guide`. The flow
 teaches Find → Evaluate → Apply → Progress without requiring AI or repeated Guide visits.
 No database schema or owner data changed in this usability pass.
+
+## Employer due-diligence audit — 2026-09-17
+
+Completed a read-only employer-quality audit over the live owner snapshot (45 companies,
+47 jobs, 14 applications, 58 sources, 3 research runs). The audit separates role fit from
+employer quality, classifies evidence as fact/repeated signal/anecdote/unknown, and uses
+CLEARED, CAUTION, HOLD / RESEARCH and AVOID with confidence. Six employers had enough
+public evidence for CLEARED; several had material trade-offs; many smaller employers
+remain HOLD because public evidence is too thin. No jobs, companies, applications, CVs,
+snapshots, sources or history were changed. The detailed dated report is
+`output/employer-due-diligence-audit-2026-09-17.md`; the durable policy is
+`docs/15_EMPLOYER_DUE_DILIGENCE.md`. A normalized diligence migration remains deferred.

@@ -130,3 +130,15 @@ for jobs, applications and application questions. CSV cells are escaped and form
 values are prefixed defensively. The full backup is portable data, not a research-import
 payload; V1 has no full-backup restore UI. Preserve it privately before changing browser
 origins or moving between local and cloud mode.
+
+## Employer due-diligence storage boundary
+
+The current `companies` table is an identity/reuse record, not an employer-review
+database. Do not put a long audit dump in `companies.notes` or duplicate employer facts
+into every job. The proposed normalized future shape is an owner-scoped one-to-one
+`company_diligence` record plus owner-scoped `company_diligence_sources` children for
+status, confidence, summary, signals, concerns, compensation/stability/career-value
+signals, operational recommendation and dated evidence. It requires composite owner
+foreign keys, RLS and HTTPS-only source URLs. This audit does not add the tables or
+mutate production; until a migration is approved, the dated audit remains a report-only
+artifact under `output/`.

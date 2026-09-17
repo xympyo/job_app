@@ -213,3 +213,14 @@ browser convenience state and survive ordinary logout/login for that same user; 
 clears only in-memory/session state and another user loads a separate namespace. Canonical
 workspace records remain the only source for milestone completion. Guidance is
 provider-neutral and never writes workflow state.
+
+## 2026-09-17 — Employer due diligence as a separate Evaluate dimension
+
+Decision: extend `Evaluate` with an independent employer-quality/due-diligence assessment
+alongside role fit. Use explainable statuses (CLEARED, CAUTION, HOLD / RESEARCH, AVOID)
+with confidence and dated source evidence; never derive employer quality from prestige or
+a star rating alone. Existing jobs/applications remain authoritative and are not silently
+rewritten by an audit. The current V1 schema has no normalized diligence record, so this
+pass adds policy and a read-only dated audit report only. A future persistence change must
+use owner-scoped `company_diligence` and source rows rather than overloading company notes
+or job fit fields.

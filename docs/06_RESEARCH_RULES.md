@@ -28,6 +28,18 @@ link, removed employer page, stale aggregator, misleading employment status or d
 repost. Record the URL and verification timestamp when known. Missing facts remain null,
 blank or Unknown.
 
+## Employer due diligence
+
+`Evaluate` has two separate outputs: role fit and employer quality. Future research must
+check the employer's legitimacy/stability, repeated culture and management signals,
+compensation/benefits, career value and role/team risks before recommending meaningful
+application effort. Use the evidence and status policy in
+`15_EMPLOYER_DUE_DILIGENCE.md`. Record source URL, access date, sample/office/function
+scope and whether a point is a FACT, REPEATED SIGNAL, ANECDOTE or UNKNOWN. Do not use a
+star rating alone, do not generalize across offices or employment types, and do not
+invent salary ranges. A CAUTION or HOLD finding does not erase an existing application;
+it creates an explicit verification plan.
+
 ## One vacancy, many sources
 
 The same requisition on an employer site, LinkedIn and JobStreet is one `jobs` record with
