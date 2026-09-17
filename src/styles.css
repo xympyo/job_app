@@ -2349,7 +2349,7 @@
 .guide-help-section h2 { margin: 0 0 6px; }
 .guide-help-section p { margin: 0 0 10px; color: #65725f; }
 .guide-help-section ul { margin: 0 0 16px; padding-left: 19px; color: #53634f; line-height: 1.65; }
-.guide-glossary { margin-top: 20px; }
+.guide-glossary { margin-top: 20px; padding:24px;}
 .guide-glossary dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; margin: 0; }
 .guide-glossary dl div { padding: 11px 0; border-top: 1px solid #e5ebe1; }
 .guide-glossary dt { font-weight: 700; }
