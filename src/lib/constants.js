@@ -124,7 +124,12 @@ export const TABLES = [
   "applications",
   "application_questions",
   "application_events",
+  "company_diligence",
+  "company_diligence_sources",
 ];
+export const CORE_TABLES = TABLES.filter(
+  (table) => !["company_diligence", "company_diligence_sources"].includes(table),
+);
 export const LOCAL_USER = "00000000-0000-4000-8000-000000000001";
 export const CV_SEEDS = [
   {

@@ -22,6 +22,7 @@ import { Badge, Button, Confirm, ExternalLink, Select, formatDate } from "./ui";
 import JobForm from "./JobForm";
 import ApplicationPanel from "./ApplicationPanel";
 import { ContextualGuidance } from "./Guidance";
+import EmployerDiligence from "./EmployerDiligence";
 
 export default function JobDetail({ job, area = "inbox" }) {
   const { data, mutate, saving } = useWorkspace();
@@ -247,6 +248,7 @@ export default function JobDetail({ job, area = "inbox" }) {
               </Button>
             </div>
           </section>
+          <EmployerDiligence companyId={job.company_id} />
           <section className="detail-section">
             <div className="form-grid">
               <Select

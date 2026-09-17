@@ -10,6 +10,8 @@ const C = "33333333-3333-4333-8333-333333333333",
   AP = "55555555-5555-4555-8555-555555555555";
 const P = "66666666-6666-4666-8666-666666666666",
   PR = "77777777-7777-4777-8777-777777777777";
+const D = "88888888-8888-4888-8888-888888888888",
+  DS = "99999999-9999-4999-8999-999999999999";
 await db.exec(`create role anon; create role authenticated; create schema auth;
 create table auth.users(id uuid primary key);
 insert into auth.users values('${A}'),('${B}');
@@ -46,6 +48,17 @@ try {
       `insert into public.companies(id,name,normalized_name) values('${C}','Company','company'); insert into public.jobs(id,company_id,title) values('${J}','${C}','Analyst')`,
     );
     assert.equal((await db.query("select * from public.jobs")).rows.length, 1);
+  });
+  await check("Employer diligence is owner scoped and company linked", async () => {
+    await db.exec(`insert into public.company_diligence(id,company_id,status,confidence,summary) values('${D}','${C}','caution','medium','QA concern'); insert into public.company_diligence_sources(id,company_diligence_id,source_name,source_url) values('${DS}','${D}','QA source','https://example.com');`);
+    assert.equal((await db.query("select * from public.company_diligence")).rows.length, 1);
+    assert.equal((await db.query("select * from public.company_diligence_sources")).rows.length, 1);
+    await asUser(B);
+    assert.equal((await db.query("select * from public.company_diligence")).rows.length, 0);
+    assert.equal((await db.query("select * from public.company_diligence_sources")).rows.length, 0);
+    await fail(`insert into public.company_diligence(user_id,company_id,status,confidence) values('${B}','${C}','hold','low')`, /row-level security|foreign key/);
+    await fail(`insert into public.company_diligence_sources(user_id,company_diligence_id,source_name) values('${B}','${D}','spoof')`, /row-level security|foreign key/);
+    await asUser(A);
   });
   await check(
     "Second user cannot read/update/delete first user records",
@@ -96,6 +109,8 @@ try {
         "application_events",
         "cv_versions",
         "research_runs",
+        "company_diligence",
+        "company_diligence_sources",
       ])
         await fail(`select * from public.${table}`, /permission denied/);
       await fail(`select public.apply_changes('[]')`, /permission denied/);

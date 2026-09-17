@@ -36,6 +36,7 @@ import {
 } from "../components/ui";
 import JobForm from "../components/JobForm";
 import JobDetail from "../components/JobDetail";
+import { EmployerDiligenceBadge } from "../components/EmployerDiligence";
 
 export function JobCard({ job, area, selected, contextQuery = "" }) {
   const { data, mutate, saving } = useWorkspace();
@@ -89,6 +90,7 @@ export function JobCard({ job, area, selected, contextQuery = "" }) {
           >
             {job.fit_label || "Not assessed"}
           </Badge>
+          <EmployerDiligenceBadge companyId={job.company_id} />
           <span className="small muted" title="How recently this posting was checked">
             {verificationLabel(job)}
           </span>

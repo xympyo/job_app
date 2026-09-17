@@ -54,6 +54,29 @@ export const companySchema = z.object({
   headquarters: short,
   notes: text,
 });
+const diligenceList = z.array(z.string().max(5000)).max(100).default([]);
+export const companyDiligenceSchema = z.object({
+  company_id: z.uuid(),
+  status: z.enum(["cleared", "caution", "hold", "avoid"]),
+  confidence: z.enum(["high", "medium", "low"]),
+  summary: text,
+  positive_signals: diligenceList,
+  concern_signals: diligenceList,
+  verification_questions: diligenceList,
+  operational_recommendation: short,
+  researched_at: date,
+});
+export const companyDiligenceSourceSchema = z.object({
+  company_diligence_id: z.uuid(),
+  source_name: required,
+  source_url: url,
+  source_type: short,
+  evidence_classification: z.enum(["FACT", "REPEATED SIGNAL", "ANECDOTE", "UNKNOWN"]).default("UNKNOWN"),
+  scope: z.enum(["company", "office", "team", "role"]).default("company"),
+  review_sample_size: z.number().int().nonnegative().nullable().default(null),
+  note: text,
+  accessed_at: date,
+});
 export const sourceSchema = z.object({
   job_id: ref,
   source_name: required,
@@ -237,6 +260,8 @@ export const schemas = {
   application_events: eventSchema,
   cv_versions: cvSchema,
   research_runs: runSchema,
+  company_diligence: companyDiligenceSchema,
+  company_diligence_sources: companyDiligenceSourceSchema,
 };
 export const errorMessage = (e) =>
   e.issues

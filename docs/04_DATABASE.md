@@ -138,7 +138,8 @@ database. Do not put a long audit dump in `companies.notes` or duplicate employe
 into every job. The proposed normalized future shape is an owner-scoped one-to-one
 `company_diligence` record plus owner-scoped `company_diligence_sources` children for
 status, confidence, summary, signals, concerns, compensation/stability/career-value
-signals, operational recommendation and dated evidence. It requires composite owner
-foreign keys, RLS and HTTPS-only source URLs. This audit does not add the tables or
-mutate production; until a migration is approved, the dated audit remains a report-only
-artifact under `output/`.
+signals, operational recommendation and dated evidence. Migration
+`202609180001_company_diligence.sql` implements this as `company_diligence` plus
+`company_diligence_sources`. Both tables have composite owner foreign keys, one current
+record per user/company, RLS and HTTPS-only source URLs. The import writes only these
+tables; V1 jobs, sources, applications, CVs and history remain unchanged.

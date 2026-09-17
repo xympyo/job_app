@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { TABLES } from "./constants";
+import { CORE_TABLES, TABLES } from "./constants";
 import { emptyData, seedCVs } from "./domain";
 import { schemas } from "./schema";
 
@@ -72,13 +72,13 @@ export function createLocalRepository(storage = localStorage) {
         }
         if (
           parsed.version !== 1 ||
-          !TABLES.every((t) => Array.isArray(parsed.data?.[t]))
+          !CORE_TABLES.every((t) => Array.isArray(parsed.data?.[t]))
         )
           throw new Error(
             "Unsupported local data format. Your stored data has been left intact.",
           );
         return Object.fromEntries(
-          TABLES.map((t) => [t, parsed.data[t].map((r) => hydrate(t, r))]),
+          TABLES.map((t) => [t, (parsed.data[t] || []).map((r) => hydrate(t, r))]),
         );
       }
       const data = emptyData();
@@ -115,6 +115,8 @@ const nullableColumns = new Set([
   "scheduled_at",
   "started_at",
   "completed_at",
+  "researched_at",
+  "accessed_at",
 ]);
 export function createCloudRepository(client) {
   const repository = {

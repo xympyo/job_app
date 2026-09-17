@@ -55,7 +55,7 @@ Use one operational recommendation alongside the status:
 read as employer clearance. A HOLD blocks an automatic progression recommendation;
 CAUTION can remain actionable only when the trade-off is visible and Moshe chooses it.
 
-## Minimal persistence design (not yet migrated)
+## Canonical persistence and frontend use
 
 The current `companies` table stores identity and reusable company metadata but has no
 safe place for structured due-diligence evidence. Do not overload `companies.notes` or
@@ -70,13 +70,21 @@ job fit fields. If persistence is approved, add an owner-scoped one-to-one
 `source_url`, `accessed_at`, `evidence_class`, `scope` (company/office/team/role),
 `review_sample_size`, and `notes`.
 
-Both tables require owner-scoped foreign keys, RLS, HTTPS-only URLs and no writes to
-application snapshots. This is a design decision only; this audit does not add a
-migration or mutate owner records.
+Both tables are implemented by migration `202609180001_company_diligence.sql` with
+owner-scoped composite foreign keys, RLS, HTTPS-only source URLs and no writes to
+application snapshots. The reviewed 2026-09-17 audit is imported as the current
+owner-scoped diligence layer. Job cards, company panels and job detail show a compact
+Employer indicator; detail expands the summary, signals, interview questions and
+source links. A missing record is explicitly **Not researched**. Diligence never changes
+role fit, Ready to Apply, application stages or history.
+
+The import is fail-closed: it matches the audit to exactly one existing canonical
+company, uses a deterministic owner/company record id, upserts only the diligence
+tables, and reports unresolved mappings instead of guessing. Sources store concise
+evidence references rather than copied review text.
 
 ## Research policy change
 
 Future research must answer both “Should Moshe apply?” and “Is this an employer he
 should want to work for?” before recommending substantial effort. Role fit and employer
 quality are reported separately in research notes or the normalized diligence model.
-

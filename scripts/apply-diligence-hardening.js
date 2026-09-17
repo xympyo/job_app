@@ -1,0 +1,13 @@
+import fs from "node:fs/promises";
+import path from "node:path";
+import process from "node:process";
+import { fileURLToPath } from "node:url";
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const ref = process.env.SUPABASE_PROJECT_REF || "gficmubsqkeqqsdlbxup";
+const endpoint = `https://api.supabase.com/v1/projects/${ref}/database/query`;
+const envText = await fs.readFile(path.join(root, ".env"), "utf8");
+const env = Object.fromEntries(envText.split(/\r?\n/).flatMap((line) => { const m = line.match(/^\s*([^#=]+)=(.*)$/); return m ? [[m[1].trim(), m[2].trim().replace(/^['"]|['"]$/g, "")]] : []; }));
+const q = async (sql) => { const r = await fetch(endpoint, { method: "POST", headers: { Authorization: `Bearer ${env.SUPABASE_ACCESS_TOKEN}`, "Content-Type": "application/json" }, body: JSON.stringify({ query: sql }) }); const b = await r.text(); if (!r.ok) throw new Error(b); return JSON.parse(b); };
+const existing = await q("select 1 from pg_constraint where conname='company_diligence_sources_https_url';");
+if (!existing.length) await q(await fs.readFile(path.join(root, "supabase/migrations/202609180002_company_diligence_hardening.sql"), "utf8"));
+console.log(JSON.stringify({ mode: existing.length ? "already-applied" : "applied", httpsConstraint: true }));

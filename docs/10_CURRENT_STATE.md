@@ -244,12 +244,15 @@ No database schema or owner data changed in this usability pass.
 
 ## Employer due-diligence audit — 2026-09-17
 
-Completed a read-only employer-quality audit over the live owner snapshot (45 companies,
-47 jobs, 14 applications, 58 sources, 3 research runs). The audit separates role fit from
+Completed a read-only employer-quality audit over the live owner snapshot. The audit separates role fit from
 employer quality, classifies evidence as fact/repeated signal/anecdote/unknown, and uses
 CLEARED, CAUTION, HOLD / RESEARCH and AVOID with confidence. Six employers had enough
 public evidence for CLEARED; several had material trade-offs; many smaller employers
 remain HOLD because public evidence is too thin. No jobs, companies, applications, CVs,
 snapshots, sources or history were changed. The detailed dated report is
 `output/employer-due-diligence-audit-2026-09-17.md`; the durable policy is
-`docs/15_EMPLOYER_DUE_DILIGENCE.md`. A normalized diligence migration remains deferred.
+`docs/15_EMPLOYER_DUE_DILIGENCE.md`. Migration `202609180001_company_diligence.sql`
+is applied and 38 audit records (6 CLEARED, 18 CAUTION, 14 HOLD / RESEARCH) are
+imported into the owner workspace. The current read-only post-import snapshot is 45
+companies, 46 jobs, 57 job sources, 3 research runs, 17 applications, 0 questions and
+0 events; diligence import changed only the two new diligence tables.

@@ -21,6 +21,7 @@ import {
   Textarea,
 } from "../components/ui";
 import { download } from "./Research";
+import EmployerDiligence, { EmployerDiligenceBadge } from "../components/EmployerDiligence";
 
 function RecordForm({ table, record, onClose }) {
   const { mutate } = useWorkspace();
@@ -180,9 +181,11 @@ export default function Library({ companiesOnly = false }) {
                   .join(" · ") || "Details not added yet"}
               </p>
               <div className="badge-row">
+                <EmployerDiligenceBadge companyId={c.id} />
                 <ExternalLink href={c.website}>Website</ExternalLink>
                 <ExternalLink href={c.careers_url}>Careers</ExternalLink>
               </div>
+              <EmployerDiligence companyId={c.id} compact />
               <p className="prewrap">{c.notes}</p>
               <Badge>
                 {data.jobs.filter((j) => j.company_id === c.id).length}{" "}

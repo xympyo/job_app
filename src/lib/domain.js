@@ -33,13 +33,15 @@ export function put(data, table, values, userId) {
         ? "slug"
         : table === "applications"
           ? "job_id"
+          : table === "company_diligence"
+            ? "company_id"
           : null;
   if (
     uniqueKey &&
     data[table].some((r) => r.id !== row.id && r[uniqueKey] === row[uniqueKey])
   )
     throw new Error(
-      `A ${table === "companies" ? "company with this name" : table === "cv_versions" ? "CV with this identifier" : "record for this application"} already exists`,
+      `A ${table === "companies" ? "company with this name" : table === "cv_versions" ? "CV with this identifier" : table === "company_diligence" ? "diligence record for this company" : "record for this application"} already exists`,
     );
   if (old) data[table] = data[table].map((r) => (r.id === old.id ? row : r));
   else data[table].push(row);
@@ -314,6 +316,20 @@ export function currentLifecycle(job, application) {
   if (job.recommendation === "Research first" || job.recommendation === "Research First") return "Research First";
   if (job.review_status === "Found" || job.review_status === "Reviewing") return "To Review";
   return job.review_status || "To Review";
+}
+export function companyDiligence(data, companyId) {
+  return data.company_diligence?.find((record) => record.company_id === companyId) || null;
+}
+export function diligenceLabel(status) {
+  return {
+    cleared: "Cleared",
+    caution: "Caution",
+    hold: "Hold / Research",
+    avoid: "Avoid",
+  }[status] || "Not researched";
+}
+export function diligenceTone(status) {
+  return { cleared: "green", caution: "amber", hold: "amber", avoid: "red" }[status] || "";
 }
 export function attentionItems(data) {
   const items = [];

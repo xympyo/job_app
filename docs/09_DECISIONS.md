@@ -220,7 +220,16 @@ Decision: extend `Evaluate` with an independent employer-quality/due-diligence a
 alongside role fit. Use explainable statuses (CLEARED, CAUTION, HOLD / RESEARCH, AVOID)
 with confidence and dated source evidence; never derive employer quality from prestige or
 a star rating alone. Existing jobs/applications remain authoritative and are not silently
-rewritten by an audit. The current V1 schema has no normalized diligence record, so this
-pass adds policy and a read-only dated audit report only. A future persistence change must
-use owner-scoped `company_diligence` and source rows rather than overloading company notes
-or job fit fields.
+rewritten by an audit. The normalized implementation uses owner-scoped
+`company_diligence` and source rows rather than overloading company notes or job fit
+fields.
+
+## 2026-09-18 — Employer diligence becomes canonical and visible
+
+Decision: persist the reviewed employer audit in owner-scoped `company_diligence` and
+`company_diligence_sources` records. The frontend exposes the status separately from
+role fit on Jobs, company context and job detail. CLEARED, CAUTION, HOLD / RESEARCH,
+AVOID and Not researched remain explainable states with confidence and source evidence.
+Import is fail-closed on company mapping and does not update jobs, applications, stages,
+CVs or history. A CAUTION/HOLD/AVOID status is actionable guidance, not an automatic
+deletion or application transition.
