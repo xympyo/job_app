@@ -256,3 +256,22 @@ is applied and 38 audit records (6 CLEARED, 18 CAUTION, 14 HOLD / RESEARCH) are
 imported into the owner workspace. The current read-only post-import snapshot is 45
 companies, 46 jobs, 57 job sources, 3 research runs, 17 applications, 0 questions and
 0 events; diligence import changed only the two new diligence tables.
+
+## Supabase project recovery — 2026-10-02
+
+The former Supabase project became unreachable at the DNS level, so the hosted app could
+not authenticate or load workspace data. A new active Supabase project was configured
+through the local/Vercel environment, bootstrapped with the repository migrations, and
+verified with the existing RLS checks. The private Gate 3B V1 backup from 2026-09-16 was
+restored without changing its record IDs or relationships; the new project therefore
+contains the verifiable snapshot of 45 companies, 47 jobs, 58 job sources, 3 research
+runs, 11 applications, 3 CV variants, 0 questions and 0 events. The V2 profile revision
+1 and 38 employer-diligence records were restored as well. The owner Auth identity is
+new-project scoped, while the restored durable records retain their original IDs.
+
+This is a recovery snapshot, not proof that later activity was recovered: the dated
+employer-audit snapshot described 46 jobs and 17 applications, but no complete export of
+that later state was available. The missing later delta remains unresolved and must not be
+filled by inference. The production alias `https://pyoloker.vercel.app` now serves a
+bundle configured for the new project. Private recovery scripts and reports remain local
+and ignored; no credentials or owner backup content are committed.

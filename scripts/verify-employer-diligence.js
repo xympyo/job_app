@@ -3,12 +3,15 @@ import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const projectRef = process.env.SUPABASE_PROJECT_REF || "gficmubsqkeqqsdlbxup";
+const envText = await fs.readFile(path.join(root, ".env"), "utf8");
+const env = Object.fromEntries(envText.split(/\r?\n/).flatMap((line) => {
+  const match = line.match(/^\s*([^#=]+)=(.*)$/);
+  return match ? [[match[1].trim(), match[2].trim().replace(/^['"]|['"]$/g, "")]] : [];
+}));
+const projectRef = process.env.SUPABASE_PROJECT_REF || new URL(env.VITE_SUPABASE_URL).hostname.split(".")[0];
 const ownerEmail = process.env.DILIGENCE_OWNER_EMAIL || "moshe4122004@gmail.com";
 const endpoint = `https://api.supabase.com/v1/projects/${projectRef}/database/query`;
 const sqlText = (v) => `'${String(v).replaceAll("'", "''")}'`;
-const envText = await fs.readFile(path.join(root, ".env"), "utf8");
-const env = Object.fromEntries(envText.split(/\r?\n/).flatMap((line) => { const m = line.match(/^\s*([^#=]+)=(.*)$/); return m ? [[m[1].trim(), m[2].trim().replace(/^['"]|['"]$/g, "")]] : []; }));
 const query = async (sql) => { const r = await fetch(endpoint, { method: "POST", headers: { Authorization: `Bearer ${env.SUPABASE_ACCESS_TOKEN}`, "Content-Type": "application/json" }, body: JSON.stringify({ query: sql }) }); const body = await r.text(); if (!r.ok) throw new Error(body); return JSON.parse(body); };
 const [{ id: ownerId }] = await query(`select id from auth.users where lower(email)=lower(${sqlText(ownerEmail)});`);
 const counts = (await query(`select jsonb_build_object('cv_versions',(select count(*) from public.cv_versions where user_id=${sqlText(ownerId)}::uuid),'companies',(select count(*) from public.companies where user_id=${sqlText(ownerId)}::uuid),'jobs',(select count(*) from public.jobs where user_id=${sqlText(ownerId)}::uuid),'job_sources',(select count(*) from public.job_sources where user_id=${sqlText(ownerId)}::uuid),'research_runs',(select count(*) from public.research_runs where user_id=${sqlText(ownerId)}::uuid),'applications',(select count(*) from public.applications where user_id=${sqlText(ownerId)}::uuid),'application_questions',(select count(*) from public.application_questions where user_id=${sqlText(ownerId)}::uuid),'application_events',(select count(*) from public.application_events where user_id=${sqlText(ownerId)}::uuid),'company_diligence',(select count(*) from public.company_diligence where user_id=${sqlText(ownerId)}::uuid),'company_diligence_sources',(select count(*) from public.company_diligence_sources where user_id=${sqlText(ownerId)}::uuid)) as counts;`))[0].counts;

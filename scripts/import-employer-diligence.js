@@ -5,9 +5,7 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const projectRef = process.env.SUPABASE_PROJECT_REF || "gficmubsqkeqqsdlbxup";
 const ownerEmail = process.env.DILIGENCE_OWNER_EMAIL || "moshe4122004@gmail.com";
-const endpoint = `https://api.supabase.com/v1/projects/${projectRef}/database/query`;
 
 function envFile() {
   return fs.readFile(path.join(root, ".env"), "utf8").then((text) => Object.fromEntries(text.split(/\r?\n/).flatMap((line) => {
@@ -15,7 +13,7 @@ function envFile() {
     return m ? [[m[1].trim(), m[2].trim().replace(/^['"]|['"]$/g, "")]] : [];
   })));
 }
-async function query(sql, token) {
+async function query(sql, token, endpoint) {
   const response = await fetch(endpoint, { method: "POST", headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify({ query: sql }) });
   const body = await response.text();
   if (!response.ok) throw new Error(`Management API query failed (${response.status}): ${body.slice(0, 500)}`);
@@ -48,14 +46,16 @@ async function main() {
   const args = new Set(process.argv.slice(2));
   const execute = args.has("--execute");
   const env = await envFile();
+  const projectRef = process.env.SUPABASE_PROJECT_REF || new URL(env.VITE_SUPABASE_URL).hostname.split(".")[0];
+  const endpoint = `https://api.supabase.com/v1/projects/${projectRef}/database/query`;
   const token = env.SUPABASE_ACCESS_TOKEN;
   if (!token) throw new Error("SUPABASE_ACCESS_TOKEN is required in .env.");
   const fixture = await loadFixture();
   if (fixture.version !== 1 || !Array.isArray(fixture.records)) throw new Error("Invalid diligence fixture.");
-  const users = await query(`select id from auth.users where lower(email)=lower(${sqlText(ownerEmail)});`, token);
+  const users = await query(`select id from auth.users where lower(email)=lower(${sqlText(ownerEmail)});`, token, endpoint);
   if (users.length !== 1) throw new Error(`Expected one owner account; found ${users.length}.`);
   const ownerId = users[0].id;
-  const companies = await query(`select id,name from public.companies where user_id=${sqlText(ownerId)}::uuid order by name;`, token);
+  const companies = await query(`select id,name from public.companies where user_id=${sqlText(ownerId)}::uuid order by name;`, token, endpoint);
   const byKey = new Map();
   for (const company of companies) { const key = canonicalKey(company.name); const list = byKey.get(key) || []; list.push(company); byKey.set(key, list); }
   const mapped = []; const unresolved = [];
@@ -64,7 +64,7 @@ async function main() {
     if (matches.length !== 1) unresolved.push({ auditCompany: record.company, matches: matches.map((m) => m.name) });
     else mapped.push({ record, company: matches[0] });
   }
-  const existing = await query(`select company_id,status,confidence,researched_at from public.company_diligence where user_id=${sqlText(ownerId)}::uuid order by company_id;`, token).catch(() => []);
+  const existing = await query(`select company_id,status,confidence,researched_at from public.company_diligence where user_id=${sqlText(ownerId)}::uuid order by company_id;`, token, endpoint).catch(() => []);
   const summary = { mode: execute ? "execute" : "preflight", ownerEmail, fixtureRecords: fixture.records.length, ownerCompanies: companies.length, mapped: mapped.length, unresolved, existing: existing.length };
   if (unresolved.length) { console.log(JSON.stringify(summary, null, 2)); throw new Error(`Failing closed: ${unresolved.length} diligence company mappings are unresolved.`); }
   if (!execute) { console.log(JSON.stringify(summary, null, 2)); return; }
@@ -77,8 +77,8 @@ async function main() {
     if (sources) statements.push(`insert into public.company_diligence_sources (company_diligence_id,user_id,source_name,source_url,source_type,evidence_classification,scope,review_sample_size,note,accessed_at) values ${sources};`);
   }
   statements.push("commit");
-  await query(`${statements.join("\n")};`, token);
-  const after = await query(`select d.status,d.confidence,c.name from public.company_diligence d join public.companies c on c.id=d.company_id where d.user_id=${sqlText(ownerId)}::uuid order by c.name;`, token);
+  await query(`${statements.join("\n")};`, token, endpoint);
+  const after = await query(`select d.status,d.confidence,c.name from public.company_diligence d join public.companies c on c.id=d.company_id where d.user_id=${sqlText(ownerId)}::uuid order by c.name;`, token, endpoint);
   console.log(JSON.stringify({ ...summary, imported: after.length, statuses: after.reduce((a, r) => (a[r.status] = (a[r.status] || 0) + 1, a), {}) }, null, 2));
 }
 main().catch((error) => { console.error(error.message); process.exitCode = 1; });

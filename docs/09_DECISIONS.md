@@ -233,3 +233,15 @@ AVOID and Not researched remain explainable states with confidence and source ev
 Import is fail-closed on company mapping and does not update jobs, applications, stages,
 CVs or history. A CAUTION/HOLD/AVOID status is actionable guidance, not an automatic
 deletion or application transition.
+
+## 2026-10-02 — Supabase project recovery
+
+Decision: restore the reachable production workspace into the newly configured Supabase
+project from the private dated Gate 3B V1 backup after read-only target checks, then
+reapply the approved V2 profile and employer-diligence schema/data. Restore preserves the
+backup's IDs and relationships and uses the normal RLS/profile operations; it does not
+recreate records or infer later activity. The old project was unreachable at DNS level.
+The later 46-job/17-application snapshot is documented as an unresolved recovery gap
+because no complete export was available. The Vercel production alias now points at the
+new project through environment configuration. No credentials, backup content or owner
+secrets are committed.

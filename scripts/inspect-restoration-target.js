@@ -1,0 +1,11 @@
+import fs from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const parseEnv = (text) => Object.fromEntries(text.split(/\r?\n/).flatMap((line) => { const m = line.match(/^\s*([^#=]+)=(.*)$/); return m ? [[m[1].trim(), m[2].trim().replace(/^['"]|['"]$/g, "")]] : []; }));
+const env = parseEnv(await fs.readFile(path.join(root, ".env"), "utf8"));
+const ref = new URL(env.VITE_SUPABASE_URL).hostname.split(".")[0];
+const response = await fetch(`https://api.supabase.com/v1/projects/${ref}/database/query`, { method: "POST", headers: { Authorization: `Bearer ${env.SUPABASE_ACCESS_TOKEN}`, "Content-Type": "application/json" }, body: JSON.stringify({ query: "select id,email,email_confirmed_at,created_at from auth.users order by created_at;" }) });
+const body = await response.text();
+if (!response.ok) throw new Error(body);
+console.log(JSON.stringify({ ref, users: JSON.parse(body) }, null, 2));
