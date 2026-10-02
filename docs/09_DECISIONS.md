@@ -245,3 +245,25 @@ The later 46-job/17-application snapshot is documented as an unresolved recovery
 because no complete export was available. The Vercel production alias now points at the
 new project through environment configuration. No credentials, backup content or owner
 secrets are committed.
+
+## 2026-10-02 — October refresh geography and evidence handling
+
+Decision: prioritize high-quality full-time opportunities in Tangerang and western
+Jabodetabek first, while retaining Jakarta and exceptional farther opportunities when
+career value justifies the commute. Public transport and KRL commuting are acceptable
+and should be recorded as broad burden categories rather than invented precise times.
+Rationale: the owner explicitly wants a near-home search strategy without giving up
+strong graduate, analyst, product or transformation opportunities. Implication: each
+new retained job records its coarse geographic tier, work mode and commute trade-off;
+exact home-address data remains outside PyoLoker.
+
+Decision: research refreshes must reverify the complete current inventory, preserve
+stale records and applications, and represent uncertainty as `Possibly open` or
+`Research first` rather than carrying forward September's `Verified open` label.
+Employer quality remains independent from role fit. A dated research run, primary
+source and current verification timestamp are required for a production refresh.
+
+Decision: a confirmed assessment or interview milestone may be recorded as an
+application event without changing the application stage or inferring a pass/fail
+outcome. The 2026-09-19 Sea Global MAP online assessment is therefore recorded as
+completed/awaiting result.

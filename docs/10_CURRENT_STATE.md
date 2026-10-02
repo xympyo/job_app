@@ -275,3 +275,22 @@ that later state was available. The missing later delta remains unresolved and m
 filled by inference. The production alias `https://pyoloker.vercel.app` now serves a
 bundle configured for the new project. Private recovery scripts and reports remain local
 and ignored; no credentials or owner backup content are committed.
+
+## October 2026 refresh
+
+The authoritative 2026-10-02 refresh read the restored production workspace before
+mutation: 45 companies, 47 jobs, 58 job sources, 3 research runs, 11 applications,
+3 CV variants, 0 questions and 0 events. It reverified all 47 existing jobs, preserved
+their IDs and history, recorded current uncertainty/expiry where September evidence was
+stale, and added 11 new curated opportunities in a fourth research run. The resulting
+workspace has 54 companies, 58 jobs, 69 sources, 4 research runs, 11 applications,
+3 CV variants, 1 assessment event and 47 employer-diligence records. The only new
+application-related record is the Sea Global MAP online-assessment event completed on
+2026-09-19; no application stage was changed and no pass/fail outcome was inferred.
+
+The refresh applies the current durable search policy: Tangerang/western Jabodetabek
+first, public-transport/KRL commuting acceptable, and Jakarta/farther roles retained only
+when fit, employer quality and career value justify the burden. Existing stale jobs and
+applications remain available for historical context. The dated operational report is
+`output/october-refresh-2026-10-02.md`; its source links and classifications are evidence
+for this run, not permanent policy.
