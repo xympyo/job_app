@@ -1,0 +1,156 @@
+{
+  "generated_at": "2026-10-02T15:04:38.817Z",
+  "audit_date": "2026-10-02",
+  "pre_run": {
+    "jobs": 58,
+    "applications": 11,
+    "job_ids": [
+      "fbc543d6-ed21-4aaa-88df-d815408089a8",
+      "664917d8-07d1-4561-871e-e6ac962ffb5d",
+      "2d9e40ca-5d18-49aa-aa0c-4af7b4be80ad",
+      "a749078c-11a5-44a7-9dad-ffae1d265a6e",
+      "fc11b765-4c3d-4856-86cf-9049f7f33b49",
+      "55091d9f-c5a7-4921-b115-dd4b5a2d8f95",
+      "4de8cfcf-2c6b-4477-bff5-eea37c611356",
+      "0c704f59-cfe3-48f9-bf7c-5cf787cca5e7",
+      "2811ab42-8f26-4ff8-805c-996b2f806cea",
+      "8da8c755-f329-4e01-9432-064b9e6fc371",
+      "147a3b80-e9af-435e-88ec-f7d3ab112ea4",
+      "a5e76949-6d6c-4a46-bd99-3f1df9b421be",
+      "5b609168-1445-436a-b573-9dcb36a24bef",
+      "d4795ae3-e32e-4950-8edc-f3da70a000c9",
+      "83c0a836-5ab8-4726-95a7-df21259aa658",
+      "ea89af8d-8b46-4f4a-b703-a4d66405202a",
+      "9c20717b-3d05-5b63-a266-1dabf83dd950",
+      "9d0b6766-7066-4430-ad2e-4282b0877a32",
+      "377f63b6-d581-4e4c-ae51-3699805942b1",
+      "71e3626e-ff44-43ad-b291-a0c56783294b",
+      "0c405a6c-9b57-47bc-9694-e6df22daaedd",
+      "212590a9-df65-47b4-80e4-e1772be5c1d5",
+      "0cabd0c5-8d12-4470-b875-c8e70309e61a",
+      "6aad2d91-6339-43cb-9338-211cb121a548",
+      "fe62e925-6bc6-4b04-a95a-76d0a6f96ecb",
+      "d5c313f9-5019-411f-8aa5-e9e2829b71e5",
+      "be1a0987-2044-4669-9989-12f2d61fdb7e",
+      "9a6bd1c1-9487-44f0-9ae1-9c1aed6ef72a",
+      "7c43206b-c3ce-43f7-a10e-8516057e585d",
+      "bc96e4c6-5730-4eed-ae02-cdd1446991ba",
+      "b0a7952e-31db-4553-a7a2-fd95857fd140",
+      "a9ea4ef0-cad3-56e3-a178-1eab41629ff4",
+      "518e679a-0250-4c14-8f40-29c93783201b",
+      "60f9e90b-07d5-4678-84cd-31d321aefaef",
+      "3cce7998-63ff-573c-8626-c0f837b58b0e",
+      "4c57b2d6-d7e6-4401-8734-ab633d9b19fd",
+      "24ef214f-e762-4f29-aee4-e6296d4f63ef",
+      "56d09789-596e-421d-84f7-1a3907914f3a",
+      "42a5a0d3-2c68-42b5-a3fa-0d69d2655527",
+      "568a58e3-8ca8-4ee1-b7e4-384871fc5e9e",
+      "9c5564e9-ebcd-4135-8323-65ed41edeaee",
+      "4077f1bf-3a7d-4a0a-bba0-c9a146dd2a36",
+      "aca4623b-f8ba-4d68-838b-5290c80d51e0",
+      "a68377d6-c50e-419a-81fb-89ebcfaeecec",
+      "2ac4f324-cf24-506e-abd0-30dbbe6b7475",
+      "737dfae3-f311-476d-a406-5cf52ca8b180",
+      "d4e46da4-4e57-4257-85e7-e776c2d9ac5f",
+      "456da943-d3d0-4d17-bbd0-622c95d85f7a",
+      "2493b37d-da92-4d75-a25a-8ff9646705b3",
+      "919b0a6f-3ce5-4102-9e08-3dd1c675f75e",
+      "4244f0f0-50bd-4eec-83a6-c829d97691ec",
+      "70fd5552-13e9-5ade-b615-52893b304a79",
+      "ca80bb59-6318-5f4c-acff-75b07ea79f31",
+      "8a10ad12-efca-5310-a7d8-254c65d58e24",
+      "cc3743f8-9725-5305-a660-df330c881cfb",
+      "4606add2-0ad4-58cb-9ed1-1b449be6c59c",
+      "0ea88bfc-b4ee-52aa-9b2e-8bf001cc3dbe",
+      "8ab7247e-9955-5615-a2a5-f6a6543c2e57"
+    ],
+    "application_ids": [
+      "2842eace-fcd8-45f4-9f85-da2ec93e7990",
+      "135895a2-231a-45a1-b191-d6d6a37b8e46",
+      "d1c830d1-aefc-4b1d-950a-ad359de1ce24",
+      "5ff610ed-33ea-49c6-ba96-f98a20127606",
+      "6c3ba2d1-7f5c-4c92-9372-177d4687deef",
+      "df548257-e951-4e45-b94a-bd47542b226e",
+      "dd9f50e2-2912-49b9-9a82-0e85e2cd7358",
+      "a8292417-f8a1-4caf-925d-a2ae47705528",
+      "2cd2de70-0d1b-42b4-9c97-77eb7af05209",
+      "a81cf8c8-88d1-4096-99fe-04344179a33d",
+      "e149eb90-18d0-41de-b9f1-04ed93171be1"
+    ]
+  },
+  "post_run": {
+    "jobs": 58,
+    "events": 1,
+    "applications": 11
+  },
+  "total_jobs_audited": 58,
+  "buckets": {
+    "APPLIED / WAITING": 8,
+    "CLOSED / HISTORICAL": 14,
+    "APPLY ASAP": 6,
+    "DROP FROM ACTIVE QUEUE": 5,
+    "RESEARCH FIRST": 16,
+    "APPLY": 4,
+    "OPTIONAL": 5
+  },
+  "applied_preserved": [
+    {
+      "company": "Sea",
+      "title": "2027 Sea Global Management Associate Program (Shopee/Monee)",
+      "status": "Applied",
+      "applied_at": "2026-09-15",
+      "next_action": "Await Sea Global MAP online-assessment result; do not infer pass/fail"
+    },
+    {
+      "company": "PT Bank Digital BCA (BCA Digital)",
+      "title": "Business Analyst",
+      "status": "Applied",
+      "applied_at": "2026-09-15",
+      "next_action": "Await employer evidence"
+    },
+    {
+      "company": "Oliver Wyman",
+      "title": "Entry-level Consultant & Project Analyst (2027) - Jakarta",
+      "status": "Applied",
+      "applied_at": "2026-09-15",
+      "next_action": "Await employer evidence"
+    },
+    {
+      "company": "Noraa & Co.",
+      "title": "ERP Consultant — Entry Level / Fresh Graduate",
+      "status": "Applied",
+      "applied_at": "2026-09-15",
+      "next_action": "Await employer evidence"
+    },
+    {
+      "company": "FrieslandCampina / Frisian Flag Indonesia",
+      "title": "Global Traineeship Program Engineering & Technology - Indonesia",
+      "status": "Applied",
+      "applied_at": "2026-09-15",
+      "next_action": "Await employer evidence"
+    },
+    {
+      "company": "TikTok",
+      "title": "Graduate Development Program (TikTok Shop E-commerce, Indonesia) - 2027 Start",
+      "status": "Applied",
+      "applied_at": "2026-09-15",
+      "next_action": "Await employer evidence"
+    },
+    {
+      "company": "99 Group",
+      "title": "Graduate Trainee Programme (All Functions)",
+      "status": "Applied",
+      "applied_at": "2026-09-15",
+      "next_action": "Await employer evidence"
+    },
+    {
+      "company": "TikTok",
+      "title": "Logistics Operation Excellence Graduate (GTL Logistics, Indonesia) - 2027 Start",
+      "status": "Applied",
+      "applied_at": "2026-09-15",
+      "next_action": "Await employer evidence"
+    }
+  ],
+  "sea_assessment_preserved": true,
+  "no_deletion": true
+}

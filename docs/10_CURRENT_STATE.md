@@ -294,3 +294,20 @@ when fit, employer quality and career value justify the burden. Existing stale j
 applications remain available for historical context. The dated operational report is
 `output/october-refresh-2026-10-02.md`; its source links and classifications are evidence
 for this run, not permanent policy.
+
+## Active queue relevance audit — 2026-10-02
+
+The post-refresh production inventory was audited in place for current usefulness as of
+2 October 2026. All 58 jobs remain preserved, but the Jobs queue now has an explicit
+operational classification: 6 APPLY ASAP, 4 APPLY, 16 RESEARCH FIRST, 5 OPTIONAL,
+8 APPLIED / WAITING, 14 CLOSED / HISTORICAL and 5 DROP FROM ACTIVE QUEUE. Opening Jobs
+therefore emphasizes the small set that still deserves effort while retaining closed,
+skipped, stale and lower-value records for history and research context.
+
+The 8 existing Applied records were not moved back to application work, and the Sea
+Global MAP assessment event remains intact. Pre/post integrity is unchanged at 54
+companies, 58 jobs, 69 job sources, 4 research runs, 11 applications, 1 event and 3
+CV variants. The audit changed job review/recommendation/fit or research-note metadata
+as documented, refreshed four stale source destinations, and repaired Summarecon's
+official open/deadline state. No job, application, CV, source-history or event was
+deleted. Full classification and reasons: `output/active-queue-audit-2026-10-02.md`.

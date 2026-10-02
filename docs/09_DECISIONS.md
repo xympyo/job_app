@@ -267,3 +267,17 @@ Decision: a confirmed assessment or interview milestone may be recorded as an
 application event without changing the application stage or inferring a pass/fail
 outcome. The 2026-09-19 Sea Global MAP online assessment is therefore recorded as
 completed/awaiting result.
+
+## 2026-10-02 — Active queue relevance is a separate operational decision
+
+Decision: after each refresh, every preserved job receives one current operational
+bucket: APPLY ASAP, APPLY, RESEARCH FIRST, OPTIONAL, APPLIED / WAITING, CLOSED /
+HISTORICAL, or DROP FROM ACTIVE QUEUE. The bucket is allowed to override stale
+recommendation/fit presentation for queue purposes without deleting the underlying
+job, source, application or history. Historical recommendation evidence remains in
+the job record; an existing application remains APPLIED / WAITING (or its canonical
+stage) even when the vacancy closes or becomes less relevant. Current eligibility,
+posting evidence, employer economics, geography and career direction are evaluated
+again rather than inheriting an old score. The 2026-10-02 audit is recorded in
+`output/active-queue-audit-2026-10-02.md` and changed only job operational metadata
+and four stale source destinations; no application, CV or event record was rewritten.
